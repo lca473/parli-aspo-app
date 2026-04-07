@@ -2428,11 +2428,7 @@ const GRAMMAR_SECTIONS = [
 
 function renderGrammar() {
   const el = document.getElementById('grammar-body');
-  let html = `<div class="grammar-intro">
-    <strong>ParliAspo</strong> — a constructed language built for accessibility and elegance, 
-    drawing vocabulary from languages across the globe. Every rule is consistent: no exceptions, 
-    no irregular forms, no surprises.
-  </div>`;
+  let html = ``;
 
   GRAMMAR_SECTIONS.forEach((sec, i) => {
     html += `<div class="grammar-section" id="gsec-${i}">
