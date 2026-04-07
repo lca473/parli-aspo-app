@@ -505,7 +505,7 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
         <div class="landing-stat-label">Words</div>
       </div>
       <div class="landing-stat">
-        <div class="landing-stat-num">74</div>
+        <div class="landing-stat-num">100</div>
         <div class="landing-stat-label">Lessons</div>
       </div>
       <div class="landing-stat">
@@ -696,82 +696,1404 @@ try {
 // VOCABULARY (shared between App and Dictionary)
 // ═══════════════════════════════════════════════════════════════
 const V = {
-  greetings1:[{pa:"grati",en:"please/thank you"},{pa:"bona",en:"good"},{pa:"da",en:"yes"},{pa:"na",en:"no"},{pa:"skusa",en:"sorry"},{pa:"bem",en:"well (interjection)"},{pa:"am",en:"here"},{pa:"faram",en:"there"}],
-  pronouns1:[{pa:"me",en:"I/me"},{pa:"yu",en:"you"},{pa:"le",en:"he"},{pa:"lu",en:"she"},{pa:"lo",en:"it / they (neutral)"},{pa:"nos",en:"we/us"},{pa:"les",en:"they (male group)"},{pa:"lus",en:"they (female group)"},{pa:"los",en:"they (mixed group)"},{pa:"yus",en:"you (plural)"}],
-  possessives:[{pa:"men",en:"my/mine"},{pa:"yun",en:"your/yours"},{pa:"len",en:"his"},{pa:"lun",en:"her"},{pa:"lon",en:"its"},{pa:"nosin",en:"our/ours"},{pa:"lesin",en:"their (male group)"},{pa:"lusin",en:"their (female group)"},{pa:"losin",en:"their (mixed group)"},{pa:"yusin",en:"your/yours (plural)"}],
-  people1:[{pa:"humo",en:"person"},{pa:"filo",en:"friend"},{pa:"familo",en:"family"},{pa:"kido",en:"child"},{pa:"viro",en:"man"},{pa:"femo",en:"woman"}],
-  people2:[{pa:"patro",en:"father"},{pa:"matro",en:"mother"},{pa:"frato",en:"brother"},{pa:"yoyo",en:"sister"},{pa:"asawo",en:"spouse"},{pa:"bebo",en:"baby"},{pa:"nufemo",en:"girl"}],
-  colors1:[{pa:"reda",en:"red"},{pa:"blua",en:"blue"},{pa:"verda",en:"green"},{pa:"yela",en:"yellow"},{pa:"negra",en:"black"},{pa:"blanka",en:"white"}],
-  colors2:[{pa:"orana",en:"orange"},{pa:"purpa",en:"purple"},{pa:"grisa",en:"gray"},{pa:"bruna",en:"brown"},{pa:"kroma",en:"color (adj.)"},{pa:"kromo",en:"color (noun)"}],
-  numbers:[{pa:"nula",en:"zero"},{pa:"una",en:"one"},{pa:"dua",en:"two"},{pa:"tria",en:"three"},{pa:"kwara",en:"four"},{pa:"kina",en:"five"},{pa:"sesa",en:"six"},{pa:"sepa",en:"seven"},{pa:"okta",en:"eight"},{pa:"nova",en:"nine"},{pa:"deka",en:"ten"}],
-  articles:[{pa:"la",en:"the"},{pa:"lan",en:"this/these"},{pa:"farlan",en:"that/those"},{pa:"ke",en:"that/who/which (conj./rel.)"},{pa:"ki",en:"question particle"},{pa:"kiparli",en:"ask"},{pa:"kiparlo",en:"question"},{pa:"kwa",en:"what"},{pa:"kwo",en:"who"},{pa:"kwe",en:"where"},{pa:"kwen",en:"when"},{pa:"kwi",en:"why"}],
-  food1:[{pa:"nutro",en:"food"},{pa:"pano",en:"bread"},{pa:"karno",en:"meat"},{pa:"fruko",en:"fruit"},{pa:"malfruko",en:"vegetable"},{pa:"ovo",en:"egg"}],
-  food2:[{pa:"agwo",en:"water"},{pa:"lakto",en:"milk"},{pa:"kafo",en:"coffee"},{pa:"teo",en:"tea"},{pa:"salo",en:"salt"},{pa:"sukro",en:"sugar"},{pa:"spiso",en:"spice"},{pa:"oleo",en:"oil"}],
-  cooking:[{pa:"kusi",en:"cook"},{pa:"kuso",en:"kitchen"},{pa:"nutri",en:"eat"},{pa:"agwi",en:"drink"},{pa:"gusti",en:"taste"},{pa:"gusto",en:"flavor"},{pa:"kuto",en:"knife"},{pa:"garfo",en:"fork"},{pa:"spuno",en:"spoon"},{pa:"plato",en:"plate"},{pa:"taso",en:"cup"}],
-  animals1:[{pa:"pipo",en:"dog"},{pa:"gato",en:"cat"},{pa:"pisko",en:"fish"},{pa:"waso",en:"bird"},{pa:"kavalo",en:"horse"},{pa:"bovo",en:"cow"}],
-  animals2:[{pa:"elefano",en:"elephant"},{pa:"simo",en:"monkey"},{pa:"galo",en:"chicken"},{pa:"lano",en:"sheep"},{pa:"kapro",en:"goat"},{pa:"pordo",en:"pig"},{pa:"kamelo",en:"camel"}],
-  animals3:[{pa:"serpo",en:"snake"},{pa:"insekto",en:"insect"},{pa:"arano",en:"spider"},{pa:"abelo",en:"bee"},{pa:"formiko",en:"ant"},{pa:"musko",en:"fly"},{pa:"sauro",en:"dinosaur"}],
-  home1:[{pa:"kaso",en:"house"},{pa:"domo",en:"room"},{pa:"porto",en:"door"},{pa:"feno",en:"window"},{pa:"muro",en:"wall"},{pa:"piso",en:"floor"},{pa:"teko",en:"ceiling"}],
-  home2:[{pa:"tablo",en:"table"},{pa:"sedo",en:"chair"},{pa:"kamo",en:"bed"},{pa:"sofo",en:"sofa"},{pa:"levo",en:"elevator"},{pa:"marsos",en:"stairs"}],
-  objects1:[{pa:"libo",en:"book"},{pa:"telo",en:"phone"},{pa:"kompo",en:"computer"},{pa:"plumo",en:"pen"},{pa:"papelo",en:"paper"},{pa:"karto",en:"card"},{pa:"klavo",en:"key"}],
-  objects2:[{pa:"deno",en:"money"},{pa:"sako",en:"bag"},{pa:"ropo",en:"clothes"},{pa:"sapo",en:"shoe"},{pa:"goro",en:"hat"},{pa:"tolo",en:"towel"},{pa:"foto",en:"picture"}],
-  verbs1:[{pa:"esi",en:"be/is/am"},{pa:"havi",en:"have"},{pa:"fari",en:"do/make"},{pa:"iri",en:"go"},{pa:"veni",en:"come"},{pa:"vidi",en:"see"}],
-  verbs2:[{pa:"sabi",en:"know"},{pa:"voli",en:"want"},{pa:"povi",en:"can"},{pa:"debi",en:"should"},{pa:"nedi",en:"need"},{pa:"aspi",en:"hope/expect"}],
-  verbs3:[{pa:"kuri",en:"run"},{pa:"marsi",en:"walk"},{pa:"dormi",en:"sleep"},{pa:"sedi",en:"sit"},{pa:"stari",en:"stand"},{pa:"puli",en:"jump"},{pa:"nadi",en:"swim"}],
-  verbs4:[{pa:"labori",en:"work"},{pa:"ludi",en:"play"},{pa:"legi",en:"read"},{pa:"plumi",en:"write"},{pa:"parli",en:"speak"},{pa:"kanti",en:"sing"},{pa:"dansi",en:"dance"},{pa:"fabuli",en:"narrate"}],
-  verbs5:[{pa:"pensi",en:"think"},{pa:"kredi",en:"believe"},{pa:"kapi",en:"understand"},{pa:"repensi",en:"remember"},{pa:"lerni",en:"learn"},{pa:"studi",en:"study"},{pa:"skoli",en:"teach"},{pa:"nurovidi",en:"imagine"},{pa:"voliparli",en:"mean"}],
-  verbs6:[{pa:"doni",en:"give"},{pa:"maldoni",en:"take"},{pa:"deni",en:"buy"},{pa:"vendi",en:"sell"},{pa:"sendi",en:"send"},{pa:"malsendi",en:"receive"},{pa:"kargi",en:"carry"}],
-  verbs7:[{pa:"ami",en:"love"},{pa:"feli",en:"feel"},{pa:"helpi",en:"help"},{pa:"trati",en:"try"},{pa:"buski",en:"search"},{pa:"trovi",en:"find"},{pa:"eleki",en:"choose"}],
-  verbs8:[{pa:"komensi",en:"start"},{pa:"fini",en:"finish"},{pa:"resti",en:"stay/wait"},{pa:"kumi",en:"stop"},{pa:"dureli",en:"continue"},{pa:"kambi",en:"change"},{pa:"movi",en:"move"},{pa:"volvi",en:"return"},{pa:"kovi",en:"hide"}],
-  adj1:[{pa:"bela",en:"beautiful"},{pa:"granda",en:"big"},{pa:"malgranda",en:"small"},{pa:"alta",en:"tall/high"},{pa:"malalta",en:"short/low"},{pa:"longa",en:"long"},{pa:"larga",en:"wide"}],
-  adj2:[{pa:"rapida",en:"fast"},{pa:"malrapida",en:"slow"},{pa:"forta",en:"strong"},{pa:"dura",en:"hard"},{pa:"maldura",en:"soft"},{pa:"fasila",en:"easy"},{pa:"malfasila",en:"difficult"}],
-  adj3:[{pa:"nuva",en:"new"},{pa:"malnuva",en:"old"},{pa:"pura",en:"clean"},{pa:"malpura",en:"dirty"},{pa:"friga",en:"cold"},{pa:"malfriga",en:"hot"},{pa:"agwa",en:"wet"},{pa:"seka",en:"dry"}],
-  adj4:[{pa:"felisa",en:"happy"},{pa:"malfelisa",en:"sad"},{pa:"tranka",en:"calm"},{pa:"nerva",en:"nervous"},{pa:"brava",en:"brave"},{pa:"kleva",en:"smart"},{pa:"rida",en:"funny"},{pa:"grava",en:"important"},{pa:"todabona",en:"perfect"}],
-  nature1:[{pa:"suno",en:"sun"},{pa:"luno",en:"moon"},{pa:"stelo",en:"star"},{pa:"nebo",en:"sky"},{pa:"venaro",en:"wind"},{pa:"pluvo",en:"rain"},{pa:"malnebo",en:"storm"}],
-  nature2:[{pa:"arbo",en:"tree"},{pa:"floro",en:"flower"},{pa:"terfo",en:"grass"},{pa:"foro",en:"forest"},{pa:"roko",en:"rock"},{pa:"tero",en:"ground"},{pa:"aro",en:"air"}],
-  nature3:[{pa:"agwo",en:"water"},{pa:"rivo",en:"river"},{pa:"lago",en:"lake"},{pa:"maro",en:"sea"},{pa:"monto",en:"mountain"},{pa:"playo",en:"beach"},{pa:"selo",en:"ice"}],
-  places:[{pa:"urbo",en:"city"},{pa:"vilo",en:"village"},{pa:"strado",en:"street"},{pa:"parko",en:"park"},{pa:"skolo",en:"school"},{pa:"hospito",en:"hospital"},{pa:"ofiso",en:"office"},{pa:"tendo",en:"store"},{pa:"merko",en:"market"}],
-  body1:[{pa:"korpo",en:"body"},{pa:"krano",en:"head"},{pa:"faso",en:"face"},{pa:"oklo",en:"eye"},{pa:"naso",en:"nose"},{pa:"buko",en:"mouth"},{pa:"orelo",en:"ear"}],
-  body2:[{pa:"mano",en:"hand"},{pa:"fingo",en:"finger"},{pa:"brako",en:"arm"},{pa:"gambo",en:"leg"},{pa:"kiko",en:"foot"},{pa:"kolo",en:"neck"},{pa:"koro",en:"heart"},{pa:"nuro",en:"brain"}],
-  health:[{pa:"sana",en:"healthy"},{pa:"malsana",en:"sick"},{pa:"dola",en:"painful"},{pa:"doli",en:"hurt"},{pa:"febro",en:"fever"},{pa:"wundo",en:"wound"},{pa:"mediko",en:"medicine"},{pa:"doktio",en:"doctor"},{pa:"nursio",en:"nurse"}],
-  preps1:[{pa:"en",en:"in"},{pa:"ad",en:"to/at"},{pa:"sur",en:"on/about"},{pa:"sub",en:"under"},{pa:"kon",en:"with"},{pa:"sen",en:"without"}],
-  preps2:[{pa:"for",en:"for"},{pa:"de",en:"of"},{pa:"inter",en:"between"},{pa:"serka",en:"next to/near"},{pa:"far",en:"far"},{pa:"tru",en:"through"},{pa:"malen",en:"out"}],
-  conjunctions:[{pa:"i",en:"and"},{pa:"ili",en:"or"},{pa:"ma",en:"but"},{pa:"si",en:"if"},{pa:"forke",en:"because"},{pa:"sina",en:"unless"},{pa:"durel",en:"during/while"},{pa:"intera",en:"until"}],
-  time1:[{pa:"oro",en:"hour/time"},{pa:"orido",en:"minute"},{pa:"oridido",en:"second"},{pa:"oyo",en:"today"},{pa:"fuyo",en:"tomorrow"},{pa:"payo",en:"yesterday"},{pa:"nokto",en:"night"}],
-  time2:[{pa:"matino",en:"morning"},{pa:"spero",en:"evening"},{pa:"semano",en:"week"},{pa:"luno",en:"month"},{pa:"ano",en:"year"},{pa:"sesono",en:"season"}],
-  days:[{pa:"unayo",en:"Sunday"},{pa:"duayo",en:"Monday"},{pa:"triayo",en:"Tuesday"},{pa:"kwarayo",en:"Wednesday"},{pa:"kinayo",en:"Thursday"},{pa:"sesayo",en:"Friday"},{pa:"sepayo",en:"Saturday"}],
-  seasons:[{pa:"printemo",en:"spring"},{pa:"somero",en:"summer"},{pa:"autuno",en:"autumn"},{pa:"hivero",en:"winter"},{pa:"nebofelo",en:"weather"},{pa:"suna",en:"sunny"},{pa:"pluvi",en:"raining"}],
-  transport:[{pa:"karo",en:"car"},{pa:"buso",en:"bus"},{pa:"tramo",en:"train"},{pa:"aviono",en:"airplane"},{pa:"boto",en:"boat"},{pa:"vapo",en:"ship"},{pa:"biklo",en:"bicycle"},{pa:"moto",en:"motorcycle"}],
-  travel:[{pa:"kari",en:"drive"},{pa:"foli",en:"fly"},{pa:"marsi",en:"walk"},{pa:"movi",en:"move"},{pa:"mapo",en:"map"},{pa:"topo",en:"place"},{pa:"mondo",en:"world"},{pa:"kasi",en:"reside/live"}],
-  feelings1:[{pa:"feliso",en:"happiness"},{pa:"malfeliso",en:"sadness"},{pa:"amo",en:"love"},{pa:"malbravo",en:"fear"},{pa:"malami",en:"hate"},{pa:"aspo",en:"hope"},{pa:"malaspo",en:"despair"}],
-  feelings2:[{pa:"dorma",en:"sleepy"},{pa:"onesta",en:"honest"},{pa:"matura",en:"mature"},{pa:"sola",en:"alone"},{pa:"lista",en:"ready"},{pa:"dena",en:"rich"},{pa:"maldena",en:"poor"}],
-  personality:[{pa:"amabla",en:"kind"},{pa:"malamabla",en:"cruel"},{pa:"kora",en:"careful"},{pa:"malkora",en:"careless"},{pa:"helpa",en:"helpful"},{pa:"malhelpa",en:"unhelpful"},{pa:"vera",en:"true"},{pa:"malvera",en:"false"}],
-  mal1:[{pa:"malfilo",en:"enemy",note:"mal+filo(friend)"},{pa:"malgranda",en:"small",note:"mal+granda(big)"},{pa:"malfelisa",en:"sad",note:"mal+felisa(happy)"},{pa:"malbela",en:"ugly",note:"mal+bela(beautiful)"},{pa:"malfriga",en:"hot",note:"mal+friga(cold)"},{pa:"malnuva",en:"old",note:"mal+nuva(new)"}],
-  mal2:[{pa:"malpura",en:"dirty",note:"mal+pura(clean)"},{pa:"malkrei",en:"destroy",note:"mal+krei(create)"},{pa:"malveni",en:"leave",note:"mal+veni(come)"},{pa:"malkredi",en:"doubt",note:"mal+kredi(believe)"},{pa:"malgardi",en:"let go",note:"mal+gardi(hold)"},{pa:"maldoni",en:"take",note:"mal+doni(give)"}],
-  tense1:[{pa:"me vidi",en:"I see",note:"Present"},{pa:"me pa vidi",en:"I saw",note:"Past: pa+verb"},{pa:"me fu vidi",en:"I will see",note:"Future: fu+verb"},{pa:"me pa nutri",en:"I ate",note:"Past"},{pa:"me fu iri",en:"I will go",note:"Future"},{pa:"yu pa labori",en:"you worked",note:"Past"}],
-  tense2:[{pa:"los pa veni",en:"they came",note:"Past"},{pa:"nos fu ludi",en:"we will play",note:"Future"},{pa:"lu pa kanti",en:"she sang",note:"Past"},{pa:"le fu plumi",en:"he will write",note:"Future"},{pa:"me pa dormi",en:"I slept",note:"Past"},{pa:"yu fu lerni",en:"you will learn",note:"Future"}],
-  compound1:[{pa:"panotendo",en:"bakery",note:"pano+tendo"},{pa:"libotendo",en:"bookstore",note:"libo+tendo"},{pa:"karnotendo",en:"meat store",note:"karno+tendo"},{pa:"frukotendo",en:"fruit store",note:"fruko+tendo"},{pa:"interligo",en:"internet",note:"inter+ligo"},{pa:"kompoludo",en:"videogame",note:"kompo+ludo"}],
-  compound2:[{pa:"ropopuro",en:"washing machine",note:"ropo+puro"},{pa:"dentopuro",en:"toothbrush",note:"dento+puro"},{pa:"felifaso",en:"smile",note:"feli+faso"},{pa:"felifasi",en:"to smile",note:"feli+fasi"},{pa:"marsimoro",en:"zombie",note:"marsi+moro"},{pa:"morahumo",en:"ghost",note:"mora+humo"},{pa:"debifaro",en:"rule",note:"debi+faro(should-do)"},{pa:"nedifaro",en:"law",note:"nedi+faro(need-do)"}],
-  reprefix:[{pa:"relegi",en:"reread",note:"re+legi(read)"},{pa:"refari",en:"redo",note:"re+fari(do)"},{pa:"replumi",en:"rewrite",note:"re+plumi(write)"},{pa:"rekomensi",en:"restart",note:"re+komensi(start)"},{pa:"rebigi",en:"rebuild",note:"re+bigi(build)"},{pa:"repensi",en:"remember",note:"re+pensi(think)"}],
-  relclauses:[{pa:["La","humo","ke","labori","am","esi","men","filo"],en:"The person who works here is my friend"},{pa:["La","libo","ke","me","pa","legi","esi","bela"],en:"The book that I read is beautiful"},{pa:["Me","vidi","la","gato","ke","dormi","sur","la","sedo"],en:"I see the cat that sleeps on the chair"},{pa:["La","femo","ke","kanti","esi","men","matro"],en:"The woman who sings is my mother"},{pa:["La","kaso","ke","nos","kasi","en","esi","granda"],en:"The house that we live in is big"}],
-  verbchain:[{pa:["Me","voli","komensi","labori"],en:"I want to start working"},{pa:["Yu","debi","trati","lerni"],en:"You should try to learn"},{pa:["Nos","pa","komensi","kusi","nutro"],en:"We started cooking food"},{pa:["Los","fu","povi","veni","helpi"],en:"They will be able to come help"},{pa:["Me","voli","iri","nadi"],en:"I want to go swim"},{pa:["Lu","pa","trati","kanti","kanto"],en:"She tried to sing a song"}],
-  diminutive:[{pa:"pipido",en:"puppy",note:"pipo→pipido"},{pa:"fogido",en:"flame",note:"fogo→fogido"},{pa:"fogidido",en:"spark",note:"fogido→fogidido"},{pa:"orido",en:"minute",note:"oro→orido"},{pa:"oridido",en:"second",note:"orido→oridido"},{pa:"selido",en:"ice cube",note:"selo→selido"},{pa:"wundido",en:"scrape",note:"wundo→wundido"}],
-  daily1:[{pa:"waki",en:"wake"},{pa:"dormi",en:"sleep"},{pa:"nutri",en:"eat"},{pa:"agwi",en:"drink"},{pa:"ropi",en:"get dressed"},{pa:"bani",en:"use the bathroom"},{pa:"marsi",en:"walk"}],
-  daily2:[{pa:"puri",en:"clean"},{pa:"kusi",en:"cook"},{pa:"labori",en:"work"},{pa:"studi",en:"study"},{pa:"legi",en:"read"},{pa:"okli",en:"look/watch"},{pa:"mesagi",en:"text/message"}],
-  communication:[{pa:"parli",en:"speak"},{pa:"oreli",en:"hear"},{pa:"mesago",en:"message"},{pa:"kanto",en:"song"},{pa:"musiko",en:"music"},{pa:"filmo",en:"movie"},{pa:"filmido",en:"show"},{pa:"sporto",en:"sport"},{pa:"ludo",en:"game"},{pa:"teramaludo",en:"jiu jitsu",note:"tero+maludo"},{pa:"teramaludi",en:"do jiu jitsu",note:"tero+maludi"}],
-  abstract1:[{pa:"ideo",en:"idea"},{pa:"dilemo",en:"problem"},{pa:"solvo",en:"solution"},{pa:"eleko",en:"choice"},{pa:"penso",en:"thought"},{pa:"repenso",en:"memory"},{pa:"sabo",en:"knowledge"}],
-  abstract2:[{pa:"vivo",en:"life"},{pa:"moro",en:"death"},{pa:"vero",en:"truth"},{pa:"malvero",en:"lie"},{pa:"libero",en:"freedom"},{pa:"paso",en:"peace"},{pa:"malpaso",en:"war"},{pa:"perigo",en:"danger"}],
-  advanced1:[{pa:"propi",en:"own"},{pa:"propo",en:"property"},{pa:"wadi",en:"promise"},{pa:"wado",en:"promise (noun)"},{pa:"permi",en:"allow"},{pa:"refusi",en:"refuse"},{pa:"preferi",en:"prefer"},{pa:"adapti",en:"fit"},{pa:"todaboni",en:"perfect (verb)"}],
-  adverbs:[{pa:"sempra",en:"always"},{pa:"ofta",en:"often"},{pa:"malofta",en:"rarely"},{pa:"ya",en:"already"},{pa:"anka",en:"still"},{pa:"balda",en:"soon"},{pa:"tarda",en:"late"},{pa:"preska",en:"almost"},{pa:"nuna",en:"now"}],
-  quantities:[{pa:"tota",en:"all"},{pa:"suma",en:"some"},{pa:"manga",en:"many"},{pa:"malmanga",en:"few"},{pa:"ada",en:"more"},{pa:"mina",en:"less"},{pa:"lagoma",en:"enough"},{pa:"tro",en:"too much"},{pa:"sola",en:"only"}],
-  s1:[{pa:["Me","esi","bona"],en:"I am good"},{pa:["La","pipo","esi","granda"],en:"The dog is big"},{pa:["Me","vidi","la","gato"],en:"I see the cat"},{pa:["Yu","havi","nuva","libo"],en:"You have a new book"},{pa:["Nos","nutri","pano"],en:"We eat bread"},{pa:["La","kaso","esi","bela"],en:"The house is beautiful"},{pa:["Me","voli","agwo"],en:"I want water"}],
-  s2:[{pa:["La","femo","marsi","rapida"],en:"The woman walks quickly"},{pa:["Ki","yu","sabi"],en:"Do you know?"},{pa:["Me","ami","men","familo"],en:"I love my family"},{pa:["Kwe","la","gato","dormi"],en:"Where does the cat sleep?"},{pa:["La","kido","ludi","en","la","parko"],en:"The child plays in the park"},{pa:["Me","pa","deni","nuva","telo"],en:"I bought a new phone"}],
-  s3:[{pa:["La","granda","elefano","agwi","agwo"],en:"The big elephant drinks water"},{pa:["Men","matro","kusi","nutro","en","la","kuso"],en:"My mother cooks food in the kitchen"},{pa:["Los","pa","marsi","ad","la","parko"],en:"They walked to the park"},{pa:["Ki","yu","povi","helpi","me"],en:"Can you help me?"},{pa:["Me","fu","legi","nuva","libo"],en:"I will read a new book"},{pa:["La","malgranda","gato","dormi","sur","la","sedo"],en:"The small cat sleeps on the chair"}],
-  s4:[{pa:["Nos","voli","iri","ad","la","playo"],en:"We want to go to the beach"},{pa:["Kwe","yu","kasi"],en:"Where do you live?"},{pa:["Men","patro","labori","en","la","ofiso"],en:"My father works in the office"},{pa:["La","nebofelo","esi","bela","oyo"],en:"The weather is beautiful today"},{pa:["Me","na","kapi","kwi","yu","esi","malfelisa"],en:"I don't understand why you are sad"},{pa:["Me","pa","trovi","men","klavo","sub","la","tablo"],en:"I found my key under the table"}],
-  s5:[{pa:["Los","fu","kanti","kantos","en","la","parko"],en:"They will sing songs in the park"},{pa:["Me","voli","deni","nuva","sapos"],en:"I want to buy new shoes"},{pa:["La","femo","kon","la","reda","ropo","esi","men","filo"],en:"The woman with the red clothes is my friend"},{pa:["La","skolio","pa","skoli","nos","sur","la","stelos"],en:"The teacher taught us about the stars"},{pa:["Yu","debi","nutri","malfrukos","for","yun","sano"],en:"You should eat vegetables for your health"}],
-  s6:[{pa:["Me","povi","vidi","la","stelos","en","la","nebo"],en:"I can see the stars in the sky"},{pa:["La","rapida","kavalo","kuri","tru","la","foro"],en:"The fast horse runs through the forest"},{pa:["Nos","pa","agwi","malfriga","teo","en","la","spero"],en:"We drank hot tea in the evening"},{pa:["Kwa","yu","pensi","sur","lan","libo"],en:"What do you think about this book?"},{pa:["Men","frato","i","men","yoyo","ludi","en","la","parko"],en:"My brother and my sister play in the park"}],
+  // ── UNIT 1: BASICS ─────────────────────────────────────────────
+  greetings1:[{pa:"grati",en:"please / thank you"},{pa:"bona",en:"good"},{pa:"da",en:"yes"},{pa:"na",en:"no"},{pa:"skusa",en:"sorry"},{pa:"am",en:"here"},{pa:"faram",en:"there"}],
+  pronouns1:[{pa:"me",en:"I / me"},{pa:"yu",en:"you"},{pa:"le",en:"he"},{pa:"lu",en:"she"},{pa:"lo",en:"it / they (neutral)"},{pa:"nos",en:"we / us"},{pa:"los",en:"they (mixed group)"},{pa:"les",en:"they (male group)"},{pa:"lus",en:"they (female group)"},{pa:"yus",en:"you (plural)"}],
+  possessives:[{pa:"men",en:"my / mine"},{pa:"yun",en:"your / yours"},{pa:"len",en:"his"},{pa:"lun",en:"her"},{pa:"lon",en:"its"},{pa:"nosin",en:"our / ours"},{pa:"losin",en:"their (mixed)"},{pa:"lesin",en:"their (male group)"},{pa:"lusin",en:"their (female group)"},{pa:"yusin",en:"your / yours (plural)"}],
+  articles1:[{pa:"la",en:"the"},{pa:"lan",en:"this / these"},{pa:"farlan",en:"that / those"},{pa:"ke",en:"that / who / which"},{pa:"ki",en:"question particle"},{pa:"kwa",en:"what"},{pa:"kwo",en:"who"},{pa:"kwe",en:"where"},{pa:"kwen",en:"when"},{pa:"kwi",en:"why"}],
+  coreVerbs1:[{pa:"esi",en:"be / is / am"},{pa:"havi",en:"have"},{pa:"fari",en:"do / make"},{pa:"iri",en:"go"},{pa:"veni",en:"come"},{pa:"vidi",en:"see"},{pa:"sabi",en:"know"},{pa:"voli",en:"want"},{pa:"povi",en:"can"},{pa:"debi",en:"should"}],
+  numbers:[{pa:"nula",en:"zero"},{pa:"una",en:"one"},{pa:"dua",en:"two"},{pa:"tria",en:"three"},{pa:"kwara",en:"four"},{pa:"kina",en:"five"},{pa:"sesa",en:"six"},{pa:"sepa",en:"seven"},{pa:"okta",en:"eight"},{pa:"nova",en:"nine"},{pa:"deka",en:"ten"},{pa:"senta",en:"hundred"}],
+  people1:[{pa:"humo",en:"person"},{pa:"filo",en:"friend"},{pa:"familo",en:"family"},{pa:"kido",en:"child"},{pa:"viro",en:"man"},{pa:"femo",en:"woman"},{pa:"patro",en:"father"},{pa:"matro",en:"mother"},{pa:"frato",en:"brother"},{pa:"yoyo",en:"sister"}],
+  people2:[{pa:"asawo",en:"spouse"},{pa:"bebo",en:"baby"},{pa:"nufemo",en:"girl"},{pa:"nuviro",en:"boy",note:"nu+viro"},{pa:"doktio",en:"doctor"},{pa:"nursio",en:"nurse"},{pa:"skolia",en:"student",note:"skolo→skolia"},{pa:"skolio",en:"teacher"},{pa:"bigio",en:"builder"},{pa:"artio",en:"artist"}],
+  basicAdj:[{pa:"granda",en:"big"},{pa:"malgranda",en:"small"},{pa:"bela",en:"beautiful"},{pa:"bona",en:"good"},{pa:"nuva",en:"new"},{pa:"malnuva",en:"old"},{pa:"longa",en:"long"},{pa:"alta",en:"tall / high"},{pa:"rapida",en:"fast"},{pa:"malrapida",en:"slow"}],
+  colors1:[{pa:"reda",en:"red"},{pa:"blua",en:"blue"},{pa:"verda",en:"green"},{pa:"yela",en:"yellow"},{pa:"negra",en:"black"},{pa:"blanka",en:"white"},{pa:"orana",en:"orange"},{pa:"purpa",en:"purple"},{pa:"grisa",en:"gray"},{pa:"bruna",en:"brown"}],
+  basicVerbs2:[{pa:"nedi",en:"need"},{pa:"aspi",en:"hope"},{pa:"legi",en:"read"},{pa:"plumi",en:"write"},{pa:"parli",en:"speak"},{pa:"kapi",en:"understand"},{pa:"pensi",en:"think"},{pa:"kredi",en:"believe"},{pa:"lerni",en:"learn"},{pa:"studi",en:"study"}],
+  movement:[{pa:"kuri",en:"run"},{pa:"marsi",en:"walk"},{pa:"dormi",en:"sleep"},{pa:"sedi",en:"sit"},{pa:"stari",en:"stand"},{pa:"puli",en:"jump"},{pa:"nadi",en:"swim"},{pa:"foli",en:"fly"},{pa:"kari",en:"drive"},{pa:"movi",en:"move"}],
+  preps1:[{pa:"en",en:"in"},{pa:"ad",en:"to / at"},{pa:"sur",en:"on / about"},{pa:"sub",en:"under"},{pa:"kon",en:"with"},{pa:"sen",en:"without"},{pa:"for",en:"for"},{pa:"de",en:"of"},{pa:"inter",en:"between"},{pa:"serka",en:"next to / near"}],
+  conjunctions1:[{pa:"i",en:"and"},{pa:"ili",en:"or"},{pa:"ma",en:"but"},{pa:"si",en:"if"},{pa:"forke",en:"because"},{pa:"sina",en:"unless"},{pa:"durel",en:"during / while"},{pa:"intera",en:"until"},{pa:"ke",en:"that / who / which"},{pa:"for ke",en:"so that"}],
+  time1:[{pa:"oro",en:"hour / time"},{pa:"orido",en:"minute"},{pa:"oridido",en:"second"},{pa:"oyo",en:"today"},{pa:"fuyo",en:"tomorrow"},{pa:"payo",en:"yesterday"},{pa:"nokto",en:"night"},{pa:"matino",en:"morning"},{pa:"spero",en:"evening"},{pa:"nuna",en:"now"}],
+  days:[{pa:"unayo",en:"Sunday"},{pa:"duayo",en:"Monday"},{pa:"triayo",en:"Tuesday"},{pa:"kwarayo",en:"Wednesday"},{pa:"kinayo",en:"Thursday"},{pa:"sesayo",en:"Friday"},{pa:"sepayo",en:"Saturday"},{pa:"semano",en:"week"},{pa:"luno",en:"month"},{pa:"ano",en:"year"}],
+  // L19 = Unit 1 sentence checkpoint (s1)
+  s1:[
+    {pa:["Me","esi","bona"],en:"I am good"},
+    {pa:["Yu","havi","nuva","libo"],en:"You have a new book"},
+    {pa:["La","pipo","esi","granda"],en:"The dog is big"},
+    {pa:["Nos","nutri","pano"],en:"We eat bread"},
+    {pa:["Me","vidi","la","gato"],en:"I see the cat"},
+    {pa:["La","kaso","esi","bela"],en:"The house is beautiful"},
+    {pa:["Me","voli","agwo"],en:"I want water"},
+    {pa:["Ki","yu","sabi"],en:"Do you know?"},
+    {pa:["Kwe","la","gato","dormi"],en:"Where does the cat sleep?"},
+    {pa:["Le","esi","men","filo"],en:"He is my friend"},
+    {pa:["Nos","iri","ad","la","parko"],en:"We go to the park"},
+    {pa:["Me","nedi","helpo"],en:"I need help"},
+  ],
+
+  // ── UNIT 2: DAILY LIFE ─────────────────────────────────────────
+  food1:[{pa:"nutro",en:"food"},{pa:"pano",en:"bread"},{pa:"karno",en:"meat"},{pa:"fruko",en:"fruit"},{pa:"malfruko",en:"vegetable"},{pa:"ovo",en:"egg"},{pa:"agwo",en:"water"},{pa:"lakto",en:"milk"},{pa:"kafo",en:"coffee"},{pa:"teo",en:"tea"}],
+  food2:[{pa:"salo",en:"salt"},{pa:"sukro",en:"sugar"},{pa:"spiso",en:"spice"},{pa:"oleo",en:"oil"},{pa:"gusto",en:"flavor"},{pa:"nutri",en:"eat"},{pa:"agwi",en:"drink"},{pa:"gusti",en:"taste"},{pa:"kusi",en:"cook"},{pa:"deni",en:"buy"}],
+  kitchen:[{pa:"kuso",en:"kitchen"},{pa:"kuto",en:"knife"},{pa:"garfo",en:"fork"},{pa:"spuno",en:"spoon"},{pa:"plato",en:"plate"},{pa:"taso",en:"cup"},{pa:"frigo",en:"refrigerator"},{pa:"pano",en:"bread"},{pa:"fuli",en:"fill"},{pa:"fula",en:"full"}],
+  home1:[{pa:"kaso",en:"house"},{pa:"domo",en:"room"},{pa:"porto",en:"door"},{pa:"feno",en:"window"},{pa:"muro",en:"wall"},{pa:"piso",en:"floor"},{pa:"teko",en:"ceiling"},{pa:"bano",en:"bathroom"},{pa:"abri",en:"open"},{pa:"kasi",en:"reside / live"}],
+  home2:[{pa:"tablo",en:"table"},{pa:"sedo",en:"chair"},{pa:"kamo",en:"bed"},{pa:"sofo",en:"sofa"},{pa:"levo",en:"elevator"},{pa:"marsos",en:"stairs"},{pa:"duramalabro",en:"lock",note:"dura+malabro"},{pa:"fogido",en:"flame",note:"fogo+ido"},{pa:"fogo",en:"fire"},{pa:"puri",en:"clean"}],
+  objects1:[{pa:"libo",en:"book"},{pa:"telo",en:"phone"},{pa:"kompo",en:"computer"},{pa:"plumo",en:"pen"},{pa:"papelo",en:"paper"},{pa:"karto",en:"card"},{pa:"klavo",en:"key"},{pa:"foto",en:"picture / photo"},{pa:"mesago",en:"message"},{pa:"mesagi",en:"text / message"}],
+  objects2:[{pa:"deno",en:"money"},{pa:"sako",en:"bag"},{pa:"ropo",en:"clothes"},{pa:"sapo",en:"shoe"},{pa:"goro",en:"hat"},{pa:"tolo",en:"towel"},{pa:"dono",en:"gift"},{pa:"doni",en:"give"},{pa:"maldoni",en:"take"},{pa:"vendi",en:"sell"}],
+  body1:[{pa:"korpo",en:"body"},{pa:"krano",en:"head"},{pa:"faso",en:"face"},{pa:"oklo",en:"eye"},{pa:"naso",en:"nose"},{pa:"buko",en:"mouth"},{pa:"orelo",en:"ear"},{pa:"haro",en:"hair"},{pa:"dento",en:"tooth"},{pa:"fingo",en:"finger"}],
+  body2:[{pa:"mano",en:"hand"},{pa:"brako",en:"arm"},{pa:"gambo",en:"leg"},{pa:"kiko",en:"foot"},{pa:"kolo",en:"neck"},{pa:"koro",en:"heart"},{pa:"nuro",en:"brain"},{pa:"hemo",en:"blood"},{pa:"doli",en:"hurt"},{pa:"dola",en:"painful"}],
+  health:[{pa:"sana",en:"healthy"},{pa:"malsana",en:"sick"},{pa:"febro",en:"fever"},{pa:"wundo",en:"wound"},{pa:"mediko",en:"medicine"},{pa:"hospito",en:"hospital"},{pa:"fiki",en:"repair"},{pa:"helpi",en:"help"},{pa:"helpo",en:"help"},{pa:"sabi",en:"know"}],
+  daily1:[{pa:"waki",en:"wake"},{pa:"ropi",en:"get dressed"},{pa:"bani",en:"use the bathroom"},{pa:"okli",en:"look / watch"},{pa:"oreli",en:"hear"},{pa:"labori",en:"work"},{pa:"komensi",en:"start"},{pa:"fini",en:"finish"},{pa:"resti",en:"stay / wait"},{pa:"kumi",en:"stop"}],
+  daily2:[{pa:"ludi",en:"play"},{pa:"dansi",en:"dance"},{pa:"kanti",en:"sing"},{pa:"fabuli",en:"narrate"},{pa:"arti",en:"make art"},{pa:"arto",en:"art"},{pa:"musiko",en:"music"},{pa:"sporto",en:"sport"},{pa:"ludo",en:"game"},{pa:"fili",en:"enjoy / like"}],
+  // L32 = Unit 2 sentence checkpoint (s2)
+  s2:[
+    {pa:["La","femo","marsi","rapida"],en:"The woman walks quickly"},
+    {pa:["Ki","yu","povi","helpi","me"],en:"Can you help me?"},
+    {pa:["Me","ami","men","familo"],en:"I love my family"},
+    {pa:["La","kido","ludi","en","la","parko"],en:"The child plays in the park"},
+    {pa:["Me","pa","deni","nuva","telo"],en:"I bought a new phone"},
+    {pa:["Men","matro","kusi","nutro","en","la","kuso"],en:"My mother cooks food in the kitchen"},
+    {pa:["Me","nedi","mediko"],en:"I need medicine"},
+    {pa:["La","kamo","esi","maldura"],en:"The bed is soft"},
+    {pa:["Me","voli","agwi","kafo"],en:"I want to drink coffee"},
+    {pa:["Lu","plumi","mesago","ad","men","filo"],en:"She writes a message to my friend"},
+    {pa:["Nos","pa","nutri","en","la","spero"],en:"We ate in the evening"},
+    {pa:["Ki","yu","havi","deno"],en:"Do you have money?"},
+  ],
+
+  // ── UNIT 3: THE WORLD AROUND YOU ───────────────────────────────
+  nature1:[{pa:"suno",en:"sun"},{pa:"luno",en:"moon"},{pa:"stelo",en:"star"},{pa:"nebo",en:"sky"},{pa:"venaro",en:"wind"},{pa:"pluvo",en:"rain"},{pa:"malnebo",en:"storm"},{pa:"suna",en:"sunny"},{pa:"pluvi",en:"raining"},{pa:"aro",en:"air"}],
+  nature2:[{pa:"arbo",en:"tree"},{pa:"floro",en:"flower"},{pa:"terfo",en:"grass"},{pa:"foro",en:"forest"},{pa:"roko",en:"rock"},{pa:"tero",en:"ground"},{pa:"rivo",en:"river"},{pa:"lago",en:"lake"},{pa:"maro",en:"sea"},{pa:"monto",en:"mountain"}],
+  nature3:[{pa:"playo",en:"beach"},{pa:"selo",en:"ice"},{pa:"selido",en:"ice cube",note:"selo+ido"},{pa:"nebofelo",en:"weather",note:"nebo+felo"},{pa:"printemo",en:"spring"},{pa:"somero",en:"summer"},{pa:"autuno",en:"autumn"},{pa:"hivero",en:"winter"},{pa:"sesono",en:"season"},{pa:"mondo",en:"world"}],
+  animals1:[{pa:"pipo",en:"dog"},{pa:"gato",en:"cat"},{pa:"pisko",en:"fish"},{pa:"waso",en:"bird"},{pa:"kavalo",en:"horse"},{pa:"bovo",en:"cow"},{pa:"galo",en:"chicken"},{pa:"lano",en:"sheep"},{pa:"kapro",en:"goat"},{pa:"pordo",en:"pig"}],
+  animals2:[{pa:"elefano",en:"elephant"},{pa:"simo",en:"monkey"},{pa:"kamelo",en:"camel"},{pa:"serpo",en:"snake"},{pa:"insekto",en:"insect"},{pa:"arano",en:"spider"},{pa:"abelo",en:"bee"},{pa:"formiko",en:"ant"},{pa:"musko",en:"fly"},{pa:"pipido",en:"puppy",note:"pipo+ido"}],
+  places:[{pa:"urbo",en:"city"},{pa:"vilo",en:"village"},{pa:"strado",en:"street"},{pa:"parko",en:"park"},{pa:"skolo",en:"school"},{pa:"hospito",en:"hospital"},{pa:"ofiso",en:"office"},{pa:"tendo",en:"store"},{pa:"merko",en:"market"},{pa:"bigo",en:"building"}],
+  transport:[{pa:"karo",en:"car"},{pa:"buso",en:"bus"},{pa:"tramo",en:"train"},{pa:"aviono",en:"airplane"},{pa:"boto",en:"boat"},{pa:"vapo",en:"ship"},{pa:"biklo",en:"bicycle"},{pa:"moto",en:"motorcycle"},{pa:"mapo",en:"map"},{pa:"topo",en:"place"}],
+  time2:[{pa:"semano",en:"week"},{pa:"luno",en:"month"},{pa:"ano",en:"year"},{pa:"sesono",en:"season"},{pa:"balda",en:"soon"},{pa:"tarda",en:"late"},{pa:"preska",en:"almost"},{pa:"sempra",en:"always"},{pa:"ofta",en:"often"},{pa:"malofta",en:"rarely"}],
+  // L47 = Unit 3 sentence checkpoint (s3)
+  s3:[
+    {pa:["La","granda","elefano","agwi","agwo"],en:"The big elephant drinks water"},
+    {pa:["Los","pa","marsi","ad","la","parko"],en:"They walked to the park"},
+    {pa:["Me","fu","legi","nuva","libo"],en:"I will read a new book"},
+    {pa:["La","malgranda","gato","dormi","sur","la","sedo"],en:"The small cat sleeps on the chair"},
+    {pa:["La","nebofelo","esi","bona","oyo"],en:"The weather is beautiful today"},
+    {pa:["Ki","yu","voli","iri","ad","la","playo"],en:"Do you want to go to the beach?"},
+    {pa:["La","venaro","esi","forta","oyo"],en:"The wind is strong today"},
+    {pa:["Me","kasi","en","la","urbo"],en:"I live in the city"},
+    {pa:["Nos","pa","vidi","la","stelos","en","la","nebo"],en:"We saw the stars in the sky"},
+    {pa:["Me","marsi","tru","la","foro"],en:"I walk through the forest"},
+    {pa:["La","tramo","esi","rapida"],en:"The train is fast"},
+    {pa:["Kwe","esi","la","merko"],en:"Where is the market?"},
+    {pa:["Me","iri","ad","la","skolo","duayo"],en:"I go to school on Monday"},
+  ],
+
+  // ── UNIT 4: MIND & EXPRESSION ──────────────────────────────────
+  feelings1:[{pa:"feliso",en:"happiness"},{pa:"malfeliso",en:"sadness"},{pa:"amo",en:"love"},{pa:"malbravo",en:"fear"},{pa:"malami",en:"hate"},{pa:"aspo",en:"hope"},{pa:"malaspo",en:"despair"},{pa:"felisa",en:"happy"},{pa:"malfelisa",en:"sad"},{pa:"ami",en:"love"}],
+  feelings2:[{pa:"tranka",en:"calm"},{pa:"nerva",en:"nervous"},{pa:"brava",en:"brave"},{pa:"sola",en:"alone"},{pa:"lista",en:"ready"},{pa:"dena",en:"rich"},{pa:"maldena",en:"poor"},{pa:"dorma",en:"sleepy"},{pa:"feli",en:"feel"},{pa:"felo",en:"feeling"}],
+  personality:[{pa:"amabla",en:"kind"},{pa:"malamabla",en:"cruel"},{pa:"kora",en:"careful"},{pa:"malkora",en:"careless"},{pa:"helpa",en:"helpful"},{pa:"malhelpa",en:"unhelpful"},{pa:"vera",en:"true"},{pa:"malvera",en:"false"},{pa:"onesta",en:"honest"},{pa:"kleva",en:"smart"}],
+  abstract1:[{pa:"ideo",en:"idea"},{pa:"dilemo",en:"problem"},{pa:"solvo",en:"solution"},{pa:"eleko",en:"choice"},{pa:"penso",en:"thought"},{pa:"repenso",en:"memory"},{pa:"sabo",en:"knowledge"},{pa:"espliko",en:"explanation"},{pa:"vero",en:"truth"},{pa:"malvero",en:"lie"}],
+  abstract2:[{pa:"vivo",en:"life"},{pa:"moro",en:"death"},{pa:"libero",en:"freedom"},{pa:"paso",en:"peace"},{pa:"malpaso",en:"war"},{pa:"perigo",en:"danger"},{pa:"grava",en:"important"},{pa:"eso",en:"thing"},{pa:"hapo",en:"occurrence"},{pa:"feto",en:"feature / trait"}],
+  adverbs:[{pa:"ya",en:"already"},{pa:"anka",en:"still"},{pa:"nuna",en:"now"},{pa:"preska",en:"almost"},{pa:"ada",en:"more"},{pa:"mina",en:"less"},{pa:"tro",en:"too much"},{pa:"lagoma",en:"enough"},{pa:"alsotu",en:"also"},{pa:"avanta",en:"forward"}],
+  quantities:[{pa:"tota",en:"all"},{pa:"suma",en:"some"},{pa:"manga",en:"many"},{pa:"malmanga",en:"few"},{pa:"sola",en:"only"},{pa:"dipa",en:"deep"},{pa:"larga",en:"wide"},{pa:"fula",en:"full"},{pa:"matura",en:"mature"},{pa:"rida",en:"funny"}],
+  communication:[{pa:"parli",en:"speak"},{pa:"oreli",en:"hear"},{pa:"kanto",en:"song"},{pa:"filmo",en:"movie"},{pa:"filmido",en:"show",note:"filmo+ido"},{pa:"fabulo",en:"story"},{pa:"kiparlo",en:"question",note:"ki+parlo"},{pa:"kiparli",en:"ask",note:"ki+parli"},{pa:"espliki",en:"explain"},{pa:"voliparli",en:"mean"}],
+  // L64 = Unit 4 sentence checkpoint (s4)
+  s4:[
+    {pa:["Nos","voli","iri","ad","la","playo"],en:"We want to go to the beach"},
+    {pa:["Me","na","kapi","kwi","yu","esi","malfelisa"],en:"I don't understand why you are sad"},
+    {pa:["La","femo","kon","la","reda","ropo","esi","men","filo"],en:"The woman with the red clothes is my friend"},
+    {pa:["Me","pa","trovi","men","klavo","sub","la","tablo"],en:"I found my key under the table"},
+    {pa:["Yu","debi","nutri","malfrukos","for","yun","sano"],en:"You should eat vegetables for your health"},
+    {pa:["Me","pensi","ke","lo","esi","bona","ideo"],en:"I think that it is a good idea"},
+    {pa:["La","paso","esi","grava","for","tota","humos"],en:"Peace is important for all people"},
+    {pa:["Men","filo","esi","amabla","i","kleva"],en:"My friend is kind and smart"},
+    {pa:["Kwa","yu","feli","sur","lan","hapo"],en:"How do you feel about this event?"},
+    {pa:["Me","voli","kapi","yun","espliko"],en:"I want to understand your explanation"},
+    {pa:["Los","pa","trati","trovi","la","solvo"],en:"They tried to find the solution"},
+    {pa:["La","libero","esi","grava","for","tota","humos"],en:"Freedom is important for all people"},
+    {pa:["Me","sabi","ke","yu","esi","brava"],en:"I know that you are brave"},
+  ],
+
+  // ── UNIT 5: GRAMMAR MASTERY ────────────────────────────────────
+  tense1:[{pa:"me vidi",en:"I see (present)"},{pa:"me pa vidi",en:"I saw (past)"},{pa:"me fu vidi",en:"I will see (future)"},{pa:"yu pa labori",en:"you worked (past)"},{pa:"nos fu ludi",en:"we will play (future)"},{pa:"lu pa kanti",en:"she sang (past)"},{pa:"le fu plumi",en:"he will write (future)"},{pa:"me pa dormi",en:"I slept (past)"},{pa:"yu fu lerni",en:"you will learn (future)"},{pa:"los pa veni",en:"they came (past)"}],
+  tense2:[{pa:"me pa nutri",en:"I ate"},{pa:"me fu iri",en:"I will go"},{pa:"nos pa marsi",en:"we walked"},{pa:"lu fu kasi",en:"she will live"},{pa:"le pa sabi",en:"he knew"},{pa:"los fu povi",en:"they will be able"},{pa:"me pa pensi",en:"I thought"},{pa:"yu fu vidi",en:"you will see"},{pa:"nos pa havi",en:"we had"},{pa:"lo fu esi",en:"it will be"}],
+  mal1:[{pa:"malfilo",en:"enemy",note:"mal+filo(friend)"},{pa:"malgranda",en:"small",note:"mal+granda(big)"},{pa:"malfelisa",en:"sad",note:"mal+felisa(happy)"},{pa:"malbela",en:"ugly",note:"mal+bela(beautiful)"},{pa:"malfriga",en:"hot",note:"mal+friga(cold)"},{pa:"malnuva",en:"old",note:"mal+nuva(new)"},{pa:"malpura",en:"dirty",note:"mal+pura(clean)"},{pa:"malkrei",en:"destroy",note:"mal+krei(create)"},{pa:"malveni",en:"leave",note:"mal+veni(come)"},{pa:"malbravo",en:"fear",note:"mal+bravo(bravery)"}],
+  mal2:[{pa:"malkredi",en:"doubt",note:"mal+kredi(believe)"},{pa:"malgardi",en:"let go",note:"mal+gardi(hold)"},{pa:"maldoni",en:"take",note:"mal+doni(give)"},{pa:"malami",en:"hate",note:"mal+ami(love)"},{pa:"malsana",en:"sick",note:"mal+sana(healthy)"},{pa:"malaspo",en:"despair",note:"mal+aspo(hope)"},{pa:"malpaso",en:"war",note:"mal+paso(peace)"},{pa:"malhelpa",en:"unhelpful",note:"mal+helpa(helpful)"},{pa:"malkora",en:"careless",note:"mal+kora(careful)"},{pa:"malamabla",en:"cruel",note:"mal+amabla(kind)"}],
+  compound1:[{pa:"panotendo",en:"bakery",note:"pano+tendo"},{pa:"libotendo",en:"bookstore",note:"libo+tendo"},{pa:"karnotendo",en:"meat store",note:"karno+tendo"},{pa:"frukotendo",en:"fruit store",note:"fruko+tendo"},{pa:"interligo",en:"internet",note:"inter+ligo"},{pa:"kompoludo",en:"videogame",note:"kompo+ludo"},{pa:"ropopuro",en:"washing machine",note:"ropo+puro"},{pa:"dentopuro",en:"toothbrush",note:"dento+puro"},{pa:"debifaro",en:"rule",note:"debi+faro"},{pa:"nedifaro",en:"law",note:"nedi+faro"}],
+  compound2:[{pa:"felifaso",en:"smile",note:"feli+faso"},{pa:"felifasi",en:"to smile",note:"feli+fasi"},{pa:"marsimoro",en:"zombie",note:"marsi+moro"},{pa:"morahumo",en:"ghost",note:"mora+humo"},{pa:"nebofelo",en:"weather",note:"nebo+felo"},{pa:"nurovidi",en:"imagine",note:"nuro+vidi"},{pa:"bonapova",en:"lucky",note:"bona+pova"},{pa:"Bonaparte",en:"luck",note:"bona+povo"},{pa:"kompoludo",en:"video game",note:"kompo+ludo"},{pa:"todabona",en:"perfect",note:"toda+bona"}],
+  reprefix:[{pa:"relegi",en:"reread",note:"re+legi"},{pa:"refari",en:"redo",note:"re+fari"},{pa:"replumi",en:"rewrite",note:"re+plumi"},{pa:"rekomensi",en:"restart",note:"re+komensi"},{pa:"rebigi",en:"rebuild",note:"re+bigi"},{pa:"repensi",en:"remember",note:"re+pensi"},{pa:"repenso",en:"memory",note:"re+penso"},{pa:"rekrei",en:"recreate",note:"re+krei"},{pa:"resendi",en:"resend",note:"re+sendi"},{pa:"revolvi",en:"return (repeatedly)",note:"re+volvi"}],
+  diminutive:[{pa:"pipido",en:"puppy",note:"pipo+ido"},{pa:"fogido",en:"flame",note:"fogo+ido"},{pa:"fogidido",en:"spark",note:"fogido+ido"},{pa:"orido",en:"minute",note:"oro+ido"},{pa:"oridido",en:"second",note:"orido+ido"},{pa:"selido",en:"ice cube",note:"selo+ido"},{pa:"wundido",en:"scrape",note:"wundo+ido"},{pa:"filmido",en:"TV show",note:"filmo+ido"},{pa:"libido",en:"booklet",note:"libo+ido"},{pa:"domido",en:"small room",note:"domo+ido"}],
+  verbchain:[
+    {pa:["Me","voli","komensi","labori"],en:"I want to start working"},
+    {pa:["Yu","debi","trati","lerni"],en:"You should try to learn"},
+    {pa:["Nos","pa","komensi","kusi","nutro"],en:"We started cooking food"},
+    {pa:["Los","fu","povi","veni","helpi"],en:"They will be able to come help"},
+    {pa:["Me","voli","iri","nadi"],en:"I want to go swim"},
+    {pa:["Lu","pa","trati","kanti","kanto"],en:"She tried to sing a song"},
+    {pa:["Le","debi","komensi","studi"],en:"He should start studying"},
+    {pa:["Nos","fu","povi","marsi","ad","la","parko"],en:"We will be able to walk to the park"},
+    {pa:["Me","voli","lerni","parli","bona"],en:"I want to learn to speak well"},
+    {pa:["Yu","povi","dureli","labori","kon","nos"],en:"You can continue working with us"},
+    {pa:["La","kido","pa","komensi","legi","libos"],en:"The child started reading books"},
+    {pa:["Los","debi","trati","kapi","lan","debifaro"],en:"They should try to understand this rule"},
+  ],
+  relclauses:[
+    {pa:["La","humo","ke","labori","am","esi","men","filo"],en:"The person who works here is my friend"},
+    {pa:["La","libo","ke","me","pa","legi","esi","bela"],en:"The book that I read is beautiful"},
+    {pa:["Me","vidi","la","gato","ke","dormi","sur","la","sedo"],en:"I see the cat that sleeps on the chair"},
+    {pa:["La","femo","ke","kanti","esi","men","matro"],en:"The woman who sings is my mother"},
+    {pa:["La","kaso","ke","nos","kasi","en","esi","granda"],en:"The house that we live in is big"},
+    {pa:["La","skolio","ke","skoli","nos","esi","kleva"],en:"The teacher who teaches us is smart"},
+    {pa:["Me","havi","filo","ke","kasi","en","la","urbo"],en:"I have a friend who lives in the city"},
+    {pa:["La","nutro","ke","lu","kusi","esi","bona"],en:"The food that she cooks is good"},
+    {pa:["Los","pa","trovi","la","klavo","ke","me","pa","maldoni"],en:"They found the key that I had taken"},
+    {pa:["La","pipo","ke","kuri","en","la","parko","esi","men","pipo"],en:"The dog that runs in the park is my dog"},
+    {pa:["Me","voli","legi","la","libo","ke","yu","pa","doni","me"],en:"I want to read the book that you gave me"},
+    {pa:["La","kido","ke","puli","esi","brava"],en:"The child who jumps is brave"},
+  ],
+  // L79 = Unit 5 sentence checkpoint (s5)
+  s5:[
+    {pa:["Los","fu","kanti","kantos","en","la","parko"],en:"They will sing songs in the park"},
+    {pa:["La","skolio","pa","skoli","nos","sur","la","stelos"],en:"The teacher taught us about the stars"},
+    {pa:["Me","pa","trovi","la","humo","ke","pa","doni","me","la","libo"],en:"I found the person who gave me the book"},
+    {pa:["Yu","debi","nutri","malfrukos","for","yun","sano"],en:"You should eat vegetables for your health"},
+    {pa:["Nos","pa","komensi","studi","la","nedifaro"],en:"We started studying the law"},
+    {pa:["La","kido","ke","ludi","en","la","parko","esi","men","yoyo"],en:"The child who plays in the park is my sister"},
+    {pa:["Me","voli","kapi","kwi","lo","esi","malfasila"],en:"I want to understand why it is difficult"},
+    {pa:["Los","pa","trati","rebigi","la","malnuva","kaso"],en:"They tried to rebuild the old house"},
+    {pa:["Lu","fu","relegi","la","libos","ke","le","pa","sendi"],en:"She will reread the books that he sent"},
+    {pa:["Me","debi","sempra","trati","lerni","nuva","asos"],en:"I should always try to learn new things"},
+    {pa:["La","femo","ke","parli","bona","esi","men","skolio"],en:"The woman who speaks well is my teacher"},
+    {pa:["Nos","fu","kambi","la","debifaro","si","lo","esi","malfasila"],en:"We will change the rule if it is difficult"},
+    {pa:["Ki","yu","pa","repensi","la","wado","ke","yu","pa","fari"],en:"Do you remember the promise that you made?"},
+  ],
+
+  // ── UNIT 6: FLUENCY ────────────────────────────────────────────
+  advanced1:[{pa:"propi",en:"own"},{pa:"propo",en:"property"},{pa:"wadi",en:"promise"},{pa:"wado",en:"promise (noun)"},{pa:"permi",en:"allow"},{pa:"refusi",en:"refuse"},{pa:"preferi",en:"prefer"},{pa:"adapti",en:"fit"},{pa:"todaboni",en:"perfect (verb)"},{pa:"elori",en:"feel the urge to squeeze something cute"}],
+  advanced2:[{pa:"avanti",en:"move forward"},{pa:"avanto",en:"advantage"},{pa:"dipli",en:"use"},{pa:"dipla",en:"used"},{pa:"evali",en:"test"},{pa:"evalo",en:"exam / test"},{pa:"kambi",en:"change"},{pa:"kovi",en:"hide"},{pa:"dureli",en:"continue / endure"},{pa:"volvi",en:"return"}],
+  advanced3:[{pa:"buski",en:"search"},{pa:"trovi",en:"find"},{pa:"eleki",en:"choose"},{pa:"sendi",en:"send"},{pa:"malsendi",en:"receive"},{pa:"kargi",en:"carry"},{pa:"gardi",en:"keep / hold"},{pa:"krei",en:"create"},{pa:"bigi",en:"build"},{pa:"alti",en:"raise / increase"}],
+  advanced4:[{pa:"bravi",en:"act bravely"},{pa:"bravo",en:"bravery"},{pa:"feliboni",en:"comfort (verb)"},{pa:"felibono",en:"comfort (noun)"},{pa:"fogidi",en:"burn"},{pa:"fogida",en:"burnt"},{pa:"denti",en:"bite"},{pa:"hemi",en:"bleed"},{pa:"fiki",en:"repair"},{pa:"asawi",en:"marry"}],
+  // Review lessons 85-89 draw from prior vocab dynamically
+  // Paragraph lessons 90-97 use para data
+  // Free-text 98-99 use freetext data
+  // L100 final test uses full pool
+
+  // Paragraph data for lessons 90–97
+  para1:[
+    {en:"I wake up in the morning. I eat bread and drink coffee. Then I go to work.",
+     sentences:[
+       {pa:["Me","waki","en","la","matino"],en:"I wake up in the morning"},
+       {pa:["Me","nutri","pano","i","agwi","kafo"],en:"I eat bread and drink coffee"},
+       {pa:["Pos","me","iri","ad","labori"],en:"Then I go to work"},
+     ]},
+    {en:"My friend lives in the city. She has a big house. We often eat together in the evening.",
+     sentences:[
+       {pa:["Men","filo","kasi","en","la","urbo"],en:"My friend lives in the city"},
+       {pa:["Lu","havi","granda","kaso"],en:"She has a big house"},
+       {pa:["Nos","ofta","nutri","kon","nos","en","la","spero"],en:"We often eat together in the evening"},
+     ]},
+  ],
+  para2:[
+    {en:"The child who plays in the park is my sister. She is brave and smart. I am proud of her.",
+     sentences:[
+       {pa:["La","kido","ke","ludi","en","la","parko","esi","men","yoyo"],en:"The child who plays in the park is my sister"},
+       {pa:["Lu","esi","brava","i","kleva"],en:"She is brave and smart"},
+       {pa:["Me","esi","felisa","for","lu"],en:"I am happy for her"},
+     ]},
+    {en:"Yesterday I found the key under the table. I had been searching for a long time. Now I am happy.",
+     sentences:[
+       {pa:["Payo","me","pa","trovi","la","klavo","sub","la","tablo"],en:"Yesterday I found the key under the table"},
+       {pa:["Me","pa","buski","for","longa","oro"],en:"I had been searching for a long time"},
+       {pa:["Nuna","me","esi","felisa"],en:"Now I am happy"},
+     ]},
+  ],
+  para3:[
+    {en:"We started to rebuild the old house. It was difficult but we continued. Now the house is beautiful and big.",
+     sentences:[
+       {pa:["Nos","pa","komensi","rebigi","la","malnuva","kaso"],en:"We started to rebuild the old house"},
+       {pa:["Lo","pa","esi","malfasila","ma","nos","pa","dureli"],en:"It was difficult but we continued"},
+       {pa:["Nuna","la","kaso","esi","bela","i","granda"],en:"Now the house is beautiful and big"},
+     ]},
+    {en:"She wants to learn to speak Parli Aspo. She studies every day. She will be able to speak well soon.",
+     sentences:[
+       {pa:["Lu","voli","lerni","parli","Parli","Aspo"],en:"She wants to learn to speak Parli Aspo"},
+       {pa:["Lu","studi","tota","oyo"],en:"She studies every day"},
+       {pa:["Lu","fu","povi","parli","bona","balda"],en:"She will be able to speak well soon"},
+     ]},
+  ],
+  para4:[
+    {en:"The teacher who teaches us is kind and smart. She explains things clearly. We always try to understand.",
+     sentences:[
+       {pa:["La","skolio","ke","skoli","nos","esi","amabla","i","kleva"],en:"The teacher who teaches us is kind and smart"},
+       {pa:["Lu","espliki","asos","bona"],en:"She explains things well"},
+       {pa:["Nos","sempra","trati","kapi"],en:"We always try to understand"},
+     ]},
+    {en:"Freedom is important for all people. Without freedom there is no peace. We must fight for it.",
+     sentences:[
+       {pa:["Libero","esi","grava","for","tota","humos"],en:"Freedom is important for all people"},
+       {pa:["Sen","libero","paso","na","esi"],en:"Without freedom there is no peace"},
+       {pa:["Nos","debi","trati","for","lo"],en:"We must try for it"},
+     ]},
+  ],
+  para5:[
+    {en:"My brother started working in a bookstore. He sells books that people love. He is happy because he loves books.",
+     sentences:[
+       {pa:["Men","frato","pa","komensi","labori","en","libotendo"],en:"My brother started working in a bookstore"},
+       {pa:["Le","vendi","libos","ke","humos","ami"],en:"He sells books that people love"},
+       {pa:["Le","esi","felisa","forke","le","ami","libos"],en:"He is happy because he loves books"},
+     ]},
+    {en:"Yesterday the weather was bad. There was a strong wind and it was raining. We stayed inside the house.",
+     sentences:[
+       {pa:["Payo","la","nebofelo","pa","esi","malbona"],en:"Yesterday the weather was bad"},
+       {pa:["Lo","pa","esi","forta","venaro","i","lo","pa","pluvi"],en:"There was a strong wind and it was raining"},
+       {pa:["Nos","pa","resti","en","la","kaso"],en:"We stayed inside the house"},
+     ]},
+  ],
+  para6:[
+    {en:"The doctor who works at the hospital is my father's friend. He is always careful and helpful. Many people trust him.",
+     sentences:[
+       {pa:["La","doktio","ke","labori","en","la","hospito","esi","men","patro","filo"],en:"The doctor who works at the hospital is my father's friend"},
+       {pa:["Le","esi","sempra","kora","i","helpa"],en:"He is always careful and helpful"},
+       {pa:["Manga","humos","kredi","le"],en:"Many people believe in him"},
+     ]},
+    {en:"We tried to rebuild the bridge but it was too difficult. We needed more people and more money. We will try again.",
+     sentences:[
+       {pa:["Nos","pa","trati","rebigi","la","bigo","ma","lo","pa","esi","tro","malfasila"],en:"We tried to rebuild the building but it was too difficult"},
+       {pa:["Nos","pa","nedi","ada","humos","i","ada","deno"],en:"We needed more people and more money"},
+       {pa:["Nos","fu","trati","otra","hapa"],en:"We will try again"},
+     ]},
+  ],
+  para7:[
+    {en:"Hope is the most important thing in life. Without hope people cannot move forward. I always hope for a better world.",
+     sentences:[
+       {pa:["Aspo","esi","la","grava","eso","en","vivo"],en:"Hope is the important thing in life"},
+       {pa:["Sen","aspo","humos","na","povi","avanti"],en:"Without hope people cannot move forward"},
+       {pa:["Me","sempra","aspi","for","bona","mondo"],en:"I always hope for a good world"},
+     ]},
+    {en:"My sister chose to study medicine. She wants to become a doctor who helps everyone. I believe she will succeed.",
+     sentences:[
+       {pa:["Men","yoyo","pa","eleki","studi","mediko"],en:"My sister chose to study medicine"},
+       {pa:["Lu","voli","esi","doktio","ke","helpi","tota","humos"],en:"She wants to be a doctor who helps everyone"},
+       {pa:["Me","kredi","ke","lu","fu","bona"],en:"I believe that she will succeed"},
+     ]},
+  ],
+  para8:[
+    {en:"The law says that all people are equal. Without justice there is no real freedom. We must protect these rules together.",
+     sentences:[
+       {pa:["La","nedifaro","parli","ke","tota","humos","esi","bona"],en:"The law says that all people are equal"},
+       {pa:["Sen","paso","libero","na","esi","vera"],en:"Without peace freedom is not real"},
+       {pa:["Nos","debi","gardi","lan","debifaro","kon","nos"],en:"We must keep these rules together"},
+     ]},
+    {en:"I remember the day my father taught me to swim. We were at the beach and the sun was bright. I was afraid but I tried.",
+     sentences:[
+       {pa:["Me","repensi","la","oyo","men","patro","pa","skoli","me","nadi"],en:"I remember the day my father taught me to swim"},
+       {pa:["Nos","pa","esi","en","la","playo","i","la","suno","pa","esi","luma"],en:"We were at the beach and the sun was bright"},
+       {pa:["Me","pa","esi","malbravo","ma","me","pa","trati"],en:"I was afraid but I tried"},
+     ]},
+  ],
+
+  // Free-text lessons 98-99 use a prompt + acceptable answers system
+  // These are handled in generateExercises with type "freetext"
+
+  // Final test pool - references all vocab keys for random draw
 };
 
+// ═══════════════════════════════════════════════════════════════
+// LESSON SENTENCES (mini sentences for non-sentence lessons)
+// ═══════════════════════════════════════════════════════════════
+const LS={
+  greetings1:[],
+  pronouns1:[{en:"I am here",pa:["Me","esi","am"]},{en:"She is my friend",pa:["Lu","esi","men","filo"]},{en:"We go together",pa:["Nos","iri","kon","nos"]}],
+  possessives:[{en:"This is my book",pa:["Lan","esi","men","libo"]},{en:"Your house is big",pa:["Yun","kaso","esi","granda"]},{en:"Her cat is small",pa:["Lun","gato","esi","malgranda"]}],
+  articles1:[{en:"Who is there?",pa:["Kwo","esi","faram"]},{en:"What do you want?",pa:["Kwa","yu","voli"]},{en:"Where is the house?",pa:["Kwe","esi","la","kaso"]}],
+  coreVerbs1:[{en:"I want to go",pa:["Me","voli","iri"]},{en:"We can help",pa:["Nos","povi","helpi"]},{en:"You should learn",pa:["Yu","debi","lerni"]}],
+  numbers:[{en:"I have two books",pa:["Me","havi","dua","libos"]},{en:"We see three dogs",pa:["Nos","vidi","tria","pipos"]},{en:"There are ten stars",pa:["Faram","esi","deka","stelos"]}],
+  people1:[{en:"The child plays",pa:["La","kido","ludi"]},{en:"The woman reads a book",pa:["La","femo","legi","libo"]},{en:"The man works",pa:["La","viro","labori"]}],
+  people2:[{en:"My mother cooks",pa:["Men","matro","kusi"]},{en:"My father works",pa:["Men","patro","labori"]},{en:"My sister sings",pa:["Men","yoyo","kanti"]}],
+  basicAdj:[{en:"The house is big",pa:["La","kaso","esi","granda"]},{en:"The dog is small",pa:["La","pipo","esi","malgranda"]},{en:"The book is new",pa:["La","libo","esi","nuva"]}],
+  colors1:[{en:"The house is red",pa:["La","kaso","esi","reda"]},{en:"The book is blue",pa:["La","libo","esi","blua"]},{en:"The flower is yellow",pa:["La","floro","esi","yela"]}],
+  basicVerbs2:[{en:"I want to learn",pa:["Me","voli","lerni"]},{en:"She thinks about it",pa:["Lu","pensi","sur","lo"]},{en:"We need to speak",pa:["Nos","nedi","parli"]}],
+  movement:[{en:"The dog runs fast",pa:["La","pipo","kuri","rapida"]},{en:"The child jumps",pa:["La","kido","puli"]},{en:"I swim in the sea",pa:["Me","nadi","en","la","maro"]}],
+  preps1:[{en:"The cat is in the house",pa:["La","gato","esi","en","la","kaso"]},{en:"The book is on the table",pa:["La","libo","esi","sur","la","tablo"]},{en:"I go to the park",pa:["Me","iri","ad","la","parko"]}],
+  conjunctions1:[{en:"I eat and drink",pa:["Me","nutri","i","agwi"]},{en:"I work but I am tired",pa:["Me","labori","ma","me","esi","dorma"]},{en:"I go if you go",pa:["Me","iri","si","yu","iri"]}],
+  time1:[{en:"I eat today",pa:["Me","nutri","oyo"]},{en:"I will go tomorrow",pa:["Me","fu","iri","fuyo"]},{en:"I worked yesterday",pa:["Me","pa","labori","payo"]}],
+  days:[{en:"Today is Monday",pa:["Oyo","esi","duayo"]},{en:"I rest on Saturday",pa:["Me","resti","sur","sepayo"]},{en:"We work on Friday",pa:["Nos","labori","sur","sesayo"]}],
+  food1:[{en:"I eat bread",pa:["Me","nutri","pano"]},{en:"We eat fruit",pa:["Nos","nutri","fruko"]},{en:"She drinks milk",pa:["Lu","agwi","lakto"]}],
+  food2:[{en:"I drink water",pa:["Me","agwi","agwo"]},{en:"She drinks coffee",pa:["Lu","agwi","kafo"]},{en:"The food is good",pa:["La","nutro","esi","bona"]}],
+  kitchen:[{en:"I cook in the kitchen",pa:["Me","kusi","en","la","kuso"]},{en:"I need a plate",pa:["Me","nedi","plato"]},{en:"The knife is on the table",pa:["La","kuto","esi","sur","la","tablo"]}],
+  home1:[{en:"The house is beautiful",pa:["La","kaso","esi","bela"]},{en:"The door is open",pa:["La","porto","esi","abra"]},{en:"I live in the house",pa:["Me","kasi","en","la","kaso"]}],
+  home2:[{en:"I sit on the chair",pa:["Me","sedi","sur","la","sedo"]},{en:"The bed is soft",pa:["La","kamo","esi","maldura"]},{en:"We clean the room",pa:["Nos","puri","la","domo"]}],
+  objects1:[{en:"I read a book",pa:["Me","legi","libo"]},{en:"I have a new phone",pa:["Me","havi","nuva","telo"]},{en:"She writes with a pen",pa:["Lu","plumi","kon","plumo"]}],
+  objects2:[{en:"I need money",pa:["Me","nedi","deno"]},{en:"The shoes are new",pa:["La","sapos","esi","nuva"]},{en:"He gives a gift",pa:["Le","doni","dono"]}],
+  body1:[{en:"My head hurts",pa:["Men","krano","doli"]},{en:"The face is beautiful",pa:["La","faso","esi","bela"]},{en:"I see with my eyes",pa:["Me","vidi","kon","men","oklos"]}],
+  body2:[{en:"I write with my hand",pa:["Me","plumi","kon","men","mano"]},{en:"The heart is strong",pa:["La","koro","esi","forta"]},{en:"My arm hurts",pa:["Men","brako","doli"]}],
+  health:[{en:"I am sick",pa:["Me","esi","malsana"]},{en:"I need medicine",pa:["Me","nedi","mediko"]},{en:"The doctor helps",pa:["La","doktio","helpi"]}],
+  daily1:[{en:"I wake in the morning",pa:["Me","waki","en","la","matino"]},{en:"I start to work",pa:["Me","komensi","labori"]},{en:"I stop working",pa:["Me","kumi","labori"]}],
+  daily2:[{en:"She sings a song",pa:["Lu","kanti","kanto"]},{en:"We play a game",pa:["Nos","ludi","ludo"]},{en:"I like music",pa:["Me","fili","musiko"]}],
+  nature1:[{en:"The sun is bright",pa:["La","suno","esi","luma"]},{en:"The wind is strong",pa:["La","venaro","esi","forta"]},{en:"It is raining today",pa:["Lo","pluvi","oyo"]}],
+  nature2:[{en:"The flower is beautiful",pa:["La","floro","esi","bela"]},{en:"I walk in the forest",pa:["Me","marsi","en","la","foro"]},{en:"The tree is tall",pa:["La","arbo","esi","alta"]}],
+  nature3:[{en:"The river is long",pa:["La","rivo","esi","longa"]},{en:"The mountain is tall",pa:["La","monto","esi","alta"]},{en:"We swim in the sea",pa:["Nos","nadi","en","la","maro"]}],
+  animals1:[{en:"The dog runs",pa:["La","pipo","kuri"]},{en:"I see the cat",pa:["Me","vidi","la","gato"]},{en:"The bird sings",pa:["La","waso","kanti"]}],
+  animals2:[{en:"The elephant is big",pa:["La","elefano","esi","granda"]},{en:"The monkey plays",pa:["La","simo","ludi"]},{en:"The bee is small",pa:["La","abelo","esi","malgranda"]}],
+  places:[{en:"I go to the city",pa:["Me","iri","ad","la","urbo"]},{en:"The school is big",pa:["La","skolo","esi","granda"]},{en:"The market is near",pa:["La","merko","esi","serka"]}],
+  transport:[{en:"I drive a car",pa:["Me","kari","karo"]},{en:"The airplane flies",pa:["La","aviono","foli"]},{en:"We take the bus",pa:["Nos","iri","kon","la","buso"]}],
+  time2:[{en:"I work in the morning",pa:["Me","labori","en","la","matino"]},{en:"We eat in the evening",pa:["Nos","nutri","en","la","spero"]},{en:"I sleep soon",pa:["Me","dormi","balda"]}],
+  feelings1:[{en:"Love is beautiful",pa:["Amo","esi","bela"]},{en:"I hope for peace",pa:["Me","aspi","paso"]},{en:"She feels happy",pa:["Lu","feli","felisa"]}],
+  feelings2:[{en:"I am sleepy",pa:["Me","esi","dorma"]},{en:"She is ready",pa:["Lu","esi","lista"]},{en:"He is calm",pa:["Le","esi","tranka"]}],
+  personality:[{en:"She is kind",pa:["Lu","esi","amabla"]},{en:"They are helpful",pa:["Los","esi","helpa"]},{en:"He is honest",pa:["Le","esi","onesta"]}],
+  abstract1:[{en:"I have an idea",pa:["Me","havi","ideo"]},{en:"I find a solution",pa:["Me","trovi","solvo"]},{en:"She explains the truth",pa:["Lu","espliki","la","vero"]}],
+  abstract2:[{en:"Life is beautiful",pa:["Vivo","esi","bela"]},{en:"Freedom is important",pa:["Libero","esi","grava"]},{en:"There is danger here",pa:["Faram","esi","perigo","am"]}],
+  adverbs:[{en:"I always work",pa:["Me","sempra","labori"]},{en:"He arrives soon",pa:["Le","veni","balda"]},{en:"She is almost ready",pa:["Lu","esi","preska","lista"]}],
+  quantities:[{en:"I have many books",pa:["Me","havi","manga","libos"]},{en:"That is enough",pa:["Farlan","esi","lagoma"]},{en:"There are few people",pa:["Faram","esi","malmanga","humos"]}],
+  communication:[{en:"I listen to music",pa:["Me","oreli","musiko"]},{en:"We watch a movie",pa:["Nos","okli","filmo"]},{en:"She asks a question",pa:["Lu","kiparli","kiparlo"]}],
+  tense1:[{en:"I saw the dog",pa:["Me","pa","vidi","la","pipo"]},{en:"I will eat bread",pa:["Me","fu","nutri","pano"]},{en:"She sang yesterday",pa:["Lu","pa","kanti","payo"]}],
+  tense2:[{en:"They came home",pa:["Los","pa","veni","ad","kaso"]},{en:"She will sing tomorrow",pa:["Lu","fu","kanti","fuyo"]},{en:"We will go to the beach",pa:["Nos","fu","iri","ad","la","playo"]}],
+  mal1:[{en:"The old house is ugly",pa:["La","malnuva","kaso","esi","malbela"]},{en:"It is hot today",pa:["Lo","esi","malfriga","oyo"]},{en:"My enemy left",pa:["Men","malfilo","pa","malveni"]}],
+  mal2:[{en:"I take the book",pa:["Me","maldoni","la","libo"]},{en:"She leaves the room",pa:["Lu","malveni","la","domo"]},{en:"He doubts the story",pa:["Le","malkredi","la","fabulo"]}],
+  compound1:[{en:"I go to the bakery",pa:["Me","iri","ad","la","panotendo"]},{en:"I play videogames",pa:["Me","ludi","kompoludo"]},{en:"I use the internet",pa:["Me","dipli","interligo"]}],
+  compound2:[{en:"She smiles at me",pa:["Lu","felifasi","ad","me"]},{en:"I see a ghost",pa:["Me","vidi","morahumo"]},{en:"The weather is perfect",pa:["La","nebofelo","esi","todabona"]}],
+  reprefix:[{en:"I reread the book",pa:["Me","relegi","la","libo"]},{en:"She rewrites the message",pa:["Lu","replumi","la","mesago"]},{en:"We restart the game",pa:["Nos","rekomensi","la","ludo"]}],
+  diminutive:[{en:"The puppy is small",pa:["La","pipido","esi","malgranda"]},{en:"I see a flame",pa:["Me","vidi","fogido"]},{en:"The spark is bright",pa:["La","fogidido","esi","luma"]}],
+  advanced1:[{en:"I own a house",pa:["Me","propi","kaso"]},{en:"I promise to help",pa:["Me","wadi","helpi"]},{en:"She refuses to go",pa:["Lu","refusi","iri"]}],
+  advanced2:[{en:"I move forward",pa:["Me","avanti"]},{en:"She hides the key",pa:["Lu","kovi","la","klavo"]},{en:"We continue together",pa:["Nos","dureli","kon","nos"]}],
+  advanced3:[{en:"I search for the truth",pa:["Me","buski","la","vero"]},{en:"She sends a message",pa:["Lu","sendi","mesago"]},{en:"We create a new rule",pa:["Nos","krei","nuva","debifaro"]}],
+  advanced4:[{en:"He acts bravely",pa:["Le","bravi"]},{en:"She comforts the child",pa:["Lu","feliboni","la","kido"]},{en:"They marry today",pa:["Los","asawi","oyo"]}],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// FREE TEXT PROMPTS (lessons 98-99)
+// ═══════════════════════════════════════════════════════════════
+const FREETEXT_PROMPTS = [
+  {prompt:"Describe your morning routine in at least 3 Parli Aspo sentences.",hint:"Use: waki, nutri, agwi, iri, labori, matino"},
+  {prompt:"Write 3 sentences about your family in Parli Aspo.",hint:"Use: patro, matro, frato, yoyo, ami, havi, esi"},
+  {prompt:"Describe the weather today in Parli Aspo. Write at least 2 sentences.",hint:"Use: nebofelo, suna, pluvi, venaro, malfriga, friga"},
+  {prompt:"Write 2-3 sentences about something you want to do in the future.",hint:"Use: fu, voli, trati, iri, lerni, povi"},
+  {prompt:"Describe a place you love. Write at least 3 sentences in Parli Aspo.",hint:"Use: bela, granda, esi, havi, kasi, amor, en"},
+  {prompt:"Tell a short story in Parli Aspo about someone who found something they lost.",hint:"Use: trovi, buski, pa, repensi, klavo, libo"},
+  {prompt:"Write 3 sentences about what you believe is important in life.",hint:"Use: kredi, grava, vivo, libero, paso, amo"},
+  {prompt:"Describe a memory from your childhood in Parli Aspo.",hint:"Use: pa, repensi, kido, ludi, ami, felisa"},
+];
+
+// ═══════════════════════════════════════════════════════════════
+// LESSON DEFINITIONS — 100 LESSONS
+// ═══════════════════════════════════════════════════════════════
+const UNITS = [
+  {name:"Unit 1 — Basics", start:0},
+  {name:"Unit 2 — Daily Life", start:20},
+  {name:"Unit 3 — The World Around You", start:35},
+  {name:"Unit 4 — Mind & Expression", start:48},
+  {name:"Unit 5 — Grammar Mastery", start:64},
+  {name:"Unit 6 — Fluency", start:79},
+];
+
+const LESSONS=[
+  // ── UNIT 1: BASICS (L1–L19, checkpoint L20) ──────────────────
+  {id:"greetings1",title:"Greetings & Basics",desc:"Yes, no, good, sorry, here",icon:"👋",vocabKey:"greetings1",xp:15,unit:0},
+  {id:"pronouns1",title:"Pronouns",desc:"I, you, he, she, it, we, they",icon:"👤",vocabKey:"pronouns1",xp:15,unit:0},
+  {id:"possessives",title:"Possessives",desc:"My, your, his, her, our",icon:"🫂",vocabKey:"possessives",xp:15,unit:0},
+  {id:"articles1",title:"Articles & Questions",desc:"The, this, what, who, where",icon:"📌",vocabKey:"articles1",xp:18,unit:0},
+  {id:"coreVerbs1",title:"Core Verbs 1",desc:"Be, have, do, go, want, can",icon:"⚡",vocabKey:"coreVerbs1",xp:18,unit:0},
+  {id:"numbers",title:"Numbers",desc:"Zero through one hundred",icon:"🔢",vocabKey:"numbers",xp:15,unit:0},
+  {id:"people1",title:"People 1",desc:"Family: father, mother, child",icon:"👨‍👩‍👧",vocabKey:"people1",xp:15,unit:0},
+  {id:"people2",title:"People 2",desc:"Roles: doctor, teacher, artist",icon:"👩‍⚕️",vocabKey:"people2",xp:15,unit:0},
+  {id:"basicAdj",title:"Basic Adjectives",desc:"Big, small, new, tall, fast",icon:"📏",vocabKey:"basicAdj",xp:18,unit:0},
+  {id:"colors1",title:"Colors",desc:"Red, blue, green, black, white",icon:"🎨",vocabKey:"colors1",xp:15,unit:0},
+  {id:"basicVerbs2",title:"Core Verbs 2",desc:"Need, read, write, think, learn",icon:"💭",vocabKey:"basicVerbs2",xp:18,unit:0},
+  {id:"movement",title:"Movement Verbs",desc:"Run, walk, swim, fly, drive",icon:"🏃",vocabKey:"movement",xp:18,unit:0},
+  {id:"preps1",title:"Prepositions",desc:"In, to, on, with, for, near",icon:"📍",vocabKey:"preps1",xp:18,unit:0},
+  {id:"conjunctions1",title:"Conjunctions",desc:"And, or, but, if, because",icon:"🔗",vocabKey:"conjunctions1",xp:18,unit:0},
+  {id:"time1",title:"Time 1",desc:"Hour, today, morning, now",icon:"🕐",vocabKey:"time1",xp:18,unit:0},
+  {id:"days",title:"Days & Calendar",desc:"Days of the week, months",icon:"📆",vocabKey:"days",xp:18,unit:0},
+  {id:"people1b",title:"People Review",desc:"Review: people & family vocab",icon:"🔁",vocabKey:"people1",xp:15,unit:0,isReview:true},
+  {id:"coreVerbs1b",title:"Verbs Review",desc:"Review: core verbs & movement",icon:"🔁",vocabKey:"coreVerbs1",xp:15,unit:0,isReview:true},
+  {id:"preps1b",title:"Grammar Words Review",desc:"Review: prepositions & conjunctions",icon:"🔁",vocabKey:"preps1",xp:15,unit:0,isReview:true},
+  {id:"s1",title:"Checkpoint 1",desc:"Unit 1 sentence challenge",icon:"🏆",vocabKey:"s1",xp:30,unit:0,isSentence:true},
+
+  // ── UNIT 2: DAILY LIFE (L21–L34, checkpoint L35) ─────────────
+  {id:"food1",title:"Food 1",desc:"Bread, meat, fruit, vegetables",icon:"🍎",vocabKey:"food1",xp:15,unit:1},
+  {id:"food2",title:"Food 2",desc:"Salt, sugar, eat, drink, taste",icon:"🧂",vocabKey:"food2",xp:15,unit:1},
+  {id:"kitchen",title:"Kitchen & Cooking",desc:"Kitchen, knife, plate, cook",icon:"🍳",vocabKey:"kitchen",xp:18,unit:1},
+  {id:"home1",title:"Home 1",desc:"House, room, door, window",icon:"🏠",vocabKey:"home1",xp:15,unit:1},
+  {id:"home2",title:"Home 2",desc:"Table, chair, bed, sofa",icon:"🛋️",vocabKey:"home2",xp:15,unit:1},
+  {id:"objects1",title:"Objects 1",desc:"Book, phone, pen, paper",icon:"📱",vocabKey:"objects1",xp:15,unit:1},
+  {id:"objects2",title:"Objects 2",desc:"Money, bag, clothes, shoes",icon:"👜",vocabKey:"objects2",xp:15,unit:1},
+  {id:"body1",title:"Body 1",desc:"Head, eyes, nose, mouth, ear",icon:"👤",vocabKey:"body1",xp:18,unit:1},
+  {id:"body2",title:"Body 2",desc:"Hand, arm, leg, heart, brain",icon:"🫀",vocabKey:"body2",xp:20,unit:1},
+  {id:"health",title:"Health",desc:"Sick, medicine, doctor, nurse",icon:"🏥",vocabKey:"health",xp:22,unit:1},
+  {id:"daily1",title:"Daily Routine 1",desc:"Wake, dress, start, stop",icon:"🌅",vocabKey:"daily1",xp:22,unit:1},
+  {id:"daily2",title:"Daily Routine 2",desc:"Play, dance, sing, enjoy",icon:"📖",vocabKey:"daily2",xp:22,unit:1},
+  {id:"food1b",title:"Food Review",desc:"Review: food & cooking vocab",icon:"🔁",vocabKey:"food1",xp:15,unit:1,isReview:true},
+  {id:"home1b",title:"Home Review",desc:"Review: home & objects vocab",icon:"🔁",vocabKey:"home1",xp:15,unit:1,isReview:true},
+  {id:"s2",title:"Checkpoint 2",desc:"Unit 2 sentence challenge",icon:"🏆",vocabKey:"s2",xp:35,unit:1,isSentence:true},
+
+  // ── UNIT 3: THE WORLD (L36–L47, checkpoint L48) ──────────────
+  {id:"nature1",title:"Sky & Weather",desc:"Sun, moon, rain, wind, storm",icon:"☀️",vocabKey:"nature1",xp:18,unit:2},
+  {id:"nature2",title:"Land & Plants",desc:"Tree, flower, forest, river",icon:"🌳",vocabKey:"nature2",xp:18,unit:2},
+  {id:"nature3",title:"Water & Seasons",desc:"Sea, beach, ice, spring, summer",icon:"🏔️",vocabKey:"nature3",xp:20,unit:2},
+  {id:"animals1",title:"Animals 1",desc:"Dog, cat, horse, cow, bird",icon:"🐾",vocabKey:"animals1",xp:15,unit:2},
+  {id:"animals2",title:"Animals 2",desc:"Elephant, snake, bee, puppy",icon:"🐘",vocabKey:"animals2",xp:15,unit:2},
+  {id:"places",title:"Places",desc:"City, school, hospital, store",icon:"🏙️",vocabKey:"places",xp:20,unit:2},
+  {id:"transport",title:"Transport & Travel",desc:"Car, bus, plane, boat, map",icon:"🚗",vocabKey:"transport",xp:20,unit:2},
+  {id:"time2",title:"Time 2 & Adverbs",desc:"Week, month, soon, often",icon:"📅",vocabKey:"time2",xp:18,unit:2},
+  {id:"nature1b",title:"Nature Review",desc:"Review: nature & weather vocab",icon:"🔁",vocabKey:"nature1",xp:15,unit:2,isReview:true},
+  {id:"places1b",title:"Places Review",desc:"Review: places & transport vocab",icon:"🔁",vocabKey:"places",xp:15,unit:2,isReview:true},
+  {id:"time1b",title:"Time Review",desc:"Review: time & calendar vocab",icon:"🔁",vocabKey:"time1",xp:15,unit:2,isReview:true},
+  {id:"animals1b",title:"Animals Review",desc:"Review: animals vocab",icon:"🔁",vocabKey:"animals1",xp:15,unit:2,isReview:true},
+  {id:"s3",title:"Checkpoint 3",desc:"Unit 3 sentence challenge",icon:"🏆",vocabKey:"s3",xp:40,unit:2,isSentence:true},
+
+  // ── UNIT 4: MIND & EXPRESSION (L49–L64, checkpoint L65) ──────
+  {id:"feelings1",title:"Emotions 1",desc:"Joy, sadness, love, fear, hope",icon:"💗",vocabKey:"feelings1",xp:22,unit:3},
+  {id:"feelings2",title:"Emotions 2",desc:"Calm, nervous, brave, sleepy",icon:"🎭",vocabKey:"feelings2",xp:22,unit:3},
+  {id:"personality",title:"Personality",desc:"Kind, careful, honest, smart",icon:"🪞",vocabKey:"personality",xp:22,unit:3},
+  {id:"abstract1",title:"Abstract 1",desc:"Idea, problem, truth, memory",icon:"💡",vocabKey:"abstract1",xp:25,unit:3},
+  {id:"abstract2",title:"Abstract 2",desc:"Life, death, freedom, peace",icon:"⚖️",vocabKey:"abstract2",xp:25,unit:3},
+  {id:"adverbs",title:"Adverbs",desc:"Already, still, now, too much",icon:"⚡",vocabKey:"adverbs",xp:22,unit:3},
+  {id:"quantities",title:"Quantities",desc:"All, many, few, some, enough",icon:"📊",vocabKey:"quantities",xp:22,unit:3},
+  {id:"communication",title:"Communication",desc:"Speak, hear, question, explain",icon:"🎵",vocabKey:"communication",xp:22,unit:3},
+  {id:"feelings1b",title:"Emotions Review",desc:"Review: emotions & feelings",icon:"🔁",vocabKey:"feelings1",xp:18,unit:3,isReview:true},
+  {id:"abstract1b",title:"Abstract Review",desc:"Review: abstract concepts",icon:"🔁",vocabKey:"abstract1",xp:18,unit:3,isReview:true},
+  {id:"personality1b",title:"Personality Review",desc:"Review: personality & traits",icon:"🔁",vocabKey:"personality",xp:18,unit:3,isReview:true},
+  {id:"adverbs1b",title:"Adverbs & Quantities Review",desc:"Review: adverbs & quantities",icon:"🔁",vocabKey:"adverbs",xp:18,unit:3,isReview:true},
+  {id:"midReview1",title:"Mid-Course Review",desc:"Draw from all vocab learned so far",icon:"🔁",vocabKey:"_review",xp:30,unit:3,isReview:true,reviewPool:["greetings1","pronouns1","possessives","coreVerbs1","people1","basicAdj","colors1","food1","home1","body1","nature1","animals1","places","feelings1","personality"]},
+  {id:"midReview2",title:"Mid-Course Review 2",desc:"More review from earlier lessons",icon:"🔁",vocabKey:"_review",xp:30,unit:3,isReview:true,reviewPool:["basicVerbs2","movement","preps1","conjunctions1","time1","days","food2","home2","objects1","body2","health","daily1","nature2","animals2","feelings2","adverbs"]},
+  {id:"midReview3",title:"Mixed Practice",desc:"All vocab: random mixed challenge",icon:"🔁",vocabKey:"_review",xp:30,unit:3,isReview:true,reviewPool:["numbers","people2","colors1","kitchen","objects2","transport","time2","abstract1","abstract2","quantities","communication"]},
+  {id:"s4",title:"Checkpoint 4",desc:"Unit 4 sentence challenge",icon:"🏆",vocabKey:"s4",xp:45,unit:3,isSentence:true},
+
+  // ── UNIT 5: GRAMMAR MASTERY (L66–L79, checkpoint L80) ────────
+  {id:"tense1",title:"Past & Future 1",desc:"pa (past) and fu (future) markers",icon:"⏳",vocabKey:"tense1",xp:25,unit:4},
+  {id:"tense2",title:"Past & Future 2",desc:"More tense practice",icon:"⏰",vocabKey:"tense2",xp:25,unit:4},
+  {id:"mal1",title:"mal- Prefix 1",desc:"Opposites with mal-",icon:"🔄",vocabKey:"mal1",xp:25,unit:4},
+  {id:"mal2",title:"mal- Prefix 2",desc:"More mal- opposites",icon:"↩️",vocabKey:"mal2",xp:25,unit:4},
+  {id:"compound1",title:"Compound Words 1",desc:"Bakery, bookstore, internet",icon:"🧩",vocabKey:"compound1",xp:25,unit:4},
+  {id:"compound2",title:"Compound Words 2",desc:"Smile, ghost, weather, perfect",icon:"🔧",vocabKey:"compound2",xp:25,unit:4},
+  {id:"reprefix",title:"re- Prefix",desc:"Redo, reread, restart, rebuild",icon:"🔁",vocabKey:"reprefix",xp:25,unit:4},
+  {id:"diminutive",title:"Diminutives (-ido)",desc:"Puppy, flame, spark, minute",icon:"🔬",vocabKey:"diminutive",xp:25,unit:4},
+  {id:"verbchain",title:"Verb Chaining",desc:"Stack verbs to express complex actions",icon:"⛓️",vocabKey:"verbchain",xp:30,unit:4,isSentence:true},
+  {id:"relclauses",title:"Relative Clauses",desc:"Who, which, that — using ke",icon:"🔗",vocabKey:"relclauses",xp:30,unit:4,isSentence:true},
+  {id:"tense1b",title:"Tense Review",desc:"Review: pa & fu practice",icon:"🔁",vocabKey:"tense1",xp:20,unit:4,isReview:true},
+  {id:"grammarReview1",title:"Grammar Review 1",desc:"mal-, re-, -ido prefixes mixed",icon:"🔁",vocabKey:"_review",xp:30,unit:4,isReview:true,reviewPool:["mal1","mal2","reprefix","diminutive"]},
+  {id:"grammarReview2",title:"Grammar Review 2",desc:"Compounds + tense + verb chains",icon:"🔁",vocabKey:"_review",xp:30,unit:4,isReview:true,reviewPool:["compound1","compound2","tense1","tense2"]},
+  {id:"advanced1",title:"Advanced Verbs 1",desc:"Own, promise, refuse, prefer",icon:"🎓",vocabKey:"advanced1",xp:28,unit:4},
+  {id:"s5",title:"Checkpoint 5",desc:"Unit 5 sentence challenge",icon:"🏆",vocabKey:"s5",xp:50,unit:4,isSentence:true},
+
+  // ── UNIT 6: FLUENCY (L81–L100) ───────────────────────────────
+  {id:"advanced2",title:"Advanced Verbs 2",desc:"Forward, hide, continue, return",icon:"🎓",vocabKey:"advanced2",xp:28,unit:5},
+  {id:"advanced3",title:"Advanced Verbs 3",desc:"Search, find, create, build, send",icon:"🎓",vocabKey:"advanced3",xp:28,unit:5},
+  {id:"advanced4",title:"Advanced Verbs 4",desc:"Comfort, burn, repair, marry",icon:"🎓",vocabKey:"advanced4",xp:28,unit:5},
+  {id:"fluencyReview1",title:"Fluency Review 1",desc:"Draw from all prior vocab",icon:"🔁",vocabKey:"_review",xp:35,unit:5,isReview:true,reviewPool:["advanced1","advanced2","advanced3","tense1","tense2","mal1","mal2","reprefix","compound1","compound2"]},
+  {id:"fluencyReview2",title:"Fluency Review 2",desc:"Emotions, abstract, grammar mixed",icon:"🔁",vocabKey:"_review",xp:35,unit:5,isReview:true,reviewPool:["feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","verbchain","relclauses"]},
+  {id:"para1",title:"Paragraph 1",desc:"Daily routine paragraph",icon:"📜",vocabKey:"para1",xp:40,unit:5,isParagraph:true},
+  {id:"para2",title:"Paragraph 2",desc:"Describe people paragraph",icon:"📜",vocabKey:"para2",xp:40,unit:5,isParagraph:true},
+  {id:"para3",title:"Paragraph 3",desc:"Challenge & perseverance",icon:"📜",vocabKey:"para3",xp:40,unit:5,isParagraph:true},
+  {id:"para4",title:"Paragraph 4",desc:"People who inspire",icon:"📜",vocabKey:"para4",xp:40,unit:5,isParagraph:true},
+  {id:"para5",title:"Paragraph 5",desc:"Work & daily life story",icon:"📜",vocabKey:"para5",xp:45,unit:5,isParagraph:true},
+  {id:"deepReview1",title:"Deep Review 1",desc:"Comprehensive random draw",icon:"🔁",vocabKey:"_review",xp:40,unit:5,isReview:true,reviewPool:["greetings1","pronouns1","possessives","coreVerbs1","basicVerbs2","movement","preps1","conjunctions1","time1","days","numbers","people1","people2","basicAdj","colors1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2"]},
+  {id:"para6",title:"Paragraph 6",desc:"Community & helping others",icon:"📜",vocabKey:"para6",xp:45,unit:5,isParagraph:true},
+  {id:"para7",title:"Paragraph 7",desc:"Hope & the future",icon:"📜",vocabKey:"para7",xp:50,unit:5,isParagraph:true},
+  {id:"deepReview2",title:"Deep Review 2",desc:"Full vocab random challenge",icon:"🔁",vocabKey:"_review",xp:40,unit:5,isReview:true,reviewPool:["health","daily1","daily2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","tense1","tense2","mal1","mal2","compound1","compound2","reprefix","diminutive","advanced1","advanced2","advanced3","advanced4"]},
+  {id:"para8",title:"Paragraph 8",desc:"Memory & reflection",icon:"📜",vocabKey:"para8",xp:50,unit:5,isParagraph:true},
+  {id:"advanced3b",title:"Advanced Verbs Review",desc:"Review: advanced verbs & actions",icon:"🔁",vocabKey:"_review",xp:35,unit:5,isReview:true,reviewPool:["advanced1","advanced2","advanced3","advanced4"]},
+  {id:"freetext1",title:"Free Writing 1",desc:"Write freely in Parli Aspo",icon:"✍️",vocabKey:"_freetext",xp:55,unit:5,isFreeText:true},
+  {id:"freetext2",title:"Free Writing 2",desc:"Express yourself freely",icon:"✍️",vocabKey:"_freetext",xp:55,unit:5,isFreeText:true},
+  {id:"fluencyReview3",title:"Fluency Review 3",desc:"Final mixed review before the test",icon:"🔁",vocabKey:"_review",xp:40,unit:5,isReview:true,reviewPool:["feelings1","abstract1","tense1","tense2","mal1","compound1","reprefix","diminutive","verbchain","relclauses","advanced1","advanced2"]},
+  {id:"finalReview",title:"Final Review",desc:"Everything — the complete draw",icon:"🔁",vocabKey:"_review",xp:50,unit:5,isReview:true,reviewPool:["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","tense1","tense2","mal1","mal2","compound1","compound2","reprefix","diminutive","advanced1","advanced2","advanced3","advanced4"]},
+  {id:"finalTest",title:"Final Test",desc:"The complete Parli Aspo challenge — no hearts, one shot",icon:"🎓",vocabKey:"_final",xp:100,unit:5,isFinalTest:true},
+];
+
+// ═══════════════════════════════════════════════════════════════
+// EXERCISE GENERATOR
+// ═══════════════════════════════════════════════════════════════
+function generateExercises(lessonId){
+  const lesson=LESSONS.find(l=>l.id===lessonId);
+  if(!lesson)return[];
+
+  // Final test: draw from full vocab pool
+  if(lesson.isFinalTest){
+    return generateFinalTest();
+  }
+
+  // Free text lessons
+  if(lesson.isFreeText){
+    return generateFreeTextExercises(lesson);
+  }
+
+  // Paragraph lessons
+  if(lesson.isParagraph){
+    return generateParagraphExercises(lesson);
+  }
+
+  // Sentence checkpoint lessons
+  if(lesson.isSentence){
+    return generateSentenceExercises(lesson);
+  }
+
+  // Review lessons with review pool
+  if(lesson.isReview && lesson.reviewPool){
+    return generateReviewExercises(lesson);
+  }
+
+  // Standard vocabulary lessons
+  return generateVocabExercises(lesson);
+}
+
+function generateVocabExercises(lesson){
+  const items=V[lesson.vocabKey];
+  if(!items||items.length===0)return[];
+  const wordItems=items.map(v=>({pa:Array.isArray(v.pa)?v.pa.join(" "):v.pa,en:v.en,note:v.note||null}));
+  const exercises=[];
+  const wordUsage={};
+  const canAdd=(w)=>(wordUsage[w]||0)<2;
+  const markUsed=(w)=>{wordUsage[w]=(wordUsage[w]||0)+1;};
+
+  // 1. MC: PA → EN (for each word)
+  shuffle(wordItems).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    const wrong=pick(wordItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    if(wrong.length<3)return;
+    exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong]),note:item.note,paWord:item.pa});
+    markUsed(item.pa);
+  });
+
+  // 2. MC: EN → PA (for subset)
+  shuffle(wordItems).slice(0,5).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    const wrong=pick(wordItems.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);
+    if(wrong.length<3)return;
+    exercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
+    markUsed(item.pa);
+  });
+
+  // 3. True/False
+  shuffle(wordItems).slice(0,4).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    const isTrue=Math.random()>0.5;
+    let shownEn=item.en;
+    if(!isTrue){const wrong=pick(wordItems.filter(v=>v.en!==item.en),1);if(wrong.length)shownEn=wrong[0].en;}
+    exercises.push({type:"tf",prompt:`"${item.pa}" means "${shownEn}"`,correct:isTrue,correctLabel:item.en,paWord:item.pa});
+    markUsed(item.pa);
+  });
+
+  // 4. Match pairs
+  const matchItems=pick(wordItems,4);
+  exercises.push({type:"match",pairs:matchItems.map(v=>({left:v.pa,right:v.en}))});
+
+  // 5. Fill in the blank (PA word given English)
+  shuffle(wordItems).slice(0,3).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    exercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});
+    markUsed(item.pa);
+  });
+
+  // 6. Reverse fill: PA sentence with blank
+  const sentData=LS[lesson.vocabKey];
+  if(sentData&&sentData.length>0){
+    pick(sentData,2).forEach(s=>{
+      const pArr=s.pa;
+      if(pArr.length<3)return;
+      const blankIdx=Math.floor(Math.random()*(pArr.length-1))+1;
+      const blankedWord=pArr[blankIdx];
+      const displaySent=pArr.map((w,i)=>i===blankIdx?"___":w).join(" ");
+      const wrong=pick(wordItems.filter(v=>v.pa.toLowerCase()!==blankedWord.toLowerCase()),3).map(v=>v.pa);
+      if(wrong.length<3)return;
+      exercises.push({type:"revfill",prompt:`Fill in the blank:\n"${displaySent}"`,correct:blankedWord,options:shuffle([blankedWord,...wrong]),sentenceEn:s.en});
+    });
+  }
+
+  // 7. Error correction (wrong word in sentence)
+  if(sentData&&sentData.length>0){
+    pick(sentData,2).forEach(s=>{
+      const pArr=[...s.pa];
+      if(pArr.length<3)return;
+      const errIdx=Math.floor(Math.random()*(pArr.length-1))+1;
+      const correctWord=pArr[errIdx];
+      const wrongWord=pick(wordItems.filter(v=>v.pa.toLowerCase()!==correctWord.toLowerCase()),1);
+      if(!wrongWord.length)return;
+      const errSent=[...pArr];errSent[errIdx]=wrongWord[0].pa;
+      exercises.push({type:"errcorrect",prompt:`Is this sentence correct?\n"${errSent.join(" ")}"`,sentenceEn:s.en,isCorrect:false,correctSent:pArr.join(" "),errorWord:wrongWord[0].pa,correctWord});
+    });
+  }
+
+  // 8. Mini word-order sentences
+  if(sentData&&sentData.length>0){
+    pick(sentData,3).forEach(s=>{
+      exercises.push({type:"wordOrder",prompt:`Translate: "${s.en}"`,correctOrder:s.pa,shuffled:shuffle([...s.pa])});
+    });
+  }
+
+  const shuffled=shuffle(exercises);
+  // Ensure at least 12 exercises, cap at 15
+  return shuffled.slice(0,Math.min(Math.max(shuffled.length,1),15));
+}
+
+function generateSentenceExercises(lesson){
+  const items=V[lesson.vocabKey];
+  if(!items||items.length===0)return[];
+  const exercises=[];
+
+  // Word order for each sentence
+  items.forEach(item=>{
+    exercises.push({type:"wordOrder",prompt:`Translate: "${item.en}"`,correctOrder:item.pa,shuffled:shuffle([...item.pa])});
+  });
+
+  // MC: what does this sentence mean?
+  shuffle(items).slice(0,5).forEach(item=>{
+    const wrong=pick(items.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    if(wrong.length>=3)exercises.push({type:"mc",prompt:`What does "${item.pa.join(" ")}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});
+  });
+
+  // True/False on sentences
+  shuffle(items).slice(0,4).forEach(item=>{
+    const isTrue=Math.random()>0.5;
+    let shownEn=item.en;
+    if(!isTrue){const wrong=pick(items.filter(v=>v.en!==item.en),1);if(wrong.length)shownEn=wrong[0].en;}
+    exercises.push({type:"tf",prompt:`"${item.pa.join(" ")}" means:\n"${shownEn}"`,correct:isTrue,correctLabel:item.en});
+  });
+
+  // Error correction on sentences
+  shuffle(items).slice(0,3).forEach(item=>{
+    const isCorrect=Math.random()>0.5;
+    if(isCorrect){
+      exercises.push({type:"errcorrect",prompt:`Is this sentence correct?\n"${item.pa.join(" ")}"`,sentenceEn:item.en,isCorrect:true,correctSent:item.pa.join(" ")});
+    } else {
+      const errPA=[...item.pa];
+      const errIdx=Math.floor(Math.random()*(errPA.length-1))+1;
+      const errWords=["la","de","en","kon","i","ma","ke","esi","na","da"];
+      const sub=pick(errWords.filter(w=>w!==errPA[errIdx].toLowerCase()),1)[0]||"lo";
+      errPA[errIdx]=sub;
+      exercises.push({type:"errcorrect",prompt:`Is this sentence correct?\n"${errPA.join(" ")}"`,sentenceEn:item.en,isCorrect:false,correctSent:item.pa.join(" ")});
+    }
+  });
+
+  return shuffle(exercises).slice(0,Math.min(15,exercises.length));
+}
+
+function generateReviewExercises(lesson){
+  const pool=lesson.reviewPool||[];
+  const allItems=[];
+  pool.forEach(key=>{
+    const arr=V[key];
+    if(arr&&!arr[0]?.sentences){
+      arr.forEach(v=>{
+        if(!Array.isArray(v.pa)){allItems.push({pa:v.pa,en:v.en,note:v.note||null});}
+      });
+    }
+  });
+  if(allItems.length===0)return[];
+
+  const exercises=[];
+  const wordUsage={};
+  const canAdd=(w)=>(wordUsage[w]||0)<2;
+  const markUsed=(w)=>{wordUsage[w]=(wordUsage[w]||0)+1;};
+  const picked=pick(allItems,Math.min(allItems.length,20));
+
+  picked.forEach(item=>{
+    if(!canAdd(item.pa))return;
+    const wrong=pick(allItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    if(wrong.length<3)return;
+    exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong]),note:item.note});
+    markUsed(item.pa);
+  });
+
+  shuffle(picked).slice(0,6).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    const wrong=pick(allItems.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);
+    if(wrong.length<3)return;
+    exercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
+    markUsed(item.pa);
+  });
+
+  shuffle(picked).slice(0,4).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    const isTrue=Math.random()>0.5;
+    let shownEn=item.en;
+    if(!isTrue){const wrong=pick(allItems.filter(v=>v.en!==item.en),1);if(wrong.length)shownEn=wrong[0].en;}
+    exercises.push({type:"tf",prompt:`"${item.pa}" means "${shownEn}"`,correct:isTrue,correctLabel:item.en,paWord:item.pa});
+    markUsed(item.pa);
+  });
+
+  const matchItems=pick(picked,4);
+  exercises.push({type:"match",pairs:matchItems.map(v=>({left:v.pa,right:v.en}))});
+
+  shuffle(picked).slice(0,3).forEach(item=>{
+    if(!canAdd(item.pa))return;
+    exercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});
+    markUsed(item.pa);
+  });
+
+  return shuffle(exercises).slice(0,15);
+}
+
+function generateParagraphExercises(lesson){
+  const paraGroups=V[lesson.vocabKey];
+  if(!paraGroups||paraGroups.length===0)return[];
+  const exercises=[];
+
+  paraGroups.forEach(para=>{
+    // Intro MC: what is this paragraph about?
+    const enWords=para.en.split(" ").slice(0,6).join(" ")+"…";
+    exercises.push({type:"paraIntro",prompt:`📖 Read this paragraph:\n"${para.en}"`,info:true,label:"Paragraph Preview"});
+
+    // Word order for each sentence in paragraph
+    para.sentences.forEach(s=>{
+      exercises.push({type:"wordOrder",prompt:`Translate: "${s.en}"`,correctOrder:s.pa,shuffled:shuffle([...s.pa])});
+    });
+
+    // TF on a sentence from the paragraph
+    const tfSent=para.sentences[0];
+    const isTrue=Math.random()>0.5;
+    let shownEn=tfSent.en;
+    if(!isTrue&&para.sentences.length>1){shownEn=para.sentences[para.sentences.length-1].en;}
+    exercises.push({type:"tf",prompt:`"${tfSent.pa.join(" ")}" means:\n"${shownEn}"`,correct:isTrue,correctLabel:tfSent.en});
+
+    // Error correction on a sentence
+    const errSent=para.sentences[Math.min(1,para.sentences.length-1)];
+    const errPA=[...errSent.pa];
+    const errIdx=Math.max(1,Math.floor(Math.random()*(errPA.length-1)));
+    const sub=["la","de","en","kon","i","ma"].filter(w=>w!==errPA[errIdx].toLowerCase())[0]||"lo";
+    errPA[errIdx]=sub;
+    exercises.push({type:"errcorrect",prompt:`Is this sentence correct?\n"${errPA.join(" ")}"`,sentenceEn:errSent.en,isCorrect:false,correctSent:errSent.pa.join(" ")});
+  });
+
+  return shuffle(exercises.filter(e=>e.type!=="paraIntro")).slice(0,14).concat(
+    exercises.filter(e=>e.type==="paraIntro").slice(0,1)
+  ).slice(0,15);
+}
+
+function generateFreeTextExercises(lesson){
+  const prompts=shuffle([...FREETEXT_PROMPTS]).slice(0,4);
+  const exercises=[];
+  prompts.forEach(p=>{
+    exercises.push({type:"freetext",prompt:p.prompt,hint:p.hint});
+  });
+  // Also add some MC review from broad pool
+  const reviewKeys=["coreVerbs1","basicVerbs2","movement","preps1","conjunctions1","feelings1","abstract1","tense1","mal1","compound1"];
+  const allItems=[];
+  reviewKeys.forEach(key=>{const arr=V[key];if(arr)arr.forEach(v=>{if(!Array.isArray(v.pa))allItems.push({pa:v.pa,en:v.en});});});
+  pick(allItems,8).forEach(item=>{
+    const wrong=pick(allItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    if(wrong.length>=3)exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});
+  });
+  return shuffle(exercises).slice(0,12);
+}
+
+function generateFinalTest(){
+  const allKeys=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","tense1","tense2","mal1","mal2","compound1","compound2","reprefix","diminutive","advanced1","advanced2","advanced3","advanced4"];
+  const allItems=[];
+  allKeys.forEach(key=>{const arr=V[key];if(arr)arr.forEach(v=>{if(!Array.isArray(v.pa))allItems.push({pa:v.pa,en:v.en,note:v.note||null});});});
+  const exercises=[];
+  const used=new Set();
+
+  // 5 PA→EN MC from diverse pool
+  pick(allItems.filter(v=>!used.has(v.pa)),5).forEach(item=>{
+    used.add(item.pa);
+    const wrong=pick(allItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    if(wrong.length>=3)exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});
+  });
+
+  // 4 EN→PA MC
+  pick(allItems.filter(v=>!used.has(v.pa)),4).forEach(item=>{
+    used.add(item.pa);
+    const wrong=pick(allItems.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);
+    if(wrong.length>=3)exercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
+  });
+
+  // 3 True/False
+  pick(allItems.filter(v=>!used.has(v.pa)),3).forEach(item=>{
+    used.add(item.pa);
+    const isTrue=Math.random()>0.5;
+    let shownEn=item.en;
+    if(!isTrue){const w=pick(allItems.filter(v=>v.en!==item.en),1);if(w.length)shownEn=w[0].en;}
+    exercises.push({type:"tf",prompt:`"${item.pa}" means "${shownEn}"`,correct:isTrue,correctLabel:item.en});
+  });
+
+  // 1 match
+  const matchItems=pick(allItems.filter(v=>!used.has(v.pa)),4);
+  matchItems.forEach(v=>used.add(v.pa));
+  exercises.push({type:"match",pairs:matchItems.map(v=>({left:v.pa,right:v.en}))});
+
+  // 2 fill
+  pick(allItems.filter(v=>!used.has(v.pa)),2).forEach(item=>{
+    used.add(item.pa);
+    exercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});
+  });
+
+  // 3 word-order from sentence checkpoints
+  const sentKeys=["s1","s2","s3","s4","s5"];
+  const allSents=[];
+  sentKeys.forEach(k=>{const arr=V[k];if(arr)arr.forEach(s=>allSents.push(s));});
+  pick(allSents,3).forEach(s=>{
+    exercises.push({type:"wordOrder",prompt:`Translate: "${s.en}"`,correctOrder:s.pa,shuffled:shuffle([...s.pa])});
+  });
+
+  // 2 reverse fill from sentence checkpoints
+  pick(allSents,2).forEach(s=>{
+    const pArr=s.pa;if(pArr.length<3)return;
+    const blankIdx=Math.floor(Math.random()*(pArr.length-1))+1;
+    const blankedWord=pArr[blankIdx];
+    const displaySent=pArr.map((w,i)=>i===blankIdx?"___":w).join(" ");
+    const wrong=pick(allItems,3).map(v=>v.pa).filter(w=>w.toLowerCase()!==blankedWord.toLowerCase()).slice(0,3);
+    if(wrong.length>=3)exercises.push({type:"revfill",prompt:`Fill in the blank:\n"${displaySent}"`,correct:blankedWord,options:shuffle([blankedWord,...wrong]),sentenceEn:s.en});
+  });
+
+  // 2 paragraph word-order from para data
+  const paraSentPool=[];
+  ["para6","para7","para8"].forEach(k=>{const arr=V[k];if(arr)arr.forEach(pg=>{if(pg.sentences)pg.sentences.forEach(s=>paraSentPool.push(s));});});
+  pick(paraSentPool,2).forEach(s=>{
+    exercises.push({type:"wordOrder",prompt:`Translate: "${s.en}"`,correctOrder:s.pa,shuffled:shuffle([...s.pa])});
+  });
+
+  return shuffle(exercises).slice(0,20);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP STATE & INITIALIZATION
+// ═══════════════════════════════════════════════════════════════
+const app=document.getElementById("app");
+let state={
+  screen:"loading",
+  user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null},
+  tab:"learn",lesson:null,exercises:[],exIdx:0,correct:0,hearts:3,accXP:0,leaderboard:[],
+  mcSelected:null,mcAnswered:false,
+  matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:[],
+  fillInput:"",fillAnswered:false,fillCorrect:false,
+  woSelected:[],woAvailable:[],woAnswered:false,woCorrect:false,
+  tfAnswered:false,tfSelected:null,
+  revfillSelected:null,revfillAnswered:false,
+  errcorrectSelected:null,errcorrectAnswered:false,
+  freetextInput:"",freetextSubmitted:false,
+  waitingContinue:false,
+};
+
+function setState(partial){Object.assign(state,partial);renderApp();}
+
+setTimeout(async()=>{
+  const savedName=getCurrentUsername();
+  if(savedName){
+    setState({screen:"loading"});
+    const user=await loadUserDataCloud(savedName);
+    // Reset old progress structure — lesson IDs have changed
+    if(user.lessonsCompleted && user.lessonsCompleted.some(id=>id==="s6"||id==="communication")){
+      user.lessonsCompleted=[];
+    }
+    saveUserData(user);
+    setState({user,screen:"home"});
+    fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+  } else {
+    setState({screen:"username"});
+  }
+},400);
+
+function renderApp(){
+  if(currentView!=='app')return;
+  switch(state.screen){
+    case"loading":renderLoading();break;
+    case"username":renderUsername();break;
+    case"home":renderHome();break;
+    case"lesson":renderLesson();break;
+    case"complete":renderComplete();break;
+  }
+}
+
+function renderLoading(){
+  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;flex-direction:column">
+    <div class="float" style="font-size:64px;margin-bottom:16px">🌍</div>
+    <div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800">Parli Aspo</div>
+    <div style="color:var(--dim);font-size:14px;margin-top:6px">Syncing your progress…</div>
+  </div>`;
+}
+
+function renderUsername(){
+  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="text-align:center;max-width:360px;width:100%">
+      <div class="float" style="font-size:72px;margin-bottom:16px">🌍</div>
+      <div style="font-family:var(--display);font-size:32px;color:var(--green);font-weight:800;margin-bottom:4px">Parli Aspo</div>
+      <div style="color:var(--dim);font-size:15px;margin-bottom:36px">The language of hope</div>
+      <input id="nameInput" type="text" placeholder="Enter your username" maxlength="20" value=""
+        style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);
+        color:var(--text);font-size:17px;font-weight:700;text-align:center;margin-bottom:8px">
+      <div style="color:var(--dim);font-size:12px;margin-bottom:16px">New username = new account · Existing username = resume progress</div>
+      <button id="startBtn" class="btn-primary">START LEARNING</button>
+    </div>
+  </div>`;
+  const input=document.getElementById("nameInput");const btn=document.getElementById("startBtn");
+  input.focus();
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")doSetUsername(input.value);});
+  btn.addEventListener("click",()=>doSetUsername(input.value));
+}
+
+async function doSetUsername(val){
+  const name=val.trim();if(!name)return;
+  setCurrentUsername(name);
+  setState({screen:"loading"});
+  const existing=await loadUserDataCloud(name);
+  const today=new Date().toDateString();
+  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
+  saveUserData(user);pushToLeaderboard(user);
+  setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+}
+
+function renderHome(){
+  const u=state.user;
+  const completedSet=new Set(u.lessonsCompleted||[]);
+  const isAdmin=(u.username||"").toLowerCase()==="admin";
+
+  let unitIdx=-1;
+  let lessonsHTML="";
+  LESSONS.forEach((l,i)=>{
+    // Unit header
+    const unitDef=UNITS.find(un=>un.start===i);
+    if(unitDef){
+      unitIdx++;
+      lessonsHTML+=`<div style="margin:${i===0?'0':'24px'} 0 12px;padding:8px 12px;background:linear-gradient(135deg,var(--card),var(--bg2));border:1.5px solid var(--border);border-radius:12px;color:var(--green);font-size:13px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px">
+        <span>${['🌱','🏠','🌍','💡','⚙️','🔥'][unitIdx]||'📚'}</span>
+        <span>${unitDef.name}</span>
+      </div>`;
+    }
+
+    const completed=completedSet.has(l.id);
+    const unlocked=isAdmin||i===0||completedSet.has(LESSONS[i-1].id);
+    const cls=completed?"completed":unlocked?"":"locked";
+    const icon=completed?"✅":unlocked?l.icon:"🔒";
+    const isFinal=l.isFinalTest;
+    const cardStyle=isFinal?`background:linear-gradient(135deg,rgba(255,200,0,0.12),rgba(206,130,255,0.08));border:2.5px solid var(--gold);`:"";
+    lessonsHTML+=`<button class="lesson-card ${cls}" data-idx="${i}" ${!unlocked?'disabled':''} style="${cardStyle}">
+      <div class="lesson-icon" style="${isFinal?'background:var(--gold-glow);border:2px solid var(--gold)':''}">${icon}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:16px;font-weight:800;${isFinal?'color:var(--gold)':''}">${l.title}</div>
+        <div style="color:var(--dim);font-size:13px;font-weight:600;margin-top:2px">${l.desc}</div>
+      </div>
+      <div style="color:var(--gold);font-size:12px;font-weight:800;flex-shrink:0">+${l.xp} XP</div>
+    </button>`;
+  });
+
+  let lbHTML="";
+  if(!firebaseReady){lbHTML=`<div style="text-align:center;padding:40px 20px;color:var(--dim)"><div style="font-size:36px;margin-bottom:12px">🌐</div><div style="font-size:15px;font-weight:700;margin-bottom:8px">Leaderboard available when hosted</div></div>`;}
+  else if(state.leaderboard.length===0){lbHTML=`<div style="text-align:center;padding:40px;color:var(--dim);font-size:15px">No learners yet. Be the first!</div>`;}
+  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;lbHTML+=`<div class="lb-row ${isMe?'is-me':''}"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div></div>`;});lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
+
+  const pct=Math.round((u.lessonsCompleted||[]).length/LESSONS.length*100);
+  app.innerHTML=`<div style="padding-bottom:80px">
+    <div style="padding:16px 20px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌍</span><span style="font-family:var(--display);color:var(--green);font-weight:800;font-size:19px">Parli Aspo</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="badge badge-streak">🔥 ${u.streak||0}</span><span class="badge badge-xp">⚡ ${u.xp||0} XP</span></div>
+    </div>
+    <div style="padding:14px 20px 8px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div><div style="color:var(--dim);font-size:14px">Bonayo, <span style="color:var(--text);font-weight:800">${u.username}</span>${isAdmin?' <span style="color:var(--gold);font-size:12px">👑 Admin</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:4px">${(u.lessonsCompleted||[]).length}/${LESSONS.length} lessons · ${pct}% complete</div></div>
+        <button id="switchUserBtn" style="background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;color:var(--dim);font-size:12px;font-weight:700">Switch User</button>
+      </div>
+      <div style="margin-top:8px" class="progress-track"><div class="progress-fill" style="width:${pct}%;background:var(--gold)"></div></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn ${state.tab==='learn'?'active':''}" data-tab="learn">📚 LEARN</button>
+      <button class="tab-btn ${state.tab==='leaderboard'?'active':''}" data-tab="leaderboard">🏆 LEADERBOARD</button>
+    </div>
+    <div style="padding:16px 20px;${state.tab==='learn'?'':'display:none'}" id="learnTab">${lessonsHTML}</div>
+    <div style="padding:16px 20px;${state.tab==='leaderboard'?'':'display:none'}" id="lbTab">${lbHTML}</div>
+  </div>`;
+
+  document.querySelectorAll(".tab-btn").forEach(btn=>{btn.addEventListener("click",()=>{setState({tab:btn.dataset.tab});if(btn.dataset.tab==="leaderboard")fetchLeaderboard().then(lb=>setState({leaderboard:lb}));});});
+  document.querySelectorAll(".lesson-card:not(.locked):not([disabled])").forEach(card=>{card.addEventListener("click",()=>startLesson(parseInt(card.dataset.idx)));});
+  const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
+  document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
+}
+
+function startLesson(idx){
+  const lesson=LESSONS[idx];
+  const exercises=generateExercises(lesson.id);
+  if(!exercises||exercises.length===0){alert("No exercises available for this lesson.");return;}
+  const ex=exercises[0];
+  const isFinal=lesson.isFinalTest;
+  setState({
+    screen:"lesson",lesson,exercises,exIdx:0,correct:0,
+    hearts:isFinal?999:3, // Final test: no hearts (999 = unlimited, handled in renderLesson)
+    isFinalTest:isFinal,
+    accXP:0,
+    mcSelected:null,mcAnswered:false,
+    matchSelectedLeft:null,matchMatched:[],matchWrong:null,
+    matchShuffledRight:ex.type==="match"?shuffle(ex.pairs.map(p=>p.right)):[],
+    fillInput:"",fillAnswered:false,fillCorrect:false,
+    woSelected:[],woAvailable:ex.type==="wordOrder"?[...ex.shuffled]:[],woAnswered:false,woCorrect:false,
+    tfAnswered:false,tfSelected:null,
+    revfillSelected:null,revfillAnswered:false,
+    errcorrectSelected:null,errcorrectAnswered:false,
+    freetextInput:"",freetextSubmitted:false,
+    waitingContinue:false,
+  });
+}
+
+function renderLesson(){
+  const ex=state.exercises[state.exIdx];
+  const pct=state.exIdx/state.exercises.length*100;
+  const isFinal=state.isFinalTest;
+
+  let heartsHTML="";
+  if(isFinal){
+    heartsHTML=`<span style="color:var(--gold);font-size:13px;font-weight:800">🎓 FINAL TEST</span>`;
+  } else {
+    heartsHTML=[...Array(3)].map((_,i)=>`<span style="font-size:20px;opacity:${i<state.hearts?1:0.2}">❤️</span>`).join("");
+  }
+
+  let exHTML="";
+  if(ex.type==="mc")exHTML=renderMC(ex);
+  else if(ex.type==="match")exHTML=renderMatch(ex);
+  else if(ex.type==="fill")exHTML=renderFill(ex);
+  else if(ex.type==="wordOrder")exHTML=renderWordOrder(ex);
+  else if(ex.type==="tf")exHTML=renderTF(ex);
+  else if(ex.type==="revfill")exHTML=renderRevFill(ex);
+  else if(ex.type==="errcorrect")exHTML=renderErrCorrect(ex);
+  else if(ex.type==="freetext")exHTML=renderFreeText(ex);
+  else if(ex.type==="paraIntro")exHTML=renderParaIntro(ex);
+
+  let continueHTML="";
+  if(state.waitingContinue){
+    continueHTML=`<div class="check-bar"><button id="continueBtn" class="btn-primary" style="background:var(--red);box-shadow:0 4px 20px var(--red-glow)">CONTINUE</button></div>`;
+  }
+
+  app.innerHTML=`<div style="padding:16px 16px 100px 16px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+      <button id="closeBtn" style="background:none;color:var(--dim);font-size:24px;padding:4px">✕</button>
+      <div style="flex:1" class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${isFinal?'var(--gold)':'var(--green)'}"></div></div>
+      <div style="display:flex;gap:2px">${heartsHTML}</div>
+    </div>
+    <div style="max-width:480px;margin:0 auto" class="fade-up">${exHTML}</div>
+  </div>${continueHTML}`;
+
+  document.getElementById("closeBtn").addEventListener("click",()=>setState({screen:"home"}));
+  const contBtn=document.getElementById("continueBtn");if(contBtn)contBtn.addEventListener("click",()=>advanceAfterAnswer());
+
+  if(ex.type==="mc")bindMC(ex);
+  else if(ex.type==="match")bindMatch(ex);
+  else if(ex.type==="fill")bindFill(ex);
+  else if(ex.type==="wordOrder")bindWordOrder(ex);
+  else if(ex.type==="tf")bindTF(ex);
+  else if(ex.type==="revfill")bindRevFill(ex);
+  else if(ex.type==="errcorrect")bindErrCorrect(ex);
+  else if(ex.type==="freetext")bindFreeText(ex);
+  else if(ex.type==="paraIntro")bindParaIntro(ex);
+}
+
+// ─── MC ──────────────────────────────────────────────────────
+function renderMC(ex){
+  const optsHTML=ex.options.map((opt,i)=>{
+    let cls="opt-btn";
+    if(state.mcAnswered){if(opt===ex.correct)cls+=" correct";else if(opt===state.mcSelected&&opt!==ex.correct)cls+=" wrong";else cls+=" faded";}
+    return `<button class="${cls}" data-opt="${i}" style="animation-delay:${i*0.05}s">${opt}</button>`;
+  }).join("");
+  let noteHTML="";
+  if(state.mcAnswered&&ex.note)noteHTML=`<div style="margin-top:14px;color:var(--blue);font-size:13px;font-style:italic;font-weight:600">💡 ${ex.note}</div>`;
+  const promptLines=ex.prompt.split("\n").join("<br>");
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px;line-height:1.4">${promptLines}</div><div style="display:flex;flex-direction:column;gap:10px">${optsHTML}</div>${noteHTML}`;
+}
+function bindMC(ex){
+  if(state.mcAnswered)return;
+  document.querySelectorAll(".opt-btn").forEach((btn,i)=>{
+    btn.addEventListener("click",()=>{
+      if(state.mcAnswered)return;
+      const opt=ex.options[i];state.mcSelected=opt;state.mcAnswered=true;renderApp();
+      if(opt===ex.correct){setTimeout(()=>handleAnswer(true),900);}else{setTimeout(()=>handleAnswer(false),600);}
+    });
+  });
+}
+
+// ─── TRUE/FALSE ────────────────────────────────────────────────
+function renderTF(ex){
+  const promptLines=ex.prompt.split("\n").join("<br>");
+  if(!state.tfAnswered){
+    return `<div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:8px;letter-spacing:0.5px">TRUE OR FALSE?</div>
+    <div style="font-size:19px;font-weight:800;margin-bottom:28px;line-height:1.5;padding:16px;background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border)">${promptLines}</div>
+    <div style="display:flex;gap:12px">
+      <button class="opt-btn" data-tf="true" style="flex:1;font-size:22px;text-align:center;padding:20px">✅ True</button>
+      <button class="opt-btn" data-tf="false" style="flex:1;font-size:22px;text-align:center;padding:20px">❌ False</button>
+    </div>`;
+  }
+  const isCorrect=state.tfSelected===state.tfCorrect;
+  const resultColor=isCorrect?"var(--green)":"var(--red)";
+  return `<div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:8px;letter-spacing:0.5px">TRUE OR FALSE?</div>
+    <div style="font-size:19px;font-weight:800;margin-bottom:16px;line-height:1.5;padding:16px;background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border)">${promptLines}</div>
+    <div style="display:flex;gap:12px;margin-bottom:16px">
+      <button class="opt-btn ${state.tfCorrect?'correct':'faded'}" style="flex:1;font-size:22px;text-align:center;padding:20px">✅ True</button>
+      <button class="opt-btn ${!state.tfCorrect?'correct':'faded'}" style="flex:1;font-size:22px;text-align:center;padding:20px">❌ False</button>
+    </div>
+    ${!isCorrect?`<div style="font-family:var(--font);font-size:15px;font-weight:700;color:var(--text)">Correct answer: <span style="color:var(--green)">${ex.correctLabel||''}</span></div>`:''}`;
+}
+function bindTF(ex){
+  if(state.tfAnswered)return;
+  document.querySelectorAll("[data-tf]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const chosen=btn.dataset.tf==="true";
+      state.tfAnswered=true;state.tfSelected=chosen;state.tfCorrect=ex.correct;
+      renderApp();
+      if(chosen===ex.correct){setTimeout(()=>handleAnswer(true),900);}else{setTimeout(()=>handleAnswer(false),600);}
+    });
+  });
+}
+
+// ─── REVERSE FILL ─────────────────────────────────────────────
+function renderRevFill(ex){
+  const promptLines=ex.prompt.split("\n").join("<br>");
+  if(!state.revfillAnswered){
+    const optsHTML=ex.options.map((opt,i)=>`<button class="opt-btn" data-rfi="${i}" style="animation-delay:${i*0.05}s">${opt}</button>`).join("");
+    return `<div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:8px;letter-spacing:0.5px">FILL IN THE BLANK</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:8px;line-height:1.5">${promptLines}</div>
+    <div style="color:var(--dim);font-size:13px;margin-bottom:20px">English: "${ex.sentenceEn||''}"</div>
+    <div style="display:flex;flex-direction:column;gap:10px">${optsHTML}</div>`;
+  }
+  const optsHTML=ex.options.map((opt,i)=>{
+    let cls="opt-btn";
+    if(opt===ex.correct)cls+=" correct";
+    else if(opt===state.revfillSelected&&opt!==ex.correct)cls+=" wrong";
+    else cls+=" faded";
+    return `<button class="${cls}" data-rfi="${i}">${opt}</button>`;
+  }).join("");
+  return `<div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:8px;letter-spacing:0.5px">FILL IN THE BLANK</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:8px;line-height:1.5">${promptLines}</div>
+    <div style="color:var(--dim);font-size:13px;margin-bottom:20px">English: "${ex.sentenceEn||''}"</div>
+    <div style="display:flex;flex-direction:column;gap:10px">${optsHTML}</div>`;
+}
+function bindRevFill(ex){
+  if(state.revfillAnswered)return;
+  document.querySelectorAll("[data-rfi]").forEach((btn,i)=>{
+    btn.addEventListener("click",()=>{
+      if(state.revfillAnswered)return;
+      const opt=ex.options[i];state.revfillSelected=opt;state.revfillAnswered=true;renderApp();
+      if(opt===ex.correct){setTimeout(()=>handleAnswer(true),900);}else{setTimeout(()=>handleAnswer(false),600);}
+    });
+  });
+}
+
+// ─── ERROR CORRECTION ─────────────────────────────────────────
+function renderErrCorrect(ex){
+  const promptLines=ex.prompt.split("\n").join("<br>");
+  if(!state.errcorrectAnswered){
+    return `<div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:0.5px">ERROR CORRECTION</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:8px;line-height:1.5;padding:14px;background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border)">${promptLines}</div>
+    <div style="color:var(--dim);font-size:13px;margin-bottom:20px">Meaning: "${ex.sentenceEn||''}"</div>
+    <div style="display:flex;gap:12px">
+      <button class="opt-btn" data-ec="correct" style="flex:1;text-align:center;padding:16px">✅ Correct</button>
+      <button class="opt-btn" data-ec="wrong" style="flex:1;text-align:center;padding:16px">❌ Has Error</button>
+    </div>`;
+  }
+  const userSaidCorrect=state.errcorrectSelected==="correct";
+  const actuallyCorrect=ex.isCorrect;
+  const isRight=userSaidCorrect===actuallyCorrect;
+  return `<div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:0.5px">ERROR CORRECTION</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:8px;line-height:1.5;padding:14px;background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border)">${promptLines}</div>
+    <div style="color:var(--dim);font-size:13px;margin-bottom:12px">Meaning: "${ex.sentenceEn||''}"</div>
+    <div style="display:flex;gap:12px;margin-bottom:14px">
+      <button class="opt-btn ${actuallyCorrect?'correct':'faded'}" style="flex:1;text-align:center;padding:16px">✅ Correct</button>
+      <button class="opt-btn ${!actuallyCorrect?'correct':'faded'}" style="flex:1;text-align:center;padding:16px">❌ Has Error</button>
+    </div>
+    ${!actuallyCorrect&&ex.correctSent?`<div style="font-size:14px;font-weight:700;color:var(--text)">Correct sentence: <span style="color:var(--green);font-size:16px">${ex.correctSent}</span></div>`:''}`;
+}
+function bindErrCorrect(ex){
+  if(state.errcorrectAnswered)return;
+  document.querySelectorAll("[data-ec]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(state.errcorrectAnswered)return;
+      const chosen=btn.dataset.ec;state.errcorrectSelected=chosen;state.errcorrectAnswered=true;renderApp();
+      const correct=(chosen==="correct")===ex.isCorrect;
+      if(correct){setTimeout(()=>handleAnswer(true),900);}else{setTimeout(()=>handleAnswer(false),600);}
+    });
+  });
+}
+
+// ─── PARAGRAPH INTRO ───────────────────────────────────────────
+function renderParaIntro(ex){
+  return `<div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:12px;letter-spacing:0.5px">📖 PARAGRAPH</div>
+    <div style="font-size:16px;line-height:1.7;padding:18px;background:var(--card);border:1.5px solid var(--blue);border-radius:var(--radius);margin-bottom:20px;color:var(--text)">${ex.prompt.replace("📖 Read this paragraph:\n","")}</div>
+    <button id="paraNext" class="btn-primary">CONTINUE →</button>`;
+}
+function bindParaIntro(ex){
+  const btn=document.getElementById("paraNext");
+  if(btn)btn.addEventListener("click",()=>{handleAnswer(true);});
+}
+
+// ─── FREE TEXT ─────────────────────────────────────────────────
+function renderFreeText(ex){
+  if(!state.freetextSubmitted){
+    return `<div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:12px;letter-spacing:0.5px">✍️ FREE WRITING</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:12px;line-height:1.5">${ex.prompt}</div>
+    <div style="color:var(--blue);font-size:13px;margin-bottom:16px;font-style:italic">💡 Hint: ${ex.hint}</div>
+    <textarea id="ftInput" rows="5" placeholder="Write in Parli Aspo..." autocomplete="off" autocapitalize="off"
+      style="width:100%;padding:14px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:15px;font-weight:600;resize:vertical;margin-bottom:12px">${state.freetextInput}</textarea>
+    <button id="ftSubmit" class="btn-primary">SUBMIT</button>`;
+  }
+  return `<div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:12px;letter-spacing:0.5px">✅ SUBMITTED</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:12px">${ex.prompt}</div>
+    <div style="padding:14px;background:var(--ok);border:2px solid var(--green);border-radius:var(--radius);color:var(--text);font-size:15px;line-height:1.6;margin-bottom:16px">${state.freetextInput||'(no answer)'}</div>
+    <div style="color:var(--dim);font-size:13px;font-style:italic">Bona labori! Keep practicing — fluency grows with use.</div>`;
+}
+function bindFreeText(ex){
+  if(state.freetextSubmitted){setTimeout(()=>handleAnswer(true),1500);return;}
+  const ta=document.getElementById("ftInput");if(ta){ta.focus();ta.addEventListener("input",e=>{state.freetextInput=e.target.value;});}
+  const btn=document.getElementById("ftSubmit");
+  if(btn)btn.addEventListener("click",()=>{
+    if(!(state.freetextInput||"").trim())return;
+    state.freetextSubmitted=true;renderApp();
+  });
+}
+
+// ─── FILL ─────────────────────────────────────────────────────
+function renderFill(ex){
+  let feedbackHTML="";
+  if(state.fillAnswered&&!state.fillCorrect){feedbackHTML=`<div style="margin-top:16px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct answer: <span style="color:var(--green)">${ex.correct}</span></div>`;}
+  const borderColor=state.fillAnswered?(state.fillCorrect?"var(--green)":"var(--red)"):"var(--border)";
+  const bgColor=state.fillAnswered?(state.fillCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div>
+    <div style="display:flex;gap:10px">
+      <input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
+        style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">
+      ${!state.fillAnswered?'<button id="fillCheck" class="btn-primary" style="width:auto;padding:14px 20px;font-size:15px">CHECK</button>':''}
+    </div>${feedbackHTML}`;
+}
+function bindFill(ex){
+  if(state.fillAnswered)return;
+  const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
+  if(input){input.focus();input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
+  if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
+}
+function doFillCheck(ex){
+  if(state.fillAnswered||!(state.fillInput||"").trim())return;
+  const correct=state.fillInput.trim().toLowerCase()===ex.correct.toLowerCase();
+  state.fillAnswered=true;state.fillCorrect=correct;renderApp();
+  if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
+}
+
+// ─── WORD ORDER ────────────────────────────────────────────────
+function renderWordOrder(ex){
+  const selectedHTML=state.woSelected.length===0?`<span style="color:var(--dim);font-size:14px;padding:4px">Tap words to build the sentence...</span>`:state.woSelected.map((w,i)=>`<button class="word-chip placed" data-rm="${i}">${w}</button>`).join("");
+  const availHTML=state.woAvailable.map((w,i)=>`<button class="word-chip" data-add="${i}">${w}</button>`).join("");
+  const answerBorder=state.woAnswered?(state.woCorrect?"var(--green)":"var(--red)"):"var(--border)";
+  const answerBg=state.woAnswered?(state.woCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
+  let checkHTML="";if(!state.woAnswered&&state.woSelected.length===ex.correctOrder.length){checkHTML=`<button id="woCheck" class="btn-primary" style="margin-top:4px">CHECK</button>`;}
+  let wrongHTML="";if(state.woAnswered&&!state.woCorrect){wrongHTML=`<div style="margin-top:12px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct: <span style="color:var(--green)">${ex.correctOrder.join(" ")}</span></div>`;}
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:20px">${ex.prompt}</div>
+    <div style="min-height:52px;padding:10px 14px;background:${answerBg};border:2.5px dashed ${answerBorder};border-radius:var(--radius);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${selectedHTML}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${availHTML}</div>${checkHTML}${wrongHTML}`;
+}
+function bindWordOrder(ex){
+  if(state.woAnswered)return;
+  document.querySelectorAll("[data-add]").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.add);const word=state.woAvailable[i];state.woSelected=[...state.woSelected,word];state.woAvailable=state.woAvailable.filter((_,j)=>j!==i);renderApp();});});
+  document.querySelectorAll("[data-rm]").forEach(btn=>{btn.addEventListener("click",()=>{if(state.woAnswered)return;const i=parseInt(btn.dataset.rm);const word=state.woSelected[i];state.woSelected=state.woSelected.filter((_,j)=>j!==i);state.woAvailable=[...state.woAvailable,word];renderApp();});});
+  const checkBtn=document.getElementById("woCheck");
+  if(checkBtn)checkBtn.addEventListener("click",()=>{const correct=state.woSelected.every((w,i)=>w===ex.correctOrder[i]);state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
+}
+
+// ─── MATCH ─────────────────────────────────────────────────────
+function renderMatch(ex){
+  const leftHTML=ex.pairs.map((p,i)=>{const matched=state.matchMatched.find(m=>m.left===p.left);const selected=state.matchSelectedLeft===p.left;const wrong=state.matchWrong&&state.matchWrong.left===p.left;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";else if(selected)cls+=" selected";return `<button class="${cls}" data-side="left" data-idx="${i}">${p.left}</button>`;}).join("");
+  const rightHTML=state.matchShuffledRight.map((r,i)=>{const matched=state.matchMatched.find(m=>m.right===r);const wrong=state.matchWrong&&state.matchWrong.right===r;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";return `<button class="${cls}" data-side="right" data-idx="${i}">${r}</button>`;}).join("");
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">Match the pairs</div><div style="display:flex;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:8px">${leftHTML}</div><div style="flex:1;display:flex;flex-direction:column;gap:8px">${rightHTML}</div></div>`;
+}
+function bindMatch(ex){
+  document.querySelectorAll("[data-side='left']").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.idx);const left=ex.pairs[i].left;if(state.matchMatched.find(m=>m.left===left))return;state.matchSelectedLeft=left;state.matchWrong=null;renderApp();});});
+  document.querySelectorAll("[data-side='right']").forEach(btn=>{btn.addEventListener("click",()=>{if(!state.matchSelectedLeft)return;const right=state.matchShuffledRight[parseInt(btn.dataset.idx)];if(state.matchMatched.find(m=>m.right===right))return;const pair=ex.pairs.find(p=>p.left===state.matchSelectedLeft&&p.right===right);if(pair){state.matchMatched=[...state.matchMatched,pair];state.matchSelectedLeft=null;renderApp();if(state.matchMatched.length===ex.pairs.length)setTimeout(()=>handleAnswer(true),600);}else{state.matchWrong={left:state.matchSelectedLeft,right};renderApp();setTimeout(()=>{state.matchWrong=null;state.matchSelectedLeft=null;renderApp();},700);}});});
+}
+
+// ─── ANSWER FLOW ───────────────────────────────────────────────
+function handleAnswer(correct){
+  const isFinal=state.isFinalTest;
+  if(correct){
+    state.correct++;
+    state.accXP+=state.lesson.xp/state.exercises.length;
+    advanceAfterAnswer();
+  } else {
+    if(!isFinal){state.hearts--;}
+    state.waitingContinue=true;
+    renderApp();
+  }
+}
+
+function advanceAfterAnswer(){
+  state.waitingContinue=false;
+  if(!state.isFinalTest&&state.hearts<=0){setState({screen:"complete"});return;}
+  if(state.exIdx+1>=state.exercises.length){
+    const totalXP=Math.round(state.accXP);
+    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
+    saveUserData(user);pushToLeaderboard(user);state.user=user;
+    setState({screen:"complete"});
+  } else {
+    const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
+    setState({
+      exIdx:nextIdx,
+      mcSelected:null,mcAnswered:false,
+      matchSelectedLeft:null,matchMatched:[],matchWrong:null,
+      matchShuffledRight:nextEx.type==="match"?shuffle(nextEx.pairs.map(p=>p.right)):[],
+      fillInput:"",fillAnswered:false,fillCorrect:false,
+      woSelected:[],woAvailable:nextEx.type==="wordOrder"?[...nextEx.shuffled]:[],woAnswered:false,woCorrect:false,
+      tfAnswered:false,tfSelected:null,
+      revfillSelected:null,revfillAnswered:false,
+      errcorrectSelected:null,errcorrectAnswered:false,
+      freetextInput:"",freetextSubmitted:false,
+      waitingContinue:false,
+    });
+  }
+}
+
+function render(){renderApp();}
+
+function renderComplete(){
+  const passed=state.isFinalTest||state.hearts>0;
+  const earnedXP=Math.round(state.accXP);
+  const isFinal=state.isFinalTest;
+
+  let confettiHTML="";
+  if(passed){
+    const colors=["#58CC02","#FFC800","#1CB0F6","#CE82FF","#FF4B4B"];
+    const count=isFinal?60:20;
+    for(let i=0;i<count;i++){const color=colors[i%colors.length];const left=Math.random()*100;const delay=Math.random()*(isFinal?1.5:0.5);const size=isFinal?8+Math.random()*12:6+Math.random()*8;confettiHTML+=`<div class="confetti-piece" style="left:${left}%;bottom:40%;width:${size}px;height:${size}px;background:${color};animation-delay:${delay}s;border-radius:${Math.random()>0.5?'50%':'2px'}"></div>`;}
+  }
+
+  let innerHTML="";
+  if(isFinal&&passed){
+    innerHTML=`
+      <div style="font-size:80px;margin-bottom:8px">🏆</div>
+      <div style="font-family:var(--display);font-size:32px;font-weight:800;color:var(--gold);margin-bottom:8px">Aspo Maestra!</div>
+      <div style="font-size:18px;color:var(--mid);margin-bottom:8px">You have completed the Parli Aspo course.</div>
+      <div style="font-size:14px;color:var(--dim);margin-bottom:20px;font-style:italic">"La vivo esi bela kun aspo." — Life is beautiful with hope.</div>
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
+        <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak} day streak</span>
+        <span class="badge badge-lessons" style="font-size:15px;padding:6px 16px">🎓 ${(state.user.lessonsCompleted||[]).length} lessons</span>
+      </div>
+      <div style="padding:16px;background:var(--gold-glow);border:2px solid var(--gold);border-radius:var(--radius);margin-bottom:24px">
+        <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px">🌟 COURSE COMPLETE</div>
+        <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered 350+ words, all 6 units, and the complete grammar system of Parli Aspo. The language of hope lives in you now.</div>
+      </div>`;
+  } else if(passed){
+    innerHTML=`
+      <div style="font-size:72px;margin-bottom:16px">🎉</div>
+      <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--green);margin-bottom:8px">Lesson Complete!</div>
+      <div style="color:var(--mid);font-size:16px;margin-bottom:20px">${state.correct}/${state.exercises.length} correct</div>
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px">
+        <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
+        <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak}</span>
+      </div>`;
+  } else {
+    innerHTML=`
+      <div style="font-size:72px;margin-bottom:16px">💔</div>
+      <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--red);margin-bottom:8px">Out of Hearts!</div>
+      <div style="color:var(--dim);font-size:15px;margin-bottom:28px">Na malbravi! Trati otra hapa.<br><span style="font-size:13px;color:var(--mid)">(Don't fear! Try again.)</span></div>`;
+  }
+
+  app.innerHTML=`${confettiHTML}
+    <div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
+      <div style="text-align:center;max-width:400px;width:100%" class="pop">
+        ${innerHTML}
+        <button id="completeBtn" class="btn-primary" style="margin-bottom:10px">${passed?"CONTINUE":"TRY AGAIN"}</button>
+        ${!passed?'<button id="backBtn" class="btn-secondary">BACK TO LESSONS</button>':''}
+      </div>
+    </div>`;
+
+  document.getElementById("completeBtn").addEventListener("click",()=>{
+    if(!passed){const idx=LESSONS.findIndex(l=>l.id===state.lesson.id);startLesson(idx);}
+    else{setState({screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));}
+  });
+  const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home"}));
+}
+
+// Trigger renderApp when switching to app view
+(function(){
+  const orig=showView;
+  window.showView=function(name){orig(name);if(name==='app')renderApp();};
+})();
 // ═══════════════════════════════════════════════════════════════
 // DICTIONARY DATA
 // ═══════════════════════════════════════════════════════════════
@@ -1364,534 +2686,6 @@ function resetContact() {
   document.getElementById('cf-chars').textContent = '0 / 2000';
 }
 
-// ═══════════════════════════════════════════════════════════════
-// LEARNING APP ENGINE (from parli-aspo.html)
-// ═══════════════════════════════════════════════════════════════
-function shuffle(arr) {
-  const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;
-}
-function pick(arr,n){return shuffle(arr).slice(0,n);}
-function saveLocal(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}}
-function loadLocal(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def}}
-function getCurrentUsername(){return loadLocal("pa_current_user","");}
-function setCurrentUsername(name){saveLocal("pa_current_user",name);}
-function applyStreakLogic(data){
-  if(data.lastActiveDate){
-    const today=new Date().toDateString();
-    const yesterday=new Date(Date.now()-86400000).toDateString();
-    if(data.lastActiveDate!==today&&data.lastActiveDate!==yesterday)data.streak=0;
-    if(data.lastActiveDate!==today){data.streak=(data.streak||0)+1;data.lastActiveDate=today;}
-  }
-  return data;
-}
-function loadUserData(username){
-  // Fallback local-only load (used synchronously when Firebase unavailable)
-  if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
-  const data=loadLocal("pa_user_"+username,{username,xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null});
-  data.username=username;
-  return applyStreakLogic(data);
-}
-async function loadUserDataCloud(username){
-  // Load from Firebase first, fall back to localStorage
-  if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
-  if(firebaseReady&&db){
-    try{
-      const key=username.replace(/[.#$\/\[\]]/g,"_");
-      const snap=await db.ref("users/"+key).once("value");
-      if(snap.exists()){
-        const data=snap.val();
-        data.username=username;
-        data.lessonsCompleted=data.lessonsCompleted||[];
-        const updated=applyStreakLogic(data);
-        saveLocal("pa_user_"+username,updated); // keep local in sync
-        return updated;
-      }
-    }catch(e){console.warn("Firebase load error:",e);}
-  }
-  // Fall back to localStorage
-  return loadUserData(username);
-}
-function saveUserData(data){
-  if(!data.username)return;
-  saveLocal("pa_user_"+data.username,data);
-  // Also persist full profile to Firebase for cross-device sync
-  if(firebaseReady&&db){
-    const key=data.username.replace(/[.#$\/\[\]]/g,"_");
-    db.ref("users/"+key).set({...data,updatedAt:Date.now()}).catch(e=>console.warn("Firebase save error:",e));
-  }
-}
-async function pushToLeaderboard(data){
-  if(!firebaseReady||!db||!data.username)return;
-  try{await db.ref("leaderboard/"+data.username.replace(/[.#$\/\[\]]/g,"_")).set({name:data.username,xp:data.xp,streak:data.streak,lessons:data.lessonsCompleted.length,updatedAt:Date.now()});}
-  catch(e){console.warn("Firebase push error:",e);}
-}
-async function fetchLeaderboard(){
-  if(!firebaseReady||!db)return[];
-  try{const snap=await db.ref("leaderboard").orderByChild("xp").limitToLast(50).once("value");const entries=[];snap.forEach(c=>{entries.push(c.val());});return entries.sort((a,b)=>b.xp-a.xp);}
-  catch(e){console.warn("Firebase fetch error:",e);return[];}
-}
-
-const LESSONS=[
-  {id:"greetings1",title:"Greetings 1",desc:"Yes, no, good, sorry",icon:"👋",vocabKey:"greetings1",xp:15},
-  {id:"pronouns1",title:"Pronouns 1",desc:"I, you, he, she, it",icon:"👤",vocabKey:"pronouns1",xp:15},
-  {id:"possessives",title:"Possessives",desc:"My, your, his, her",icon:"🫂",vocabKey:"possessives",xp:15},
-  {id:"people1",title:"People 1",desc:"Person, friend, family",icon:"👨‍👩‍👧",vocabKey:"people1",xp:15},
-  {id:"people2",title:"People 2",desc:"Father, mother, brother",icon:"👨‍👩‍👦",vocabKey:"people2",xp:15},
-  {id:"colors1",title:"Colors 1",desc:"Red, blue, green",icon:"🎨",vocabKey:"colors1",xp:15},
-  {id:"colors2",title:"Colors 2",desc:"Orange, purple, gray",icon:"🖌️",vocabKey:"colors2",xp:15},
-  {id:"numbers",title:"Numbers",desc:"Zero through ten",icon:"🔢",vocabKey:"numbers",xp:15},
-  {id:"articles",title:"Articles & Questions",desc:"The, this, what, who",icon:"📌",vocabKey:"articles",xp:18},
-  {id:"s1",title:"Sentences 1",desc:"Basic sentences",icon:"📝",vocabKey:"s1",xp:20,isSentence:true},
-  {id:"food1",title:"Food 1",desc:"Bread, meat, fruit",icon:"🍎",vocabKey:"food1",xp:15},
-  {id:"food2",title:"Food 2",desc:"Water, milk, coffee",icon:"☕",vocabKey:"food2",xp:15},
-  {id:"cooking",title:"Cooking & Eating",desc:"Cook, eat, drink",icon:"🍳",vocabKey:"cooking",xp:18},
-  {id:"animals1",title:"Animals 1",desc:"Dog, cat, fish, bird",icon:"🐾",vocabKey:"animals1",xp:15},
-  {id:"animals2",title:"Animals 2",desc:"Elephant, monkey, cow",icon:"🐘",vocabKey:"animals2",xp:15},
-  {id:"animals3",title:"Animals 3",desc:"Snake, insect, bee",icon:"🐍",vocabKey:"animals3",xp:15},
-  {id:"home1",title:"Home 1",desc:"House, room, door",icon:"🏠",vocabKey:"home1",xp:15},
-  {id:"home2",title:"Home 2",desc:"Table, chair, bed",icon:"🛋️",vocabKey:"home2",xp:15},
-  {id:"objects1",title:"Objects 1",desc:"Book, phone, computer",icon:"📱",vocabKey:"objects1",xp:15},
-  {id:"objects2",title:"Objects 2",desc:"Money, bag, clothes",icon:"👜",vocabKey:"objects2",xp:15},
-  {id:"s2",title:"Sentences 2",desc:"Questions & family",icon:"📝",vocabKey:"s2",xp:22,isSentence:true},
-  {id:"verbs1",title:"Verbs 1",desc:"Be, have, do, go",icon:"⚡",vocabKey:"verbs1",xp:18},
-  {id:"verbs2",title:"Verbs 2",desc:"Know, want, can",icon:"💭",vocabKey:"verbs2",xp:18},
-  {id:"verbs3",title:"Verbs 3",desc:"Run, walk, sit, jump",icon:"🏃",vocabKey:"verbs3",xp:18},
-  {id:"verbs4",title:"Verbs 4",desc:"Work, play, read, write",icon:"✍️",vocabKey:"verbs4",xp:18},
-  {id:"verbs5",title:"Verbs 5",desc:"Think, learn, teach",icon:"🧠",vocabKey:"verbs5",xp:18},
-  {id:"verbs6",title:"Verbs 6",desc:"Give, take, buy, sell",icon:"🤝",vocabKey:"verbs6",xp:18},
-  {id:"verbs7",title:"Verbs 7",desc:"Love, help, find",icon:"❤️",vocabKey:"verbs7",xp:20},
-  {id:"verbs8",title:"Verbs 8",desc:"Start, finish, change",icon:"🔄",vocabKey:"verbs8",xp:20},
-  {id:"adj1",title:"Adjectives 1",desc:"Big, small, tall",icon:"📏",vocabKey:"adj1",xp:18},
-  {id:"adj2",title:"Adjectives 2",desc:"Fast, strong, easy",icon:"💪",vocabKey:"adj2",xp:18},
-  {id:"adj3",title:"Adjectives 3",desc:"New, clean, hot, cold",icon:"🌡️",vocabKey:"adj3",xp:20},
-  {id:"adj4",title:"Adjectives 4",desc:"Happy, brave, smart",icon:"😊",vocabKey:"adj4",xp:20},
-  {id:"s3",title:"Sentences 3",desc:"Descriptions & places",icon:"📝",vocabKey:"s3",xp:25,isSentence:true},
-  {id:"nature1",title:"Sky & Weather",desc:"Sun, moon, rain",icon:"☀️",vocabKey:"nature1",xp:18},
-  {id:"nature2",title:"Land & Plants",desc:"Tree, flower, forest",icon:"🌳",vocabKey:"nature2",xp:18},
-  {id:"nature3",title:"Water & Terrain",desc:"River, lake, mountain",icon:"🏔️",vocabKey:"nature3",xp:20},
-  {id:"places",title:"Places",desc:"City, school, store",icon:"🏙️",vocabKey:"places",xp:20},
-  {id:"body1",title:"Body 1",desc:"Head, eyes, mouth",icon:"👤",vocabKey:"body1",xp:18},
-  {id:"body2",title:"Body 2",desc:"Hand, arm, leg, heart",icon:"🫀",vocabKey:"body2",xp:20},
-  {id:"health",title:"Health",desc:"Sick, medicine, doctor",icon:"🏥",vocabKey:"health",xp:22},
-  {id:"s4",title:"Sentences 4",desc:"Longer sentences",icon:"📝",vocabKey:"s4",xp:28,isSentence:true},
-  {id:"preps1",title:"Prepositions 1",desc:"In, on, with, under",icon:"📍",vocabKey:"preps1",xp:18},
-  {id:"preps2",title:"Prepositions 2",desc:"For, between, through",icon:"🔀",vocabKey:"preps2",xp:20},
-  {id:"conjunctions",title:"Conjunctions",desc:"And, or, but, because",icon:"🔗",vocabKey:"conjunctions",xp:20},
-  {id:"time1",title:"Time 1",desc:"Hour, today, tomorrow",icon:"🕐",vocabKey:"time1",xp:18},
-  {id:"time2",title:"Time 2",desc:"Morning, week, year",icon:"📅",vocabKey:"time2",xp:18},
-  {id:"days",title:"Days of the Week",desc:"Monday through Sunday",icon:"📆",vocabKey:"days",xp:20},
-  {id:"seasons",title:"Seasons & Weather",desc:"Spring, summer, winter",icon:"🍂",vocabKey:"seasons",xp:20},
-  {id:"s5",title:"Sentences 5",desc:"Complex sentences",icon:"📝",vocabKey:"s5",xp:30,isSentence:true},
-  {id:"transport",title:"Transport",desc:"Car, bus, airplane",icon:"🚗",vocabKey:"transport",xp:20},
-  {id:"travel",title:"Travel",desc:"Drive, fly, map, world",icon:"🌍",vocabKey:"travel",xp:20},
-  {id:"feelings1",title:"Emotions 1",desc:"Joy, sadness, love, fear",icon:"💗",vocabKey:"feelings1",xp:22},
-  {id:"feelings2",title:"Emotions 2",desc:"States & traits",icon:"🎭",vocabKey:"feelings2",xp:22},
-  {id:"personality",title:"Personality",desc:"Kind, honest, careful",icon:"🪞",vocabKey:"personality",xp:22},
-  {id:"mal1",title:"mal- Prefix 1",desc:"Opposites with mal-",icon:"🔄",vocabKey:"mal1",xp:25},
-  {id:"mal2",title:"mal- Prefix 2",desc:"More opposites",icon:"↩️",vocabKey:"mal2",xp:25},
-  {id:"tense1",title:"Past & Future 1",desc:"pa and fu",icon:"⏳",vocabKey:"tense1",xp:25},
-  {id:"tense2",title:"Past & Future 2",desc:"More tense practice",icon:"⏰",vocabKey:"tense2",xp:25},
-  {id:"compound1",title:"Compound Words 1",desc:"Store + noun words",icon:"🧩",vocabKey:"compound1",xp:25},
-  {id:"compound2",title:"Compound Words 2",desc:"Creative compounds",icon:"🔧",vocabKey:"compound2",xp:25},
-  {id:"diminutive",title:"Diminutives",desc:"The -ido suffix",icon:"🔬",vocabKey:"diminutive",xp:25},
-  {id:"reprefix",title:"re- Prefix",desc:"Redo, reread, rebuild",icon:"🔁",vocabKey:"reprefix",xp:25},
-  {id:"relclauses",title:"Relative Clauses",desc:"Who, which, that with ke",icon:"🔗",vocabKey:"relclauses",xp:28,isSentence:true},
-  {id:"verbchain",title:"Verb Chaining",desc:"Stack verbs together",icon:"⛓️",vocabKey:"verbchain",xp:28,isSentence:true},
-  {id:"daily1",title:"Daily Routine 1",desc:"Wake, eat, dress",icon:"🌅",vocabKey:"daily1",xp:22},
-  {id:"daily2",title:"Daily Routine 2",desc:"Clean, cook, study",icon:"📖",vocabKey:"daily2",xp:22},
-  {id:"communication",title:"Entertainment",desc:"Music, movies, sports",icon:"🎵",vocabKey:"communication",xp:22},
-  {id:"abstract1",title:"Abstract 1",desc:"Idea, problem, memory",icon:"💡",vocabKey:"abstract1",xp:25},
-  {id:"abstract2",title:"Abstract 2",desc:"Life, death, truth",icon:"⚖️",vocabKey:"abstract2",xp:25},
-  {id:"advanced1",title:"Advanced Verbs",desc:"Own, promise, allow",icon:"🎓",vocabKey:"advanced1",xp:25},
-  {id:"adverbs",title:"Adverbs",desc:"Always, often, soon",icon:"⚡",vocabKey:"adverbs",xp:22},
-  {id:"quantities",title:"Quantities",desc:"All, some, many, few",icon:"📊",vocabKey:"quantities",xp:22},
-  {id:"s6",title:"Sentences 6",desc:"Advanced sentences",icon:"📜",vocabKey:"s6",xp:35,isSentence:true},
-];
-
-function generateExercises(lessonId){
-  const lesson=LESSONS.find(l=>l.id===lessonId);
-  const vocab=V[lesson.vocabKey];
-  const mcExercises=[];const matchExercises=[];const fillExercises=[];const wordOrderExercises=[];
-  if(lesson.isSentence){
-    vocab.forEach(item=>{wordOrderExercises.push({type:"wordOrder",prompt:`Translate: "${item.en}"`,correctOrder:item.pa,shuffled:shuffle([...item.pa])});});
-    vocab.slice(0,5).forEach(item=>{const wrong=pick(vocab.filter(v=>v.en!==item.en),3).map(v=>v.en);mcExercises.push({type:"mc",prompt:`What does "${item.pa.join(" ")}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});});
-  } else {
-    const items=vocab.map(v=>({pa:v.pa,en:v.en,note:v.note,pr:v.pr}));
-    items.forEach(item=>{const wrong=pick(items.filter(v=>v.en!==item.en),3).map(v=>v.en);mcExercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong]),note:item.note,pr:item.pr,paWord:item.pa});});
-    items.slice(0,5).forEach(item=>{const wrong=pick(items.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);mcExercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});});
-    const matchItems=pick(items,4);matchExercises.push({type:"match",pairs:matchItems.map(v=>({left:v.pa,right:v.en}))});
-    const miniSentences=buildMiniSentences(items,lessonId);miniSentences.forEach(s=>wordOrderExercises.push(s));
-    items.slice(0,3).forEach(item=>{fillExercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});});
-  }
-  const ordered=[...shuffle(mcExercises).slice(0,5),...matchExercises,...shuffle(wordOrderExercises).slice(0,3),...shuffle(fillExercises).slice(0,2)];
-  return ordered.slice(0,12);
-}
-
-const LS={greetings1:[],pronouns1:[],possessives:[],articles:[],
-people1:[{en:"The child plays",pa:["La","kido","ludi"]},{en:"The woman reads a book",pa:["La","femo","legi","libo"]}],
-people2:[{en:"My mother cooks",pa:["Men","matro","kusi"]},{en:"My father works",pa:["Men","patro","labori"]}],
-colors1:[{en:"The house is red",pa:["La","kaso","esi","reda"]},{en:"The book is blue",pa:["La","libo","esi","blua"]}],
-colors2:[{en:"The cat is orange",pa:["La","gato","esi","orana"]},{en:"The flower is purple",pa:["La","floro","esi","purpa"]}],
-numbers:[{en:"I have two books",pa:["Me","havi","dua","libos"]},{en:"We see three dogs",pa:["Nos","vidi","tria","pipos"]}],
-food1:[{en:"I eat bread",pa:["Me","nutri","pano"]},{en:"We eat fruit",pa:["Nos","nutri","fruko"]}],
-food2:[{en:"I drink water",pa:["Me","agwi","agwo"]},{en:"She drinks coffee",pa:["Lu","agwi","kafo"]}],
-cooking:[{en:"I cook in the kitchen",pa:["Me","kusi","en","la","kuso"]},{en:"I need a plate",pa:["Me","nedi","plato"]}],
-animals1:[{en:"The dog runs",pa:["La","pipo","kuri"]},{en:"I see the cat",pa:["Me","vidi","la","gato"]},{en:"The bird sings",pa:["La","waso","kanti"]}],
-animals2:[{en:"The elephant is big",pa:["La","elefano","esi","granda"]},{en:"The monkey plays",pa:["La","simo","ludi"]}],
-animals3:[{en:"The spider is small",pa:["La","arano","esi","malgranda"]},{en:"The bee is here",pa:["La","abelo","esi","am"]}],
-home1:[{en:"The house is beautiful",pa:["La","kaso","esi","bela"]},{en:"I open the door",pa:["Me","abri","la","porto"]}],
-home2:[{en:"I sit on the chair",pa:["Me","sedi","sur","la","sedo"]},{en:"The bed is soft",pa:["La","kamo","esi","maldura"]}],
-objects1:[{en:"I read a book",pa:["Me","legi","libo"]},{en:"I have a new phone",pa:["Me","havi","nuva","telo"]}],
-objects2:[{en:"I need money",pa:["Me","nedi","deno"]},{en:"The shoes are new",pa:["La","sapos","esi","nuva"]}],
-verbs1:[{en:"I am here",pa:["Me","esi","am"]},{en:"We go to the park",pa:["Nos","iri","ad","la","parko"]}],
-verbs2:[{en:"I want water",pa:["Me","voli","agwo"]},{en:"We should eat",pa:["Nos","debi","nutri"]}],
-verbs3:[{en:"The dog runs fast",pa:["La","pipo","kuri","rapida"]},{en:"The child jumps",pa:["La","kido","puli"]}],
-verbs4:[{en:"I work in the office",pa:["Me","labori","en","la","ofiso"]},{en:"She writes a book",pa:["Lu","plumi","libo"]}],
-verbs5:[{en:"I think about you",pa:["Me","pensi","sur","yu"]},{en:"I remember my friend",pa:["Me","repensi","men","filo"]}],
-verbs6:[{en:"I give a gift",pa:["Me","doni","dono"]},{en:"She buys bread",pa:["Lu","deni","pano"]}],
-verbs7:[{en:"I love my family",pa:["Me","ami","men","familo"]},{en:"I find the key",pa:["Me","trovi","la","klavo"]}],
-verbs8:[{en:"I start to work",pa:["Me","komensi","labori"]},{en:"We continue to walk",pa:["Nos","dureli","marsi"]}],
-adj1:[{en:"The house is big",pa:["La","kaso","esi","granda"]},{en:"The dog is small",pa:["La","pipo","esi","malgranda"]}],
-adj2:[{en:"The horse runs fast",pa:["La","kavalo","kuri","rapida"]},{en:"She is strong",pa:["Lu","esi","forta"]}],
-adj3:[{en:"The water is cold",pa:["La","agwo","esi","friga"]},{en:"The coffee is hot",pa:["La","kafo","esi","malfriga"]}],
-adj4:[{en:"I am happy",pa:["Me","esi","felisa"]},{en:"She is smart",pa:["Lu","esi","kleva"]}],
-nature1:[{en:"The sun is bright",pa:["La","suno","esi","luma"]},{en:"The wind is strong",pa:["La","venaro","esi","forta"]}],
-nature2:[{en:"The flower is beautiful",pa:["La","floro","esi","bela"]},{en:"I walk in the forest",pa:["Me","marsi","en","la","foro"]}],
-nature3:[{en:"The river is long",pa:["La","rivo","esi","longa"]},{en:"The mountain is tall",pa:["La","monto","esi","alta"]}],
-places:[{en:"I go to the city",pa:["Me","iri","ad","la","urbo"]},{en:"The school is big",pa:["La","skolo","esi","granda"]}],
-body1:[{en:"My head hurts",pa:["Men","krano","doli"]},{en:"The face is beautiful",pa:["La","faso","esi","bela"]}],
-body2:[{en:"I write with my hand",pa:["Me","plumi","kon","men","mano"]},{en:"The heart is strong",pa:["La","koro","esi","forta"]}],
-health:[{en:"I am sick",pa:["Me","esi","malsana"]},{en:"I need medicine",pa:["Me","nedi","mediko"]},{en:"The doctor helps",pa:["La","doktio","helpi"]}],
-preps1:[{en:"The cat is in the house",pa:["La","gato","esi","en","la","kaso"]},{en:"The book is on the table",pa:["La","libo","esi","sur","la","tablo"]}],
-preps2:[{en:"I walk through the forest",pa:["Me","marsi","tru","la","foro"]},{en:"The store is near",pa:["La","tendo","esi","serka"]}],
-conjunctions:[{en:"I eat and drink",pa:["Me","nutri","i","agwi"]},{en:"I work but I am tired",pa:["Me","labori","ma","me","esi","dorma"]}],
-time1:[{en:"I eat today",pa:["Me","nutri","oyo"]},{en:"I will go tomorrow",pa:["Me","fu","iri","fuyo"]}],
-time2:[{en:"I work in the morning",pa:["Me","labori","en","la","matino"]},{en:"We eat in the evening",pa:["Nos","nutri","en","la","spero"]}],
-days:[{en:"Today is Monday",pa:["Oyo","esi","duayo"]},{en:"I rest on Saturday",pa:["Me","resti","sur","sepayo"]}],
-seasons:[{en:"Summer is hot",pa:["Somero","esi","malfriga"]},{en:"The weather is good",pa:["La","nebofelo","esi","bona"]}],
-transport:[{en:"I drive a car",pa:["Me","kari","karo"]},{en:"The airplane flies",pa:["La","aviono","foli"]}],
-travel:[{en:"I live in the city",pa:["Me","kasi","en","la","urbo"]},{en:"The world is big",pa:["La","mondo","esi","granda"]}],
-feelings1:[{en:"Love is beautiful",pa:["Amo","esi","bela"]},{en:"I hope for peace",pa:["Me","aspi","paso"]}],
-feelings2:[{en:"I am sleepy",pa:["Me","esi","dorma"]},{en:"She is ready",pa:["Lu","esi","lista"]}],
-personality:[{en:"She is kind",pa:["Lu","esi","amabla"]},{en:"They are helpful",pa:["Los","esi","helpa"]}],
-mal1:[{en:"The old house is ugly",pa:["La","malnuva","kaso","esi","malbela"]},{en:"It is hot today",pa:["Lo","esi","malfriga","oyo"]}],
-mal2:[{en:"I take the book",pa:["Me","maldoni","la","libo"]},{en:"She leaves the room",pa:["Lu","malveni","la","domo"]}],
-tense1:[{en:"I saw the dog",pa:["Me","pa","vidi","la","pipo"]},{en:"I will eat bread",pa:["Me","fu","nutri","pano"]}],
-tense2:[{en:"They came home",pa:["Los","pa","veni","ad","kaso"]},{en:"She will sing tomorrow",pa:["Lu","fu","kanti","fuyo"]}],
-compound1:[{en:"I go to the bakery",pa:["Me","iri","ad","la","panotendo"]},{en:"I play videogames",pa:["Me","ludi","kompoludos"]}],
-compound2:[{en:"She smiles at me",pa:["Lu","felifasi","ad","me"]},{en:"I see a ghost",pa:["Me","vidi","morahumo"]}],
-diminutive:[{en:"The puppy is small",pa:["La","pipido","esi","malgranda"]},{en:"I see a flame",pa:["Me","vidi","fogido"]}],
-reprefix:[{en:"I reread the book",pa:["Me","relegi","la","libo"]},{en:"She rewrites the message",pa:["Lu","replumi","la","mesago"]},{en:"We restart the game",pa:["Nos","rekomensi","la","ludo"]}],
-relclauses:[],verbchain:[],
-daily1:[{en:"I wake in the morning",pa:["Me","waki","en","la","matino"]},{en:"I eat and drink",pa:["Me","nutri","i","agwi"]}],
-daily2:[{en:"I clean the house",pa:["Me","puri","la","kaso"]},{en:"I send a message",pa:["Me","sendi","mesago"]}],
-communication:[{en:"I listen to music",pa:["Me","oreli","musiko"]},{en:"We watch a movie",pa:["Nos","okli","filmo"]},{en:"I do jiu jitsu",pa:["Me","teramaludi"]}],
-abstract1:[{en:"I have an idea",pa:["Me","havi","ideo"]},{en:"I find a solution",pa:["Me","trovi","solvo"]}],
-abstract2:[{en:"Life is beautiful",pa:["Vivo","esi","bela"]},{en:"Freedom is important",pa:["Libero","esi","grava"]}],
-advanced1:[{en:"I own a house",pa:["Me","propi","kaso"]},{en:"I promise to help",pa:["Me","wadi","helpi"]}],
-adverbs:[{en:"I always work",pa:["Me","sempra","labori"]},{en:"He arrives soon",pa:["Le","veni","balda"]}],
-quantities:[{en:"I have many books",pa:["Me","havi","manga","libos"]},{en:"That is enough",pa:["Farlan","esi","lagoma"]}],
-};
-
-function buildMiniSentences(items,lessonId){
-  const predefined=LS[lessonId];
-  if(!predefined||predefined.length===0)return[];
-  return pick(predefined,Math.min(2,predefined.length)).map(s=>({type:"wordOrder",prompt:`Translate: "${s.en}"`,correctOrder:s.pa,shuffled:shuffle([...s.pa])}));
-}
-
-const app=document.getElementById("app");
-let state={
-  screen:"loading",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null},
-  tab:"learn",lesson:null,exercises:[],exIdx:0,correct:0,hearts:3,accXP:0,leaderboard:[],
-  mcSelected:null,mcAnswered:false,matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:[],
-  fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:[],woAnswered:false,woCorrect:false,waitingContinue:false,
-};
-function setState(partial){Object.assign(state,partial);renderApp();}
-setTimeout(async()=>{
-  const savedName=getCurrentUsername();
-  if(savedName){
-    setState({screen:"loading"});
-    const user=await loadUserDataCloud(savedName);
-    saveUserData(user);
-    setState({user,screen:"home"});
-    fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
-  }
-  else{setState({screen:"username"});}
-},400);
-
-function renderApp(){
-  if(currentView!=='app')return;
-  switch(state.screen){
-    case"loading":renderLoading();break;
-    case"username":renderUsername();break;
-    case"home":renderHome();break;
-    case"lesson":renderLesson();break;
-    case"complete":renderComplete();break;
-  }
-}
-
-function renderLoading(){
-  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;flex-direction:column">
-    <div class="float" style="font-size:64px;margin-bottom:16px">🌍</div>
-    <div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800">Parli Aspo</div>
-    <div style="color:var(--dim);font-size:14px;margin-top:6px">Syncing your progress…</div>
-  </div>`;
-}
-
-function renderUsername(){
-  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
-    <div style="text-align:center;max-width:360px;width:100%">
-      <div class="float" style="font-size:72px;margin-bottom:16px">🌍</div>
-      <div style="font-family:var(--display);font-size:32px;color:var(--green);font-weight:800;margin-bottom:4px">Parli Aspo</div>
-      <div style="color:var(--dim);font-size:15px;margin-bottom:36px">The language of hope</div>
-      <input id="nameInput" type="text" placeholder="Enter your username" maxlength="20" value=""
-        style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);
-        color:var(--text);font-size:17px;font-weight:700;text-align:center;margin-bottom:8px">
-      <div style="color:var(--dim);font-size:12px;margin-bottom:16px">New username = new account · Existing username = resume progress</div>
-      <button id="startBtn" class="btn-primary">START LEARNING</button>
-    </div>
-  </div>`;
-  const input=document.getElementById("nameInput");const btn=document.getElementById("startBtn");
-  input.focus();
-  input.addEventListener("keydown",e=>{if(e.key==="Enter")doSetUsername(input.value);});
-  btn.addEventListener("click",()=>doSetUsername(input.value));
-}
-
-async function doSetUsername(val){
-  const name=val.trim();if(!name)return;
-  // Admin mode: unlock all lessons, skip Firebase save/leaderboard
-  if(name==="Admin"){
-    const adminUser={username:"Admin",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:new Date().toDateString()};
-    setState({user:adminUser,isAdmin:true,screen:"home",leaderboard:[]});
-    return;
-  }
-  setCurrentUsername(name);
-  setState({screen:"loading",isAdmin:false});
-  const existing=await loadUserDataCloud(name);
-  const today=new Date().toDateString();
-  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
-  saveUserData(user);pushToLeaderboard(user);
-  setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
-}
-
-function renderHome(){
-  const u=state.user;const completedSet=new Set(u.lessonsCompleted||[]);
-  const UNITS=[
-    {at:0,name:"Unit 1: Basics"},{at:5,name:"Unit 2: Basics 2"},{at:9,name:"Unit 3: Food & Drink"},
-    {at:12,name:"Unit 4: Animals"},{at:15,name:"Unit 5: Home & Objects"},{at:19,name:"Checkpoint 1"},
-    {at:20,name:"Checkpoint 2"},{at:21,name:"Unit 6: Basic Verbs"},{at:25,name:"Unit 7: More Verbs"},
-    {at:29,name:"Unit 8: Adjectives"},{at:33,name:"Checkpoint 3"},{at:34,name:"Unit 9: Nature & Places"},
-    {at:38,name:"Unit 10: Body & Health"},{at:41,name:"Checkpoint 4"},
-    {at:42,name:"Unit 11: Grammar Words"},{at:45,name:"Unit 12: Time"},
-    {at:49,name:"Checkpoint 5"},{at:50,name:"Unit 13: Transport & Travel"},
-    {at:52,name:"Unit 14: Emotions"},{at:55,name:"Unit 15: mal- Prefix"},
-    {at:57,name:"Unit 16: Tenses"},{at:59,name:"Unit 17: Word Building"},
-    {at:65,name:"Unit 18: Daily Life"},{at:68,name:"Unit 19: Advanced"},
-    {at:71,name:"Unit 20: Adverbs & Quantities"},{at:73,name:"Final Challenge"},
-  ];
-  const unitMap={};UNITS.forEach(u=>{unitMap[u.at]=u.name;});
-  let lessonsHTML="";
-  LESSONS.forEach((l,i)=>{
-    if(unitMap[i]){lessonsHTML+=`<div style="margin:${i===0?'0':'18px'} 0 10px;padding:6px 0;color:var(--green);font-size:14px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)">${unitMap[i]}</div>`;}
-    const unlocked=state.isAdmin||i===0||completedSet.has(LESSONS[i-1].id);
-    const completed=completedSet.has(l.id);
-    const cls=completed?"completed":unlocked?"":"locked";
-    lessonsHTML+=`<button class="lesson-card ${cls}" data-idx="${i}" ${!unlocked?'disabled':''}>
-      <div class="lesson-icon">${completed?"✅":unlocked?l.icon:"🔒"}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:16px;font-weight:800">${l.title}</div>
-        <div style="color:var(--dim);font-size:13px;font-weight:600;margin-top:2px">${l.desc}</div>
-      </div>
-      <div style="color:var(--gold);font-size:12px;font-weight:800;flex-shrink:0">+${l.xp} XP</div>
-    </button>`;
-  });
-  let lbHTML="";
-  if(!firebaseReady){lbHTML=`<div style="text-align:center;padding:40px 20px;color:var(--dim)"><div style="font-size:36px;margin-bottom:12px">🌐</div><div style="font-size:15px;font-weight:700;margin-bottom:8px">Leaderboard available when hosted</div><div style="font-size:13px;line-height:1.5">The shared leaderboard works once this file is hosted on GitHub Pages or similar.</div></div>`;}
-  else if(state.leaderboard.length===0){lbHTML=`<div style="text-align:center;padding:40px;color:var(--dim);font-size:15px">No learners yet. Be the first!</div>`;}
-  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;lbHTML+=`<div class="lb-row ${isMe?'is-me':''}"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div></div>`;}); lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
-  const pct=Math.round((u.lessonsCompleted||[]).length/LESSONS.length*100);
-  app.innerHTML=`<div style="padding-bottom:80px">
-    <div style="padding:16px 20px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌍</span><span style="font-family:var(--display);color:var(--green);font-weight:800;font-size:19px">Parli Aspo</span></div>
-      <div style="display:flex;gap:8px;align-items:center">${state.isAdmin?'<span class="badge" style="background:rgba(206,130,255,0.15);border:1.5px solid var(--purple);color:var(--purple);font-size:12px;padding:4px 10px;border-radius:20px;font-weight:800">🔑 Admin</span>':''}<span class="badge badge-streak">🔥 ${u.streak||0}</span><span class="badge badge-xp">⚡ ${u.xp||0} XP</span></div>
-    </div>
-    <div style="padding:14px 20px 8px">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div><div style="color:var(--dim);font-size:14px">Bonayo, <span style="color:var(--text);font-weight:800">${u.username}</span>!</div><div style="color:var(--dim);font-size:12px;margin-top:4px">${(u.lessonsCompleted||[]).length}/${LESSONS.length} lessons completed</div></div>
-        <button id="switchUserBtn" style="background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;color:var(--dim);font-size:12px;font-weight:700">Switch User</button>
-      </div>
-      <div style="margin-top:8px" class="progress-track"><div class="progress-fill" style="width:${pct}%;background:var(--gold)"></div></div>
-    </div>
-    <div class="tab-bar">
-      <button class="tab-btn ${state.tab==='learn'?'active':''}" data-tab="learn">📚 LEARN</button>
-      <button class="tab-btn ${state.tab==='leaderboard'?'active':''}" data-tab="leaderboard">🏆 LEADERBOARD</button>
-    </div>
-    <div style="padding:16px 20px;${state.tab==='learn'?'':'display:none'}" id="learnTab">${lessonsHTML}</div>
-    <div style="padding:16px 20px;${state.tab==='leaderboard'?'':'display:none'}" id="lbTab">${lbHTML}</div>
-  </div>`;
-  document.querySelectorAll(".tab-btn").forEach(btn=>{btn.addEventListener("click",()=>{setState({tab:btn.dataset.tab});if(btn.dataset.tab==="leaderboard")fetchLeaderboard().then(lb=>setState({leaderboard:lb}));});});
-  document.querySelectorAll(".lesson-card:not(.locked)").forEach(card=>{card.addEventListener("click",()=>startLesson(parseInt(card.dataset.idx)));});
-  const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
-  document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",isAdmin:false,user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
-}
-
-function startLesson(idx){
-  const lesson=LESSONS[idx];const exercises=generateExercises(lesson.id);const ex=exercises[0];
-  setState({screen:"lesson",lesson,exercises,exIdx:0,correct:0,hearts:3,accXP:0,mcSelected:null,mcAnswered:false,matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:ex.type==="match"?shuffle(ex.pairs.map(p=>p.right)):[],fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:ex.type==="wordOrder"?[...ex.shuffled]:[],woAnswered:false,woCorrect:false,waitingContinue:false,});
-}
-
-function renderLesson(){
-  const ex=state.exercises[state.exIdx];const pct=state.exIdx/state.exercises.length*100;
-  const heartsHTML=[...Array(3)].map((_,i)=>`<span style="font-size:20px;opacity:${i<state.hearts?1:0.2}">❤️</span>`).join("");
-  let exHTML="";
-  if(ex.type==="mc")exHTML=renderMC(ex);else if(ex.type==="match")exHTML=renderMatch(ex);else if(ex.type==="fill")exHTML=renderFill(ex);else if(ex.type==="wordOrder")exHTML=renderWordOrder(ex);
-  let continueHTML="";
-  if(state.waitingContinue){continueHTML=`<div class="check-bar"><button id="continueBtn" class="btn-primary" style="background:var(--red);box-shadow:0 4px 20px var(--red-glow)">CONTINUE</button></div>`;}
-  app.innerHTML=`<div style="padding:16px 16px 100px 16px">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
-      <button id="closeBtn" style="background:none;color:var(--dim);font-size:24px;padding:4px">✕</button>
-      <div style="flex:1" class="progress-track"><div class="progress-fill" style="width:${pct}%;background:var(--green)"></div></div>
-      <div style="display:flex;gap:2px">${heartsHTML}</div>
-    </div>
-    <div style="max-width:480px;margin:0 auto" class="fade-up">${exHTML}</div>
-  </div>${continueHTML}`;
-  document.getElementById("closeBtn").addEventListener("click",()=>setState({screen:"home"}));
-  const contBtn=document.getElementById("continueBtn");if(contBtn)contBtn.addEventListener("click",()=>advanceAfterAnswer());
-  if(ex.type==="mc")bindMC(ex);else if(ex.type==="match")bindMatch(ex);else if(ex.type==="fill")bindFill(ex);else if(ex.type==="wordOrder")bindWordOrder(ex);
-}
-
-function renderMC(ex){
-  const optsHTML=ex.options.map((opt,i)=>{
-    let cls="opt-btn";
-    if(state.mcAnswered){if(opt===ex.correct)cls+=" correct";else if(opt===state.mcSelected&&opt!==ex.correct)cls+=" wrong";else if(opt!==ex.correct)cls+=" faded";}
-    return `<button class="${cls}" data-opt="${i}" style="animation-delay:${i*0.05}s">${opt}</button>`;
-  }).join("");
-  let noteHTML="";
-  if(state.mcAnswered&&ex.note)noteHTML=`<div style="margin-top:14px;color:var(--blue);font-size:13px;font-style:italic;font-weight:600">💡 ${ex.note}</div>`;
-  if(state.mcAnswered&&ex.pr)noteHTML+=`<div class="pronun">🔊 ${ex.paWord}: ${ex.pr}</div>`;
-  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px;line-height:1.4">${ex.prompt}</div><div style="display:flex;flex-direction:column;gap:10px">${optsHTML}</div>${noteHTML}`;
-}
-function bindMC(ex){
-  if(state.mcAnswered)return;
-  document.querySelectorAll(".opt-btn").forEach((btn,i)=>{
-    btn.addEventListener("click",()=>{
-      if(state.mcAnswered)return;
-      const opt=ex.options[i];state.mcSelected=opt;state.mcAnswered=true;render();
-      const isCorrect=opt===ex.correct;
-      if(isCorrect){setTimeout(()=>handleAnswer(true),900);}else{setTimeout(()=>handleAnswer(false),600);}
-    });
-  });
-}
-
-function renderMatch(ex){
-  const leftHTML=ex.pairs.map((p,i)=>{const matched=state.matchMatched.find(m=>m.left===p.left);const selected=state.matchSelectedLeft===p.left;const wrong=state.matchWrong&&state.matchWrong.left===p.left;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";else if(selected)cls+=" selected";return `<button class="${cls}" data-side="left" data-idx="${i}">${p.left}</button>`;}).join("");
-  const rightHTML=state.matchShuffledRight.map((r,i)=>{const matched=state.matchMatched.find(m=>m.right===r);const wrong=state.matchWrong&&state.matchWrong.right===r;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";return `<button class="${cls}" data-side="right" data-idx="${i}">${r}</button>`;}).join("");
-  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">Match the pairs</div><div style="display:flex;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:8px">${leftHTML}</div><div style="flex:1;display:flex;flex-direction:column;gap:8px">${rightHTML}</div></div>`;
-}
-function bindMatch(ex){
-  document.querySelectorAll("[data-side='left']").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.idx);const left=ex.pairs[i].left;if(state.matchMatched.find(m=>m.left===left))return;state.matchSelectedLeft=left;state.matchWrong=null;renderApp();});});
-  document.querySelectorAll("[data-side='right']").forEach(btn=>{btn.addEventListener("click",()=>{if(!state.matchSelectedLeft)return;const right=state.matchShuffledRight[parseInt(btn.dataset.idx)];if(state.matchMatched.find(m=>m.right===right))return;const pair=ex.pairs.find(p=>p.left===state.matchSelectedLeft&&p.right===right);if(pair){state.matchMatched=[...state.matchMatched,pair];state.matchSelectedLeft=null;renderApp();if(state.matchMatched.length===ex.pairs.length)setTimeout(()=>handleAnswer(true),600);}else{state.matchWrong={left:state.matchSelectedLeft,right};renderApp();setTimeout(()=>{state.matchWrong=null;state.matchSelectedLeft=null;renderApp();},700);}});});
-}
-
-function renderFill(ex){
-  let feedbackHTML="";
-  if(state.fillAnswered&&!state.fillCorrect){feedbackHTML=`<div style="margin-top:16px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct answer: <span style="color:var(--green)">${ex.correct}</span></div>`;}
-  const borderColor=state.fillAnswered?(state.fillCorrect?"var(--green)":"var(--red)"):"var(--border)";
-  const bgColor=state.fillAnswered?(state.fillCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
-  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div>
-    <div style="display:flex;gap:10px">
-      <input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
-        style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">
-      ${!state.fillAnswered?'<button id="fillCheck" class="btn-primary" style="width:auto;padding:14px 20px;font-size:15px">CHECK</button>':''}
-    </div>${feedbackHTML}`;
-}
-function bindFill(ex){
-  if(state.fillAnswered)return;
-  const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
-  input.focus();
-  input.addEventListener("input",e=>{state.fillInput=e.target.value;});
-  input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});
-  if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
-}
-function doFillCheck(ex){
-  if(state.fillAnswered||!state.fillInput.trim())return;
-  const correct=state.fillInput.trim().toLowerCase()===ex.correct.toLowerCase();
-  state.fillAnswered=true;state.fillCorrect=correct;renderApp();
-  if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
-}
-
-function renderWordOrder(ex){
-  const selectedHTML=state.woSelected.length===0?`<span style="color:var(--dim);font-size:14px;padding:4px">Tap words to build the sentence...</span>`:state.woSelected.map((w,i)=>`<button class="word-chip placed" data-rm="${i}">${w}</button>`).join("");
-  const availHTML=state.woAvailable.map((w,i)=>`<button class="word-chip" data-add="${i}">${w}</button>`).join("");
-  const answerBorder=state.woAnswered?(state.woCorrect?"var(--green)":"var(--red)"):"var(--border)";
-  const answerBg=state.woAnswered?(state.woCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
-  let checkHTML="";if(!state.woAnswered&&state.woSelected.length===ex.correctOrder.length){checkHTML=`<button id="woCheck" class="btn-primary" style="margin-top:4px">CHECK</button>`;}
-  let wrongHTML="";if(state.woAnswered&&!state.woCorrect){wrongHTML=`<div style="margin-top:12px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct: <span style="color:var(--green)">${ex.correctOrder.join(" ")}</span></div>`;}
-  return `<div style="font-size:20px;font-weight:800;margin-bottom:20px">${ex.prompt}</div>
-    <div style="min-height:52px;padding:10px 14px;background:${answerBg};border:2.5px dashed ${answerBorder};border-radius:var(--radius);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${selectedHTML}</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${availHTML}</div>${checkHTML}${wrongHTML}`;
-}
-function bindWordOrder(ex){
-  if(state.woAnswered)return;
-  document.querySelectorAll("[data-add]").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.add);const word=state.woAvailable[i];state.woSelected=[...state.woSelected,word];state.woAvailable=state.woAvailable.filter((_,j)=>j!==i);renderApp();});});
-  document.querySelectorAll("[data-rm]").forEach(btn=>{btn.addEventListener("click",()=>{if(state.woAnswered)return;const i=parseInt(btn.dataset.rm);const word=state.woSelected[i];state.woSelected=state.woSelected.filter((_,j)=>j!==i);state.woAvailable=[...state.woAvailable,word];renderApp();});});
-  const checkBtn=document.getElementById("woCheck");
-  if(checkBtn)checkBtn.addEventListener("click",()=>{const correct=state.woSelected.every((w,i)=>w===ex.correctOrder[i]);state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
-}
-
-function handleAnswer(correct){
-  if(correct){state.correct++;state.accXP+=state.lesson.xp/state.exercises.length;advanceAfterAnswer();}
-  else{state.hearts--;state.waitingContinue=true;renderApp();}
-}
-
-function advanceAfterAnswer(){
-  state.waitingContinue=false;
-  if(state.hearts<=0){setState({screen:"complete"});return;}
-  if(state.exIdx+1>=state.exercises.length){
-    const totalXP=Math.round(state.accXP);
-    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
-    saveUserData(user);pushToLeaderboard(user);state.user=user;setState({screen:"complete"});
-  } else {
-    const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
-    setState({exIdx:nextIdx,mcSelected:null,mcAnswered:false,matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:nextEx.type==="match"?shuffle(nextEx.pairs.map(p=>p.right)):[],fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:nextEx.type==="wordOrder"?[...nextEx.shuffled]:[],woAnswered:false,woCorrect:false,waitingContinue:false,});
-  }
-}
-
-// Alias so MC bindMC still works (render → renderApp in lesson context)
-function render() { renderApp(); }
-
-function renderComplete(){
-  const passed=state.hearts>0;const earnedXP=Math.round(state.accXP);
-  let confettiHTML="";
-  if(passed){const colors=["#58CC02","#FFC800","#1CB0F6","#CE82FF","#FF4B4B"];for(let i=0;i<20;i++){const color=colors[i%colors.length];const left=Math.random()*100;const delay=Math.random()*0.5;const size=6+Math.random()*8;confettiHTML+=`<div class="confetti-piece" style="left:${left}%;bottom:40%;width:${size}px;height:${size}px;background:${color};animation-delay:${delay}s;border-radius:${Math.random()>0.5?'50%':'2px'}"></div>`;}}
-  app.innerHTML=`${confettiHTML}
-    <div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
-      <div style="text-align:center;max-width:360px" class="pop">
-        <div style="font-size:72px;margin-bottom:16px">${passed?"🎉":"💔"}</div>
-        <div style="font-family:var(--display);font-size:28px;font-weight:800;color:${passed?'var(--green)':'var(--red)'};margin-bottom:8px">${passed?"Lesson Complete!":"Out of Hearts!"}</div>
-        ${passed?`<div style="color:var(--mid);font-size:16px;margin-bottom:20px">${state.correct}/${state.exercises.length} correct</div>
-          <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px">
-            <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
-            <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak}</span>
-          </div>`:`<div style="color:var(--dim);font-size:15px;margin-bottom:28px">Na malbravi! Trati otra hapa.<br><span style="font-size:13px;color:var(--mid)">(Don't fear! Try again.)</span></div>`}
-        <button id="completeBtn" class="btn-primary" style="margin-bottom:10px">${passed?"CONTINUE":"TRY AGAIN"}</button>
-        ${!passed?'<button id="backBtn" class="btn-secondary">BACK TO LESSONS</button>':''}
-      </div>
-    </div>`;
-  document.getElementById("completeBtn").addEventListener("click",()=>{if(!passed){const idx=LESSONS.findIndex(l=>l.id===state.lesson.id);startLesson(idx);}else{setState({screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));}});
-  const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home"}));
-}
-
-// Trigger initial app render when switching to app view
-const _origShowView = showView;
-// Override showView to also trigger renderApp
-(function(){
-  const orig = showView;
-  window.showView = function(name) {
-    orig(name);
-    if(name === 'app') renderApp();
-  };
-})();
 </script>
 </body>
 </html>
