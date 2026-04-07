@@ -1375,19 +1375,51 @@ function saveLocal(key,val){try{localStorage.setItem(key,JSON.stringify(val))}ca
 function loadLocal(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def}}
 function getCurrentUsername(){return loadLocal("pa_current_user","");}
 function setCurrentUsername(name){saveLocal("pa_current_user",name);}
-function loadUserData(username){
-  if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
-  const data=loadLocal("pa_user_"+username,{username,xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null});
-  data.username=username;
+function applyStreakLogic(data){
   if(data.lastActiveDate){
     const today=new Date().toDateString();
     const yesterday=new Date(Date.now()-86400000).toDateString();
     if(data.lastActiveDate!==today&&data.lastActiveDate!==yesterday)data.streak=0;
-    if(data.lastActiveDate!==today){data.streak=(data.streak||0)+1;data.lastActiveDate=today;saveLocal("pa_user_"+username,data);}
+    if(data.lastActiveDate!==today){data.streak=(data.streak||0)+1;data.lastActiveDate=today;}
   }
   return data;
 }
-function saveUserData(data){if(!data.username)return;saveLocal("pa_user_"+data.username,data);}
+function loadUserData(username){
+  // Fallback local-only load (used synchronously when Firebase unavailable)
+  if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
+  const data=loadLocal("pa_user_"+username,{username,xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null});
+  data.username=username;
+  return applyStreakLogic(data);
+}
+async function loadUserDataCloud(username){
+  // Load from Firebase first, fall back to localStorage
+  if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
+  if(firebaseReady&&db){
+    try{
+      const key=username.replace(/[.#$\/\[\]]/g,"_");
+      const snap=await db.ref("users/"+key).once("value");
+      if(snap.exists()){
+        const data=snap.val();
+        data.username=username;
+        data.lessonsCompleted=data.lessonsCompleted||[];
+        const updated=applyStreakLogic(data);
+        saveLocal("pa_user_"+username,updated); // keep local in sync
+        return updated;
+      }
+    }catch(e){console.warn("Firebase load error:",e);}
+  }
+  // Fall back to localStorage
+  return loadUserData(username);
+}
+function saveUserData(data){
+  if(!data.username)return;
+  saveLocal("pa_user_"+data.username,data);
+  // Also persist full profile to Firebase for cross-device sync
+  if(firebaseReady&&db){
+    const key=data.username.replace(/[.#$\/\[\]]/g,"_");
+    db.ref("users/"+key).set({...data,updatedAt:Date.now()}).catch(e=>console.warn("Firebase save error:",e));
+  }
+}
 async function pushToLeaderboard(data){
   if(!firebaseReady||!db||!data.username)return;
   try{await db.ref("leaderboard/"+data.username.replace(/[.#$\/\[\]]/g,"_")).set({name:data.username,xp:data.xp,streak:data.streak,lessons:data.lessonsCompleted.length,updatedAt:Date.now()});}
@@ -1575,9 +1607,15 @@ let state={
   fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:[],woAnswered:false,woCorrect:false,waitingContinue:false,
 };
 function setState(partial){Object.assign(state,partial);renderApp();}
-setTimeout(()=>{
+setTimeout(async()=>{
   const savedName=getCurrentUsername();
-  if(savedName){const user=loadUserData(savedName);setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));}
+  if(savedName){
+    setState({screen:"loading"});
+    const user=await loadUserDataCloud(savedName);
+    saveUserData(user);
+    setState({user,screen:"home"});
+    fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+  }
   else{setState({screen:"username"});}
 },400);
 
@@ -1596,7 +1634,7 @@ function renderLoading(){
   app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;flex-direction:column">
     <div class="float" style="font-size:64px;margin-bottom:16px">🌍</div>
     <div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800">Parli Aspo</div>
-    <div style="color:var(--dim);font-size:14px;margin-top:6px">The language of hope</div>
+    <div style="color:var(--dim);font-size:14px;margin-top:6px">Syncing your progress…</div>
   </div>`;
 }
 
@@ -1619,11 +1657,13 @@ function renderUsername(){
   btn.addEventListener("click",()=>doSetUsername(input.value));
 }
 
-function doSetUsername(val){
+async function doSetUsername(val){
   const name=val.trim();if(!name)return;
   setCurrentUsername(name);
-  const existing=loadUserData(name);
-  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:new Date().toDateString()};
+  setState({screen:"loading"});
+  const existing=await loadUserDataCloud(name);
+  const today=new Date().toDateString();
+  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
   saveUserData(user);pushToLeaderboard(user);
   setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
 }
