@@ -1659,8 +1659,14 @@ function renderUsername(){
 
 async function doSetUsername(val){
   const name=val.trim();if(!name)return;
+  // Admin mode: unlock all lessons, skip Firebase save/leaderboard
+  if(name==="Admin"){
+    const adminUser={username:"Admin",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:new Date().toDateString()};
+    setState({user:adminUser,isAdmin:true,screen:"home",leaderboard:[]});
+    return;
+  }
   setCurrentUsername(name);
-  setState({screen:"loading"});
+  setState({screen:"loading",isAdmin:false});
   const existing=await loadUserDataCloud(name);
   const today=new Date().toDateString();
   const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
@@ -1687,7 +1693,7 @@ function renderHome(){
   let lessonsHTML="";
   LESSONS.forEach((l,i)=>{
     if(unitMap[i]){lessonsHTML+=`<div style="margin:${i===0?'0':'18px'} 0 10px;padding:6px 0;color:var(--green);font-size:14px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)">${unitMap[i]}</div>`;}
-    const unlocked=i===0||completedSet.has(LESSONS[i-1].id);
+    const unlocked=state.isAdmin||i===0||completedSet.has(LESSONS[i-1].id);
     const completed=completedSet.has(l.id);
     const cls=completed?"completed":unlocked?"":"locked";
     lessonsHTML+=`<button class="lesson-card ${cls}" data-idx="${i}" ${!unlocked?'disabled':''}>
@@ -1707,7 +1713,7 @@ function renderHome(){
   app.innerHTML=`<div style="padding-bottom:80px">
     <div style="padding:16px 20px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌍</span><span style="font-family:var(--display);color:var(--green);font-weight:800;font-size:19px">Parli Aspo</span></div>
-      <div style="display:flex;gap:8px;align-items:center"><span class="badge badge-streak">🔥 ${u.streak||0}</span><span class="badge badge-xp">⚡ ${u.xp||0} XP</span></div>
+      <div style="display:flex;gap:8px;align-items:center">${state.isAdmin?'<span class="badge" style="background:rgba(206,130,255,0.15);border:1.5px solid var(--purple);color:var(--purple);font-size:12px;padding:4px 10px;border-radius:20px;font-weight:800">🔑 Admin</span>':''}<span class="badge badge-streak">🔥 ${u.streak||0}</span><span class="badge badge-xp">⚡ ${u.xp||0} XP</span></div>
     </div>
     <div style="padding:14px 20px 8px">
       <div style="display:flex;align-items:center;justify-content:space-between">
@@ -1726,7 +1732,7 @@ function renderHome(){
   document.querySelectorAll(".tab-btn").forEach(btn=>{btn.addEventListener("click",()=>{setState({tab:btn.dataset.tab});if(btn.dataset.tab==="leaderboard")fetchLeaderboard().then(lb=>setState({leaderboard:lb}));});});
   document.querySelectorAll(".lesson-card:not(.locked)").forEach(card=>{card.addEventListener("click",()=>startLesson(parseInt(card.dataset.idx)));});
   const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
-  document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
+  document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",isAdmin:false,user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
 }
 
 function startLesson(idx){
