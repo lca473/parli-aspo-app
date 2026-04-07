@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Parli Aspo — The Language of Hope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   CSS VARIABLES & RESET
+═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #0F1A1F;
+  --bg2: #162229;
+  --card: #1C2F38;
+  --card-hover: #22394A;
+  --green: #58CC02;
+  --green-dark: #46A302;
+  --green-glow: rgba(88,204,2,0.18);
+  --red: #FF4B4B;
+  --red-glow: rgba(255,75,75,0.12);
+  --gold: #FFC800;
+  --gold-glow: rgba(255,200,0,0.15);
+  --blue: #1CB0F6;
+  --blue-glow: rgba(28,176,246,0.12);
+  --purple: #CE82FF;
+  --purple-glow: rgba(206,130,255,0.12);
+  --text: #FFFFFF;
+  --dim: #7A99A8;
+  --mid: #A3BCC9;
+  --border: #263A45;
+  --input: #0B151B;
+  --ok: #1E4A14;
+  --bad: #4A1414;
+  --radius: 16px;
+  --font: 'Nunito', 'Baloo 2', system-ui, sans-serif;
+  --display: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { background:#0F1A1F; scroll-behavior:smooth; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); min-height:100vh; min-height:100dvh; overflow-x:hidden; }
+button { font-family:var(--font); cursor:pointer; border:none; outline:none; color:#FFF; }
+input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════════════════ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes pop { 0%{transform:scale(0.8);opacity:0} 60%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes confetti { 0%{transform:translateY(0) rotate(0);opacity:1} 100%{transform:translateY(-200px) rotate(720deg);opacity:0} }
+@keyframes glow { 0%,100%{box-shadow:0 0 20px var(--green-glow)} 50%{box-shadow:0 0 40px var(--green-glow)} }
+@keyframes slideResult { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes starField { from{transform:translateY(0)} to{transform:translateY(-50%)} }
+
+.fade-up { animation: fadeUp 0.4s ease-out both; }
+.fade-in { animation: fadeIn 0.3s ease-out both; }
+.pop { animation: pop 0.35s ease-out both; }
+.shake { animation: shake 0.4s ease-out; }
+.float { animation: float 3s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════════════════
+   VIEWS
+═══════════════════════════════════════════════════════════════ */
+.view { display:none; min-height:100vh; min-height:100dvh; background:var(--bg); }
+.view.active { display:block; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SHARED TOP NAV (all sub-pages)
+═══════════════════════════════════════════════════════════════ */
+.top-nav {
+  position:sticky; top:0; z-index:200;
+  display:flex; align-items:center; gap:12px;
+  padding:14px 18px;
+  background:rgba(15,26,31,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1.5px solid var(--border);
+}
+.top-nav-back {
+  background:var(--card); border:1.5px solid var(--border);
+  border-radius:12px; padding:8px 14px;
+  color:var(--dim); font-size:13px; font-weight:800;
+  display:flex; align-items:center; gap:6px;
+  transition:all 0.15s; flex-shrink:0;
+}
+.top-nav-back:hover { color:var(--text); border-color:var(--mid); }
+.top-nav-title {
+  font-family:var(--display); font-size:18px; font-weight:800; color:var(--green);
+  flex:1; text-align:center;
+}
+.top-nav-spacer { width:72px; flex-shrink:0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SHARED COMPONENTS
+═══════════════════════════════════════════════════════════════ */
+.progress-track { width:100%; height:14px; background:var(--input); border-radius:99px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:99px; transition:width 0.6s cubic-bezier(.34,1.56,.64,1); }
+.badge { display:inline-flex; align-items:center; gap:5px; border-radius:99px; padding:4px 12px; font-size:13px; font-weight:800; }
+.badge-xp { background:var(--gold-glow); border:1.5px solid var(--gold); color:var(--gold); }
+.badge-streak { background:rgba(255,120,0,0.12); border:1.5px solid #FF7800; color:#FF7800; }
+.badge-lessons { background:var(--blue-glow); border:1.5px solid var(--blue); color:var(--blue); }
+.opt-btn { width:100%; padding:15px 18px; background:var(--card); border:2.5px solid var(--border); border-radius:var(--radius); color:var(--text); font-size:16px; font-weight:700; text-align:left; transition:all 0.15s; position:relative; overflow:hidden; }
+.opt-btn:active { transform:scale(0.97); }
+.opt-btn.correct { background:var(--ok); border-color:var(--green); box-shadow:0 0 24px var(--green-glow); }
+.opt-btn.wrong { background:var(--bad); border-color:var(--red); box-shadow:0 0 24px var(--red-glow); }
+.opt-btn.faded { opacity:0.35; }
+.match-btn { padding:12px 14px; border-radius:13px; font-size:14px; font-weight:700; border:2.5px solid var(--border); background:var(--card); color:var(--text); transition:all 0.15s; text-align:center; }
+.match-btn.selected { background:var(--blue-glow); border-color:var(--blue); }
+.match-btn.matched { background:var(--ok); border-color:var(--green); opacity:0.5; }
+.match-btn.wrong-match { background:var(--bad); border-color:var(--red); }
+.word-chip { padding:9px 15px; border-radius:11px; font-size:15px; font-weight:700; border:2.5px solid var(--border); background:var(--card); color:var(--text); transition:all 0.12s; }
+.word-chip:active { transform:scale(0.93); }
+.word-chip.placed { background:var(--blue-glow); border-color:var(--blue); }
+.lesson-card { width:100%; display:flex; align-items:center; gap:14px; padding:14px 16px; border:2.5px solid var(--border); border-radius:var(--radius); margin-bottom:10px; text-align:left; transition:all 0.15s; background:var(--card); }
+.lesson-card:active { transform:scale(0.98); }
+.lesson-card.completed { background:rgba(88,204,2,0.06); border-color:var(--green); }
+.lesson-card.locked { opacity:0.35; cursor:default; }
+.lesson-icon { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; background:var(--input); }
+.lesson-card.completed .lesson-icon { background:var(--green-glow); border:2px solid var(--green); }
+.tab-bar { display:flex; border-bottom:1.5px solid var(--border); margin:8px 20px 0; }
+.tab-btn { flex:1; padding:13px 0; background:none; color:var(--dim); font-size:13px; font-weight:800; letter-spacing:0.5px; border-bottom:3px solid transparent; transition:all 0.2s; }
+.tab-btn.active { color:var(--green); border-bottom-color:var(--green); }
+.lb-row { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--card); border:1.5px solid var(--border); border-radius:14px; margin-bottom:8px; }
+.lb-row.is-me { background:rgba(88,204,2,0.06); border:2px solid var(--green); }
+.btn-primary { width:100%; padding:16px; background:var(--green); border-radius:var(--radius); color:#fff; font-size:17px; font-weight:800; letter-spacing:0.3px; box-shadow:0 4px 20px var(--green-glow), inset 0 1px 0 rgba(255,255,255,0.15); transition:all 0.15s; border:none; }
+.btn-primary:active { transform:scale(0.97); background:var(--green-dark); }
+.btn-primary:disabled { background:var(--border); box-shadow:none; cursor:default; }
+.btn-secondary { width:100%; padding:14px; background:none; border:2px solid var(--border); border-radius:var(--radius); color:var(--dim); font-size:15px; font-weight:700; }
+.check-bar { position:fixed; bottom:0; left:0; right:0; padding:16px 20px; padding-bottom:max(16px, env(safe-area-inset-bottom)); background:linear-gradient(transparent, var(--bg) 30%); }
+.confetti-piece { position:fixed; width:10px; height:10px; border-radius:2px; animation:confetti 1.2s ease-out forwards; pointer-events:none; }
+.pronun { color:var(--blue); font-size:13px; font-style:italic; font-weight:600; margin-top:2px; }
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:99px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LANDING PAGE
+═══════════════════════════════════════════════════════════════ */
+#view-home {
+  position:relative;
+  overflow:hidden;
+}
+.landing-stars {
+  position:absolute; top:0; left:0; right:0; bottom:0;
+  pointer-events:none; z-index:0; overflow:hidden;
+}
+.star {
+  position:absolute; background:#FFF; border-radius:50%;
+  animation:float linear infinite;
+  opacity:0.15;
+}
+.landing-content {
+  position:relative; z-index:1;
+  display:flex; flex-direction:column; align-items:center;
+  min-height:100vh; min-height:100dvh;
+  padding:0 20px 40px;
+}
+.landing-hero {
+  display:flex; flex-direction:column; align-items:center;
+  padding:60px 0 40px;
+  text-align:center;
+}
+.landing-globe {
+  font-size:80px;
+  animation:float 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 40px rgba(88,204,2,0.4));
+  margin-bottom:24px;
+}
+.landing-title {
+  font-family:var(--display);
+  font-size:clamp(42px, 10vw, 64px);
+  font-weight:800;
+  color:var(--green);
+  letter-spacing:-1px;
+  line-height:1.1;
+  margin-bottom:8px;
+  text-shadow:0 0 60px rgba(88,204,2,0.3);
+}
+.landing-subtitle {
+  font-size:16px; font-weight:600; color:var(--dim);
+  margin-bottom:4px;
+}
+.landing-tagline {
+  font-size:13px; color:var(--mid); font-weight:600;
+  background:var(--card); border:1.5px solid var(--border);
+  border-radius:99px; padding:6px 16px; margin-top:14px;
+  display:inline-block;
+}
+.landing-stats {
+  display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  margin:32px 0 40px;
+}
+.landing-stat {
+  background:var(--card); border:1.5px solid var(--border);
+  border-radius:14px; padding:14px 20px; text-align:center;
+  min-width:90px;
+}
+.landing-stat-num { font-family:var(--display); font-size:24px; font-weight:800; color:var(--green); }
+.landing-stat-label { font-size:12px; font-weight:700; color:var(--dim); margin-top:2px; }
+.landing-cards {
+  display:flex; flex-direction:column; gap:14px;
+  width:100%; max-width:480px;
+}
+.landing-card {
+  display:flex; align-items:center; gap:18px;
+  padding:20px 22px;
+  background:var(--card); border:2px solid var(--border);
+  border-radius:var(--radius);
+  text-align:left; width:100%;
+  transition:all 0.2s;
+  position:relative; overflow:hidden;
+}
+.landing-card::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(88,204,2,0.04), transparent);
+  opacity:0; transition:opacity 0.2s;
+}
+.landing-card:hover { border-color:var(--green); transform:translateY(-2px); box-shadow:0 8px 32px rgba(88,204,2,0.12); }
+.landing-card:hover::before { opacity:1; }
+.landing-card:active { transform:scale(0.98); }
+.landing-card-icon {
+  width:56px; height:56px; border-radius:16px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px;
+}
+.landing-card-body { flex:1; min-width:0; }
+.landing-card-title { font-family:var(--display); font-size:18px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.landing-card-desc { font-size:13px; font-weight:600; color:var(--dim); }
+.landing-card-arrow { color:var(--green); font-size:22px; flex-shrink:0; }
+.landing-contact-link {
+  margin-top:36px;
+  color:var(--dim); font-size:13px; font-weight:700;
+  display:flex; align-items:center; gap:6px;
+  text-decoration:none; background:none; border:none; cursor:pointer;
+  transition:color 0.15s;
+}
+.landing-contact-link:hover { color:var(--mid); }
+
+/* ═══════════════════════════════════════════════════════════════
+   GRAMMAR PAGE
+═══════════════════════════════════════════════════════════════ */
+.grammar-content {
+  max-width:680px; margin:0 auto;
+  padding:20px 18px 80px;
+}
+.grammar-intro {
+  background:linear-gradient(135deg, rgba(88,204,2,0.06), rgba(28,176,246,0.04));
+  border:1.5px solid var(--border); border-radius:var(--radius);
+  padding:18px 20px; margin-bottom:20px;
+  font-size:14px; font-weight:600; color:var(--mid); line-height:1.7;
+}
+.grammar-intro strong { color:var(--text); }
+.grammar-section {
+  margin-bottom:12px;
+  border:1.5px solid var(--border); border-radius:var(--radius);
+  overflow:hidden; background:var(--card);
+}
+.grammar-section-header {
+  display:flex; align-items:center; gap:12px;
+  padding:16px 18px; cursor:pointer;
+  transition:background 0.15s;
+  user-select:none;
+}
+.grammar-section-header:hover { background:var(--card-hover); }
+.grammar-section-icon { font-size:20px; flex-shrink:0; }
+.grammar-section-title { font-family:var(--display); font-size:16px; font-weight:800; color:var(--text); flex:1; }
+.grammar-section-chevron {
+  color:var(--dim); font-size:16px; flex-shrink:0;
+  transition:transform 0.25s;
+}
+.grammar-section.open .grammar-section-chevron { transform:rotate(180deg); }
+.grammar-section-body {
+  display:none; padding:0 18px 18px;
+  animation:fadeIn 0.2s ease-out both;
+}
+.grammar-section.open .grammar-section-body { display:block; }
+.grammar-section-body p {
+  font-size:14px; color:var(--mid); font-weight:600; line-height:1.7;
+  margin-bottom:12px;
+}
+.grammar-section-body p strong { color:var(--text); }
+.grammar-section-body em { color:var(--blue); font-style:italic; }
+.grammar-section-body ul {
+  list-style:none; margin-bottom:12px;
+}
+.grammar-section-body ul li {
+  font-size:14px; color:var(--mid); font-weight:600; line-height:1.6;
+  padding:4px 0 4px 18px; position:relative;
+}
+.grammar-section-body ul li::before {
+  content:'•'; position:absolute; left:0; color:var(--green);
+}
+.grammar-section-body ul li strong { color:var(--text); }
+.grammar-section-body ul li em { color:var(--blue); font-style:italic; }
+.grammar-table-wrap { overflow-x:auto; margin:12px 0; border-radius:12px; border:1.5px solid var(--border); }
+.grammar-table { width:100%; border-collapse:collapse; font-size:13px; }
+.grammar-table th {
+  padding:10px 14px; background:var(--bg2);
+  color:var(--green); font-weight:800; text-align:left;
+  font-size:12px; letter-spacing:0.3px; text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.grammar-table td {
+  padding:10px 14px; color:var(--mid); font-weight:600;
+  border-bottom:1px solid var(--border); line-height:1.5;
+}
+.grammar-table tr:last-child td { border-bottom:none; }
+.grammar-table td:first-child { color:var(--text); font-weight:700; }
+.grammar-table td em { color:var(--blue); font-style:italic; }
+.grammar-callout {
+  background:rgba(28,176,246,0.06); border:1.5px solid rgba(28,176,246,0.2);
+  border-radius:12px; padding:12px 16px; margin:12px 0;
+  font-size:13px; color:var(--mid); font-weight:600; line-height:1.6;
+}
+.grammar-callout strong { color:var(--blue); }
+.grammar-section-divider {
+  height:1px; background:var(--border); margin:12px 0;
+}
+.grammar-sub-header {
+  font-size:13px; font-weight:800; color:var(--green);
+  letter-spacing:0.3px; text-transform:uppercase;
+  margin:14px 0 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DICTIONARY PAGE
+═══════════════════════════════════════════════════════════════ */
+.dict-content {
+  max-width:640px; margin:0 auto;
+  padding:16px 16px 80px;
+}
+.dict-stats {
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;
+}
+.dict-stat-chip {
+  padding:5px 12px; border-radius:99px;
+  font-size:12px; font-weight:800;
+  background:var(--card); border:1.5px solid var(--border); color:var(--dim);
+}
+.dict-stat-chip.blue { background:var(--blue-glow); border-color:rgba(28,176,246,0.25); color:var(--blue); }
+.dict-stat-chip.green { background:var(--green-glow); border-color:rgba(88,204,2,0.25); color:var(--green); }
+.dict-panel {
+  background:var(--card); border:2px solid var(--border);
+  border-radius:var(--radius); padding:18px; margin-bottom:14px;
+}
+.dict-panel.pa-panel { border-color:rgba(88,204,2,0.2); }
+.dict-panel-label {
+  display:flex; align-items:center; gap:8px; margin-bottom:12px;
+}
+.dict-flag {
+  width:32px; height:22px; border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#FFF;
+}
+.dict-flag.flag-en { background:linear-gradient(135deg,#1CB0F6,#0d8ec7); }
+.dict-flag.flag-pa { background:linear-gradient(135deg,#58CC02,#46A302); }
+.dict-panel-lang { font-size:14px; font-weight:800; color:var(--mid); }
+.dict-input-wrap { position:relative; }
+.dict-search-input {
+  width:100%; padding:13px 40px 13px 16px;
+  background:var(--input); border:2px solid var(--border);
+  border-radius:12px; color:var(--text); font-size:16px; font-weight:700;
+  transition:border-color 0.15s;
+}
+.dict-search-input:focus { border-color:var(--blue); }
+.dict-clear-btn {
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  background:none; border:none; color:var(--dim); font-size:16px;
+  cursor:pointer; padding:4px; opacity:0; transition:opacity 0.15s;
+}
+.dict-clear-btn.visible { opacity:1; }
+.dict-results { margin-top:10px; }
+.dict-result-item {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:10px 12px; border-radius:12px;
+  background:var(--bg2); margin-bottom:6px;
+  animation:slideResult 0.2s ease-out both;
+}
+.dict-result-arrow { color:var(--green); font-weight:800; font-size:14px; margin-top:1px; flex-shrink:0; }
+.dict-result-word { font-size:16px; font-weight:800; color:var(--text); }
+.dict-result-translation { font-size:13px; font-weight:600; color:var(--mid); margin-top:2px; }
+.dict-result-pos {
+  font-size:11px; font-weight:800; color:var(--dim);
+  background:var(--input); border-radius:6px; padding:2px 7px;
+  display:inline-block; margin-top:4px;
+}
+.dict-result-note { font-size:11px; color:var(--blue); font-weight:700; margin-top:3px; }
+.dict-result-count { font-size:12px; font-weight:700; color:var(--dim); margin-bottom:6px; padding-left:2px; }
+.dict-no-results { text-align:center; padding:24px; color:var(--dim); }
+.dict-no-results-icon { font-size:32px; margin-bottom:8px; }
+.dict-divider {
+  display:flex; align-items:center; gap:10px; margin:14px 0;
+}
+.dict-divider-line { flex:1; height:1px; background:var(--border); }
+.dict-divider-icon { color:var(--dim); font-size:18px; font-weight:800; }
+.dict-grammar-tip {
+  background:linear-gradient(135deg, rgba(88,204,2,0.06), rgba(28,176,246,0.06));
+  border:1.5px solid var(--border); border-radius:var(--radius);
+  padding:16px 18px; margin-top:20px;
+}
+.dict-grammar-tip-title { font-size:14px; font-weight:800; color:var(--green); margin-bottom:8px; }
+.dict-grammar-tip-text { font-size:13px; font-weight:600; color:var(--mid); line-height:1.6; }
+.dict-grammar-tip-text strong { color:var(--text); }
+.dict-browse-section { margin-top:24px; }
+.dict-browse-title { font-size:16px; font-weight:800; color:var(--mid); margin-bottom:12px; }
+.dict-letter-nav { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+.dict-letter-btn {
+  width:36px; height:36px; border-radius:10px;
+  background:var(--card); border:1.5px solid var(--border);
+  color:var(--mid); font-size:14px; font-weight:800;
+  cursor:pointer; transition:all 0.15s;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font);
+}
+.dict-letter-btn:hover { background:var(--card-hover); color:var(--text); }
+.dict-letter-btn.active { background:var(--green-glow); border-color:var(--green); color:var(--green); }
+.dict-letter-btn.disabled { opacity:0.25; cursor:default; }
+.dict-browse-results { max-height:420px; overflow-y:auto; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTACT PAGE
+═══════════════════════════════════════════════════════════════ */
+.contact-content {
+  max-width:520px; margin:0 auto;
+  padding:24px 18px 80px;
+}
+.contact-intro {
+  text-align:center; margin-bottom:28px;
+}
+.contact-intro-icon { font-size:52px; margin-bottom:12px; }
+.contact-intro-title { font-family:var(--display); font-size:22px; font-weight:800; color:var(--text); margin-bottom:6px; }
+.contact-intro-desc { font-size:14px; font-weight:600; color:var(--dim); line-height:1.6; }
+.contact-form-group { margin-bottom:16px; }
+.contact-label {
+  display:block; font-size:13px; font-weight:800; color:var(--mid);
+  margin-bottom:6px; letter-spacing:0.2px;
+}
+.contact-input, .contact-textarea, .contact-select {
+  width:100%; padding:14px 16px;
+  background:var(--input); border:2px solid var(--border);
+  border-radius:var(--radius); color:var(--text); font-size:15px; font-weight:600;
+  transition:border-color 0.15s;
+}
+.contact-input:focus, .contact-textarea:focus, .contact-select:focus { border-color:var(--blue); }
+.contact-select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237A99A8' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+.contact-select option { background:var(--card); }
+.contact-textarea { resize:vertical; min-height:120px; line-height:1.6; }
+.contact-char-count { font-size:11px; font-weight:700; color:var(--dim); text-align:right; margin-top:4px; }
+.contact-submit {
+  width:100%; padding:16px; background:var(--green);
+  border-radius:var(--radius); color:#fff; font-size:17px; font-weight:800;
+  box-shadow:0 4px 20px var(--green-glow);
+  transition:all 0.15s; border:none; margin-top:8px;
+}
+.contact-submit:active { transform:scale(0.97); background:var(--green-dark); }
+.contact-submit:disabled { background:var(--border); box-shadow:none; cursor:default; }
+.contact-success {
+  text-align:center; padding:40px 20px;
+  animation:fadeUp 0.4s ease-out both;
+}
+.contact-success-icon { font-size:64px; margin-bottom:16px; }
+.contact-success-title { font-family:var(--display); font-size:24px; font-weight:800; color:var(--green); margin-bottom:8px; }
+.contact-success-desc { font-size:14px; font-weight:600; color:var(--dim); line-height:1.6; margin-bottom:24px; }
+.contact-notice {
+  background:rgba(28,176,246,0.06); border:1.5px solid rgba(28,176,246,0.2);
+  border-radius:12px; padding:12px 16px; margin-top:16px;
+  font-size:12px; font-weight:600; color:var(--mid); line-height:1.6;
+}
+.contact-notice strong { color:var(--blue); }
+
+/* ═══════════════════════════════════════════════════════════════
+   APP (Learning) PAGE — embedded from parli-aspo.html
+═══════════════════════════════════════════════════════════════ */
+#view-app .app-inner { min-height:calc(100vh - 61px); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     VIEW: LANDING / HOME
+═══════════════════════════════════════════════════ -->
+<div id="view-home" class="view active">
+  <div class="landing-stars" id="starfield"></div>
+  <div class="landing-content">
+    <div class="landing-hero fade-up">
+      <div class="landing-globe">🌍</div>
+      <div class="landing-title">Parli Aspo</div>
+      <div class="landing-tagline">✨ The language of hope</div>
+    </div>
+
+    <div class="landing-stats fade-up" style="animation-delay:0.1s">
+      <div class="landing-stat">
+        <div class="landing-stat-num">350+</div>
+        <div class="landing-stat-label">Words</div>
+      </div>
+      <div class="landing-stat">
+        <div class="landing-stat-num">74</div>
+        <div class="landing-stat-label">Lessons</div>
+      </div>
+      <div class="landing-stat">
+        <div class="landing-stat-num">∞</div>
+        <div class="landing-stat-label">Aspo</div>
+      </div>
+    </div>
+
+    <div class="landing-cards fade-up" style="animation-delay:0.2s">
+
+      <button class="landing-card" onclick="showView('app')">
+        <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(88,204,2,0.2),rgba(88,204,2,0.05));border:1.5px solid rgba(88,204,2,0.3)">🎓</div>
+        <div class="landing-card-body">
+          <div class="landing-card-title">Learn Parli Aspo</div>
+          <div class="landing-card-desc">Duolingo-style lessons · XP · Streaks · Leaderboard</div>
+        </div>
+        <div class="landing-card-arrow">›</div>
+      </button>
+
+      <button class="landing-card" onclick="showView('grammar')">
+        <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(28,176,246,0.2),rgba(28,176,246,0.05));border:1.5px solid rgba(28,176,246,0.3)">📖</div>
+        <div class="landing-card-body">
+          <div class="landing-card-title">Grammar Guide</div>
+          <div class="landing-card-desc">Phonology · Word classes · Syntax · Examples</div>
+        </div>
+        <div class="landing-card-arrow">›</div>
+      </button>
+
+      <button class="landing-card" onclick="showView('dictionary')">
+        <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(255,200,0,0.2),rgba(255,200,0,0.05));border:1.5px solid rgba(255,200,0,0.3)">📚</div>
+        <div class="landing-card-body">
+          <div class="landing-card-title">Dictionary</div>
+          <div class="landing-card-desc">350+ words · Bidirectional search · Browse by letter</div>
+        </div>
+        <div class="landing-card-arrow">›</div>
+      </button>
+
+    </div>
+
+    <button class="landing-contact-link" onclick="showView('contact')">
+      💬 Suggestions &amp; Feedback
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     VIEW: GRAMMAR
+═══════════════════════════════════════════════════ -->
+<div id="view-grammar" class="view">
+  <nav class="top-nav">
+    <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
+    <div class="top-nav-title">📖 Grammar</div>
+    <div class="top-nav-spacer"></div>
+  </nav>
+  <div class="grammar-content" id="grammar-body">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     VIEW: DICTIONARY
+═══════════════════════════════════════════════════ -->
+<div id="view-dictionary" class="view">
+  <nav class="top-nav">
+    <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
+    <div class="top-nav-title">📚 Dictionary</div>
+    <div class="top-nav-spacer"></div>
+  </nav>
+  <div class="dict-content" id="dict-body">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     VIEW: LEARNING APP
+═══════════════════════════════════════════════════ -->
+<div id="view-app" class="view">
+  <nav class="top-nav">
+    <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
+    <div class="top-nav-title" style="font-size:16px">🌍 Parli Aspo</div>
+    <div class="top-nav-spacer"></div>
+  </nav>
+  <div class="app-inner" id="app"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     VIEW: CONTACT
+═══════════════════════════════════════════════════ -->
+<div id="view-contact" class="view">
+  <nav class="top-nav">
+    <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
+    <div class="top-nav-title">💬 Contact</div>
+    <div class="top-nav-spacer"></div>
+  </nav>
+  <div class="contact-content" id="contact-body">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// VIEW ROUTER
+// ═══════════════════════════════════════════════════════════════
+let currentView = 'home';
+let grammarRendered = false;
+let dictRendered = false;
+let contactRendered = false;
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  window.scrollTo(0,0);
+  currentView = name;
+
+  if (name === 'grammar' && !grammarRendered) { renderGrammar(); grammarRendered = true; }
+  if (name === 'dictionary' && !dictRendered) { renderDict(); dictRendered = true; }
+  if (name === 'contact' && !contactRendered) { renderContact(); contactRendered = true; }
+  if (name === 'app') { /* app already boots via its own init */ }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STAR FIELD (landing bg)
+// ═══════════════════════════════════════════════════════════════
+(function(){
+  const sf = document.getElementById('starfield');
+  for(let i=0;i<60;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = 1 + Math.random()*2;
+    s.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      animation-duration:${4+Math.random()*6}s;
+      animation-delay:${Math.random()*4}s;
+      opacity:${0.05+Math.random()*0.15};
+    `;
+    sf.appendChild(s);
+  }
+})();
+
+// ═══════════════════════════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBVM5XYorwmLupci8VbhyXmvsrE9wm_338",
+  authDomain: "parli-aspo-app.firebaseapp.com",
+  databaseURL: "https://parli-aspo-app-default-rtdb.firebaseio.com",
+  projectId: "parli-aspo-app",
+  storageBucket: "parli-aspo-app.firebasestorage.app",
+  messagingSenderId: "377949754685",
+  appId: "1:377949754685:web:cda68cf2bd4ec0678ee154"
+};
+
+let db = null;
+let firebaseReady = false;
+try {
+  if (typeof firebase !== "undefined" && firebase.initializeApp) {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.database();
+    firebaseReady = true;
+  }
+} catch(e) { console.warn("Firebase init failed:", e); }
+
+// ═══════════════════════════════════════════════════════════════
+// EMAILJS CONFIG
+// ═══════════════════════════════════════════════════════════════
+// TODO: Replace these placeholders with your EmailJS credentials after signing up at emailjs.com
+// Steps:
+//   1. Sign up at https://www.emailjs.com
+//   2. Create an Email Service (Gmail recommended) → copy your Service ID
+//   3. Create an Email Template with variables: {{from_name}}, {{from_email}}, {{category}}, {{message}}
+//   4. Copy your Template ID and Public Key below
+const EMAILJS_PUBLIC_KEY  = "5Zl8cU30xSzqTUKCr";
+const EMAILJS_SERVICE_ID  = "service_5u1yunk";
+const EMAILJS_TEMPLATE_ID = "template_m363nog";
+
+let emailJSReady = false;
+try {
+  if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    emailJSReady = true;
+  }
+} catch(e) { console.warn("EmailJS init failed:", e); }
+
+// ═══════════════════════════════════════════════════════════════
+// VOCABULARY (shared between App and Dictionary)
+// ═══════════════════════════════════════════════════════════════
+const V = {
+  greetings1:[{pa:"grati",en:"please/thank you"},{pa:"bona",en:"good"},{pa:"da",en:"yes"},{pa:"na",en:"no"},{pa:"skusa",en:"sorry"},{pa:"bem",en:"well (interjection)"},{pa:"am",en:"here"},{pa:"faram",en:"there"}],
+  pronouns1:[{pa:"me",en:"I/me"},{pa:"yu",en:"you"},{pa:"le",en:"he"},{pa:"lu",en:"she"},{pa:"lo",en:"it / they (neutral)"},{pa:"nos",en:"we/us"},{pa:"les",en:"they (male group)"},{pa:"lus",en:"they (female group)"},{pa:"los",en:"they (mixed group)"},{pa:"yus",en:"you (plural)"}],
+  possessives:[{pa:"men",en:"my/mine"},{pa:"yun",en:"your/yours"},{pa:"len",en:"his"},{pa:"lun",en:"her"},{pa:"lon",en:"its"},{pa:"nosin",en:"our/ours"},{pa:"lesin",en:"their (male group)"},{pa:"lusin",en:"their (female group)"},{pa:"losin",en:"their (mixed group)"},{pa:"yusin",en:"your/yours (plural)"}],
+  people1:[{pa:"humo",en:"person"},{pa:"filo",en:"friend"},{pa:"familo",en:"family"},{pa:"kido",en:"child"},{pa:"viro",en:"man"},{pa:"femo",en:"woman"}],
+  people2:[{pa:"patro",en:"father"},{pa:"matro",en:"mother"},{pa:"frato",en:"brother"},{pa:"yoyo",en:"sister"},{pa:"asawo",en:"spouse"},{pa:"bebo",en:"baby"},{pa:"nufemo",en:"girl"}],
+  colors1:[{pa:"reda",en:"red"},{pa:"blua",en:"blue"},{pa:"verda",en:"green"},{pa:"yela",en:"yellow"},{pa:"negra",en:"black"},{pa:"blanka",en:"white"}],
+  colors2:[{pa:"orana",en:"orange"},{pa:"purpa",en:"purple"},{pa:"grisa",en:"gray"},{pa:"bruna",en:"brown"},{pa:"kroma",en:"color (adj.)"},{pa:"kromo",en:"color (noun)"}],
+  numbers:[{pa:"nula",en:"zero"},{pa:"una",en:"one"},{pa:"dua",en:"two"},{pa:"tria",en:"three"},{pa:"kwara",en:"four"},{pa:"kina",en:"five"},{pa:"sesa",en:"six"},{pa:"sepa",en:"seven"},{pa:"okta",en:"eight"},{pa:"nova",en:"nine"},{pa:"deka",en:"ten"}],
+  articles:[{pa:"la",en:"the"},{pa:"lan",en:"this/these"},{pa:"farlan",en:"that/those"},{pa:"ke",en:"that/who/which (conj./rel.)"},{pa:"ki",en:"question particle"},{pa:"kiparli",en:"ask"},{pa:"kiparlo",en:"question"},{pa:"kwa",en:"what"},{pa:"kwo",en:"who"},{pa:"kwe",en:"where"},{pa:"kwen",en:"when"},{pa:"kwi",en:"why"}],
+  food1:[{pa:"nutro",en:"food"},{pa:"pano",en:"bread"},{pa:"karno",en:"meat"},{pa:"fruko",en:"fruit"},{pa:"malfruko",en:"vegetable"},{pa:"ovo",en:"egg"}],
+  food2:[{pa:"agwo",en:"water"},{pa:"lakto",en:"milk"},{pa:"kafo",en:"coffee"},{pa:"teo",en:"tea"},{pa:"salo",en:"salt"},{pa:"sukro",en:"sugar"},{pa:"spiso",en:"spice"},{pa:"oleo",en:"oil"}],
+  cooking:[{pa:"kusi",en:"cook"},{pa:"kuso",en:"kitchen"},{pa:"nutri",en:"eat"},{pa:"agwi",en:"drink"},{pa:"gusti",en:"taste"},{pa:"gusto",en:"flavor"},{pa:"kuto",en:"knife"},{pa:"garfo",en:"fork"},{pa:"spuno",en:"spoon"},{pa:"plato",en:"plate"},{pa:"taso",en:"cup"}],
+  animals1:[{pa:"pipo",en:"dog"},{pa:"gato",en:"cat"},{pa:"pisko",en:"fish"},{pa:"waso",en:"bird"},{pa:"kavalo",en:"horse"},{pa:"bovo",en:"cow"}],
+  animals2:[{pa:"elefano",en:"elephant"},{pa:"simo",en:"monkey"},{pa:"galo",en:"chicken"},{pa:"lano",en:"sheep"},{pa:"kapro",en:"goat"},{pa:"pordo",en:"pig"},{pa:"kamelo",en:"camel"}],
+  animals3:[{pa:"serpo",en:"snake"},{pa:"insekto",en:"insect"},{pa:"arano",en:"spider"},{pa:"abelo",en:"bee"},{pa:"formiko",en:"ant"},{pa:"musko",en:"fly"},{pa:"sauro",en:"dinosaur"}],
+  home1:[{pa:"kaso",en:"house"},{pa:"domo",en:"room"},{pa:"porto",en:"door"},{pa:"feno",en:"window"},{pa:"muro",en:"wall"},{pa:"piso",en:"floor"},{pa:"teko",en:"ceiling"}],
+  home2:[{pa:"tablo",en:"table"},{pa:"sedo",en:"chair"},{pa:"kamo",en:"bed"},{pa:"sofo",en:"sofa"},{pa:"levo",en:"elevator"},{pa:"marsos",en:"stairs"}],
+  objects1:[{pa:"libo",en:"book"},{pa:"telo",en:"phone"},{pa:"kompo",en:"computer"},{pa:"plumo",en:"pen"},{pa:"papelo",en:"paper"},{pa:"karto",en:"card"},{pa:"klavo",en:"key"}],
+  objects2:[{pa:"deno",en:"money"},{pa:"sako",en:"bag"},{pa:"ropo",en:"clothes"},{pa:"sapo",en:"shoe"},{pa:"goro",en:"hat"},{pa:"tolo",en:"towel"},{pa:"foto",en:"picture"}],
+  verbs1:[{pa:"esi",en:"be/is/am"},{pa:"havi",en:"have"},{pa:"fari",en:"do/make"},{pa:"iri",en:"go"},{pa:"veni",en:"come"},{pa:"vidi",en:"see"}],
+  verbs2:[{pa:"sabi",en:"know"},{pa:"voli",en:"want"},{pa:"povi",en:"can"},{pa:"debi",en:"should"},{pa:"nedi",en:"need"},{pa:"aspi",en:"hope/expect"}],
+  verbs3:[{pa:"kuri",en:"run"},{pa:"marsi",en:"walk"},{pa:"dormi",en:"sleep"},{pa:"sedi",en:"sit"},{pa:"stari",en:"stand"},{pa:"puli",en:"jump"},{pa:"nadi",en:"swim"}],
+  verbs4:[{pa:"labori",en:"work"},{pa:"ludi",en:"play"},{pa:"legi",en:"read"},{pa:"plumi",en:"write"},{pa:"parli",en:"speak"},{pa:"kanti",en:"sing"},{pa:"dansi",en:"dance"},{pa:"fabuli",en:"narrate"}],
+  verbs5:[{pa:"pensi",en:"think"},{pa:"kredi",en:"believe"},{pa:"kapi",en:"understand"},{pa:"repensi",en:"remember"},{pa:"lerni",en:"learn"},{pa:"studi",en:"study"},{pa:"skoli",en:"teach"},{pa:"nurovidi",en:"imagine"},{pa:"voliparli",en:"mean"}],
+  verbs6:[{pa:"doni",en:"give"},{pa:"maldoni",en:"take"},{pa:"deni",en:"buy"},{pa:"vendi",en:"sell"},{pa:"sendi",en:"send"},{pa:"malsendi",en:"receive"},{pa:"kargi",en:"carry"}],
+  verbs7:[{pa:"ami",en:"love"},{pa:"feli",en:"feel"},{pa:"helpi",en:"help"},{pa:"trati",en:"try"},{pa:"buski",en:"search"},{pa:"trovi",en:"find"},{pa:"eleki",en:"choose"}],
+  verbs8:[{pa:"komensi",en:"start"},{pa:"fini",en:"finish"},{pa:"resti",en:"stay/wait"},{pa:"kumi",en:"stop"},{pa:"dureli",en:"continue"},{pa:"kambi",en:"change"},{pa:"movi",en:"move"},{pa:"volvi",en:"return"},{pa:"kovi",en:"hide"}],
+  adj1:[{pa:"bela",en:"beautiful"},{pa:"granda",en:"big"},{pa:"malgranda",en:"small"},{pa:"alta",en:"tall/high"},{pa:"malalta",en:"short/low"},{pa:"longa",en:"long"},{pa:"larga",en:"wide"}],
+  adj2:[{pa:"rapida",en:"fast"},{pa:"malrapida",en:"slow"},{pa:"forta",en:"strong"},{pa:"dura",en:"hard"},{pa:"maldura",en:"soft"},{pa:"fasila",en:"easy"},{pa:"malfasila",en:"difficult"}],
+  adj3:[{pa:"nuva",en:"new"},{pa:"malnuva",en:"old"},{pa:"pura",en:"clean"},{pa:"malpura",en:"dirty"},{pa:"friga",en:"cold"},{pa:"malfriga",en:"hot"},{pa:"agwa",en:"wet"},{pa:"seka",en:"dry"}],
+  adj4:[{pa:"felisa",en:"happy"},{pa:"malfelisa",en:"sad"},{pa:"tranka",en:"calm"},{pa:"nerva",en:"nervous"},{pa:"brava",en:"brave"},{pa:"kleva",en:"smart"},{pa:"rida",en:"funny"},{pa:"grava",en:"important"},{pa:"todabona",en:"perfect"}],
+  nature1:[{pa:"suno",en:"sun"},{pa:"luno",en:"moon"},{pa:"stelo",en:"star"},{pa:"nebo",en:"sky"},{pa:"venaro",en:"wind"},{pa:"pluvo",en:"rain"},{pa:"malnebo",en:"storm"}],
+  nature2:[{pa:"arbo",en:"tree"},{pa:"floro",en:"flower"},{pa:"terfo",en:"grass"},{pa:"foro",en:"forest"},{pa:"roko",en:"rock"},{pa:"tero",en:"ground"},{pa:"aro",en:"air"}],
+  nature3:[{pa:"agwo",en:"water"},{pa:"rivo",en:"river"},{pa:"lago",en:"lake"},{pa:"maro",en:"sea"},{pa:"monto",en:"mountain"},{pa:"playo",en:"beach"},{pa:"selo",en:"ice"}],
+  places:[{pa:"urbo",en:"city"},{pa:"vilo",en:"village"},{pa:"strado",en:"street"},{pa:"parko",en:"park"},{pa:"skolo",en:"school"},{pa:"hospito",en:"hospital"},{pa:"ofiso",en:"office"},{pa:"tendo",en:"store"},{pa:"merko",en:"market"}],
+  body1:[{pa:"korpo",en:"body"},{pa:"krano",en:"head"},{pa:"faso",en:"face"},{pa:"oklo",en:"eye"},{pa:"naso",en:"nose"},{pa:"buko",en:"mouth"},{pa:"orelo",en:"ear"}],
+  body2:[{pa:"mano",en:"hand"},{pa:"fingo",en:"finger"},{pa:"brako",en:"arm"},{pa:"gambo",en:"leg"},{pa:"kiko",en:"foot"},{pa:"kolo",en:"neck"},{pa:"koro",en:"heart"},{pa:"nuro",en:"brain"}],
+  health:[{pa:"sana",en:"healthy"},{pa:"malsana",en:"sick"},{pa:"dola",en:"painful"},{pa:"doli",en:"hurt"},{pa:"febro",en:"fever"},{pa:"wundo",en:"wound"},{pa:"mediko",en:"medicine"},{pa:"doktio",en:"doctor"},{pa:"nursio",en:"nurse"}],
+  preps1:[{pa:"en",en:"in"},{pa:"ad",en:"to/at"},{pa:"sur",en:"on/about"},{pa:"sub",en:"under"},{pa:"kon",en:"with"},{pa:"sen",en:"without"}],
+  preps2:[{pa:"for",en:"for"},{pa:"de",en:"of"},{pa:"inter",en:"between"},{pa:"serka",en:"next to/near"},{pa:"far",en:"far"},{pa:"tru",en:"through"},{pa:"malen",en:"out"}],
+  conjunctions:[{pa:"i",en:"and"},{pa:"ili",en:"or"},{pa:"ma",en:"but"},{pa:"si",en:"if"},{pa:"forke",en:"because"},{pa:"sina",en:"unless"},{pa:"durel",en:"during/while"},{pa:"intera",en:"until"}],
+  time1:[{pa:"oro",en:"hour/time"},{pa:"orido",en:"minute"},{pa:"oridido",en:"second"},{pa:"oyo",en:"today"},{pa:"fuyo",en:"tomorrow"},{pa:"payo",en:"yesterday"},{pa:"nokto",en:"night"}],
+  time2:[{pa:"matino",en:"morning"},{pa:"spero",en:"evening"},{pa:"semano",en:"week"},{pa:"luno",en:"month"},{pa:"ano",en:"year"},{pa:"sesono",en:"season"}],
+  days:[{pa:"unayo",en:"Sunday"},{pa:"duayo",en:"Monday"},{pa:"triayo",en:"Tuesday"},{pa:"kwarayo",en:"Wednesday"},{pa:"kinayo",en:"Thursday"},{pa:"sesayo",en:"Friday"},{pa:"sepayo",en:"Saturday"}],
+  seasons:[{pa:"printemo",en:"spring"},{pa:"somero",en:"summer"},{pa:"autuno",en:"autumn"},{pa:"hivero",en:"winter"},{pa:"nebofelo",en:"weather"},{pa:"suna",en:"sunny"},{pa:"pluvi",en:"raining"}],
+  transport:[{pa:"karo",en:"car"},{pa:"buso",en:"bus"},{pa:"tramo",en:"train"},{pa:"aviono",en:"airplane"},{pa:"boto",en:"boat"},{pa:"vapo",en:"ship"},{pa:"biklo",en:"bicycle"},{pa:"moto",en:"motorcycle"}],
+  travel:[{pa:"kari",en:"drive"},{pa:"foli",en:"fly"},{pa:"marsi",en:"walk"},{pa:"movi",en:"move"},{pa:"mapo",en:"map"},{pa:"topo",en:"place"},{pa:"mondo",en:"world"},{pa:"kasi",en:"reside/live"}],
+  feelings1:[{pa:"feliso",en:"happiness"},{pa:"malfeliso",en:"sadness"},{pa:"amo",en:"love"},{pa:"malbravo",en:"fear"},{pa:"malami",en:"hate"},{pa:"aspo",en:"hope"},{pa:"malaspo",en:"despair"}],
+  feelings2:[{pa:"dorma",en:"sleepy"},{pa:"onesta",en:"honest"},{pa:"matura",en:"mature"},{pa:"sola",en:"alone"},{pa:"lista",en:"ready"},{pa:"dena",en:"rich"},{pa:"maldena",en:"poor"}],
+  personality:[{pa:"amabla",en:"kind"},{pa:"malamabla",en:"cruel"},{pa:"kora",en:"careful"},{pa:"malkora",en:"careless"},{pa:"helpa",en:"helpful"},{pa:"malhelpa",en:"unhelpful"},{pa:"vera",en:"true"},{pa:"malvera",en:"false"}],
+  mal1:[{pa:"malfilo",en:"enemy",note:"mal+filo(friend)"},{pa:"malgranda",en:"small",note:"mal+granda(big)"},{pa:"malfelisa",en:"sad",note:"mal+felisa(happy)"},{pa:"malbela",en:"ugly",note:"mal+bela(beautiful)"},{pa:"malfriga",en:"hot",note:"mal+friga(cold)"},{pa:"malnuva",en:"old",note:"mal+nuva(new)"}],
+  mal2:[{pa:"malpura",en:"dirty",note:"mal+pura(clean)"},{pa:"malkrei",en:"destroy",note:"mal+krei(create)"},{pa:"malveni",en:"leave",note:"mal+veni(come)"},{pa:"malkredi",en:"doubt",note:"mal+kredi(believe)"},{pa:"malgardi",en:"let go",note:"mal+gardi(hold)"},{pa:"maldoni",en:"take",note:"mal+doni(give)"}],
+  tense1:[{pa:"me vidi",en:"I see",note:"Present"},{pa:"me pa vidi",en:"I saw",note:"Past: pa+verb"},{pa:"me fu vidi",en:"I will see",note:"Future: fu+verb"},{pa:"me pa nutri",en:"I ate",note:"Past"},{pa:"me fu iri",en:"I will go",note:"Future"},{pa:"yu pa labori",en:"you worked",note:"Past"}],
+  tense2:[{pa:"los pa veni",en:"they came",note:"Past"},{pa:"nos fu ludi",en:"we will play",note:"Future"},{pa:"lu pa kanti",en:"she sang",note:"Past"},{pa:"le fu plumi",en:"he will write",note:"Future"},{pa:"me pa dormi",en:"I slept",note:"Past"},{pa:"yu fu lerni",en:"you will learn",note:"Future"}],
+  compound1:[{pa:"panotendo",en:"bakery",note:"pano+tendo"},{pa:"libotendo",en:"bookstore",note:"libo+tendo"},{pa:"karnotendo",en:"meat store",note:"karno+tendo"},{pa:"frukotendo",en:"fruit store",note:"fruko+tendo"},{pa:"interligo",en:"internet",note:"inter+ligo"},{pa:"kompoludo",en:"videogame",note:"kompo+ludo"}],
+  compound2:[{pa:"ropopuro",en:"washing machine",note:"ropo+puro"},{pa:"dentopuro",en:"toothbrush",note:"dento+puro"},{pa:"felifaso",en:"smile",note:"feli+faso"},{pa:"felifasi",en:"to smile",note:"feli+fasi"},{pa:"marsimoro",en:"zombie",note:"marsi+moro"},{pa:"morahumo",en:"ghost",note:"mora+humo"},{pa:"debifaro",en:"rule",note:"debi+faro(should-do)"},{pa:"nedifaro",en:"law",note:"nedi+faro(need-do)"}],
+  reprefix:[{pa:"relegi",en:"reread",note:"re+legi(read)"},{pa:"refari",en:"redo",note:"re+fari(do)"},{pa:"replumi",en:"rewrite",note:"re+plumi(write)"},{pa:"rekomensi",en:"restart",note:"re+komensi(start)"},{pa:"rebigi",en:"rebuild",note:"re+bigi(build)"},{pa:"repensi",en:"remember",note:"re+pensi(think)"}],
+  relclauses:[{pa:["La","humo","ke","labori","am","esi","men","filo"],en:"The person who works here is my friend"},{pa:["La","libo","ke","me","pa","legi","esi","bela"],en:"The book that I read is beautiful"},{pa:["Me","vidi","la","gato","ke","dormi","sur","la","sedo"],en:"I see the cat that sleeps on the chair"},{pa:["La","femo","ke","kanti","esi","men","matro"],en:"The woman who sings is my mother"},{pa:["La","kaso","ke","nos","kasi","en","esi","granda"],en:"The house that we live in is big"}],
+  verbchain:[{pa:["Me","voli","komensi","labori"],en:"I want to start working"},{pa:["Yu","debi","trati","lerni"],en:"You should try to learn"},{pa:["Nos","pa","komensi","kusi","nutro"],en:"We started cooking food"},{pa:["Los","fu","povi","veni","helpi"],en:"They will be able to come help"},{pa:["Me","voli","iri","nadi"],en:"I want to go swim"},{pa:["Lu","pa","trati","kanti","kanto"],en:"She tried to sing a song"}],
+  diminutive:[{pa:"pipido",en:"puppy",note:"pipo→pipido"},{pa:"fogido",en:"flame",note:"fogo→fogido"},{pa:"fogidido",en:"spark",note:"fogido→fogidido"},{pa:"orido",en:"minute",note:"oro→orido"},{pa:"oridido",en:"second",note:"orido→oridido"},{pa:"selido",en:"ice cube",note:"selo→selido"},{pa:"wundido",en:"scrape",note:"wundo→wundido"}],
+  daily1:[{pa:"waki",en:"wake"},{pa:"dormi",en:"sleep"},{pa:"nutri",en:"eat"},{pa:"agwi",en:"drink"},{pa:"ropi",en:"get dressed"},{pa:"bani",en:"use the bathroom"},{pa:"marsi",en:"walk"}],
+  daily2:[{pa:"puri",en:"clean"},{pa:"kusi",en:"cook"},{pa:"labori",en:"work"},{pa:"studi",en:"study"},{pa:"legi",en:"read"},{pa:"okli",en:"look/watch"},{pa:"mesagi",en:"text/message"}],
+  communication:[{pa:"parli",en:"speak"},{pa:"oreli",en:"hear"},{pa:"mesago",en:"message"},{pa:"kanto",en:"song"},{pa:"musiko",en:"music"},{pa:"filmo",en:"movie"},{pa:"filmido",en:"show"},{pa:"sporto",en:"sport"},{pa:"ludo",en:"game"},{pa:"teramaludo",en:"jiu jitsu",note:"tero+maludo"},{pa:"teramaludi",en:"do jiu jitsu",note:"tero+maludi"}],
+  abstract1:[{pa:"ideo",en:"idea"},{pa:"dilemo",en:"problem"},{pa:"solvo",en:"solution"},{pa:"eleko",en:"choice"},{pa:"penso",en:"thought"},{pa:"repenso",en:"memory"},{pa:"sabo",en:"knowledge"}],
+  abstract2:[{pa:"vivo",en:"life"},{pa:"moro",en:"death"},{pa:"vero",en:"truth"},{pa:"malvero",en:"lie"},{pa:"libero",en:"freedom"},{pa:"paso",en:"peace"},{pa:"malpaso",en:"war"},{pa:"perigo",en:"danger"}],
+  advanced1:[{pa:"propi",en:"own"},{pa:"propo",en:"property"},{pa:"wadi",en:"promise"},{pa:"wado",en:"promise (noun)"},{pa:"permi",en:"allow"},{pa:"refusi",en:"refuse"},{pa:"preferi",en:"prefer"},{pa:"adapti",en:"fit"},{pa:"todaboni",en:"perfect (verb)"}],
+  adverbs:[{pa:"sempra",en:"always"},{pa:"ofta",en:"often"},{pa:"malofta",en:"rarely"},{pa:"ya",en:"already"},{pa:"anka",en:"still"},{pa:"balda",en:"soon"},{pa:"tarda",en:"late"},{pa:"preska",en:"almost"},{pa:"nuna",en:"now"}],
+  quantities:[{pa:"tota",en:"all"},{pa:"suma",en:"some"},{pa:"manga",en:"many"},{pa:"malmanga",en:"few"},{pa:"ada",en:"more"},{pa:"mina",en:"less"},{pa:"lagoma",en:"enough"},{pa:"tro",en:"too much"},{pa:"sola",en:"only"}],
+  s1:[{pa:["Me","esi","bona"],en:"I am good"},{pa:["La","pipo","esi","granda"],en:"The dog is big"},{pa:["Me","vidi","la","gato"],en:"I see the cat"},{pa:["Yu","havi","nuva","libo"],en:"You have a new book"},{pa:["Nos","nutri","pano"],en:"We eat bread"},{pa:["La","kaso","esi","bela"],en:"The house is beautiful"},{pa:["Me","voli","agwo"],en:"I want water"}],
+  s2:[{pa:["La","femo","marsi","rapida"],en:"The woman walks quickly"},{pa:["Ki","yu","sabi"],en:"Do you know?"},{pa:["Me","ami","men","familo"],en:"I love my family"},{pa:["Kwe","la","gato","dormi"],en:"Where does the cat sleep?"},{pa:["La","kido","ludi","en","la","parko"],en:"The child plays in the park"},{pa:["Me","pa","deni","nuva","telo"],en:"I bought a new phone"}],
+  s3:[{pa:["La","granda","elefano","agwi","agwo"],en:"The big elephant drinks water"},{pa:["Men","matro","kusi","nutro","en","la","kuso"],en:"My mother cooks food in the kitchen"},{pa:["Los","pa","marsi","ad","la","parko"],en:"They walked to the park"},{pa:["Ki","yu","povi","helpi","me"],en:"Can you help me?"},{pa:["Me","fu","legi","nuva","libo"],en:"I will read a new book"},{pa:["La","malgranda","gato","dormi","sur","la","sedo"],en:"The small cat sleeps on the chair"}],
+  s4:[{pa:["Nos","voli","iri","ad","la","playo"],en:"We want to go to the beach"},{pa:["Kwe","yu","kasi"],en:"Where do you live?"},{pa:["Men","patro","labori","en","la","ofiso"],en:"My father works in the office"},{pa:["La","nebofelo","esi","bela","oyo"],en:"The weather is beautiful today"},{pa:["Me","na","kapi","kwi","yu","esi","malfelisa"],en:"I don't understand why you are sad"},{pa:["Me","pa","trovi","men","klavo","sub","la","tablo"],en:"I found my key under the table"}],
+  s5:[{pa:["Los","fu","kanti","kantos","en","la","parko"],en:"They will sing songs in the park"},{pa:["Me","voli","deni","nuva","sapos"],en:"I want to buy new shoes"},{pa:["La","femo","kon","la","reda","ropo","esi","men","filo"],en:"The woman with the red clothes is my friend"},{pa:["La","skolio","pa","skoli","nos","sur","la","stelos"],en:"The teacher taught us about the stars"},{pa:["Yu","debi","nutri","malfrukos","for","yun","sano"],en:"You should eat vegetables for your health"}],
+  s6:[{pa:["Me","povi","vidi","la","stelos","en","la","nebo"],en:"I can see the stars in the sky"},{pa:["La","rapida","kavalo","kuri","tru","la","foro"],en:"The fast horse runs through the forest"},{pa:["Nos","pa","agwi","malfriga","teo","en","la","spero"],en:"We drank hot tea in the evening"},{pa:["Kwa","yu","pensi","sur","lan","libo"],en:"What do you think about this book?"},{pa:["Men","frato","i","men","yoyo","ludi","en","la","parko"],en:"My brother and my sister play in the park"}],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// DICTIONARY DATA
+// ═══════════════════════════════════════════════════════════════
+const DICT_RAW = [
+  {pa:"abelo",en:"bee",pos:"noun"},{pa:"abra",en:"open",pos:"adj"},{pa:"abri",en:"open",pos:"verb"},{pa:"ada",en:"more",pos:"adj"},{pa:"adapti",en:"fit",pos:"verb"},{pa:"agwa",en:"wet",pos:"adj"},{pa:"agwi",en:"drink",pos:"verb"},{pa:"agwo",en:"water",pos:"noun"},{pa:"alkolo",en:"alcohol",pos:"noun"},{pa:"alsotu",en:"also",pos:"adv"},{pa:"alta",en:"tall / high / up",pos:"adj"},{pa:"alti",en:"raise / increase",pos:"verb"},{pa:"am",en:"here",pos:"adv"},{pa:"amabla",en:"kind / kindly",pos:"adj"},{pa:"ami",en:"love",pos:"verb"},{pa:"amo",en:"love",pos:"noun"},{pa:"anka",en:"still",pos:"adv"},{pa:"ano",en:"year",pos:"noun"},{pa:"arano",en:"spider",pos:"noun"},{pa:"arbo",en:"tree",pos:"noun"},{pa:"aro",en:"air",pos:"noun"},{pa:"arti",en:"make art",pos:"verb"},{pa:"artio",en:"artist",pos:"noun"},{pa:"arto",en:"art",pos:"noun"},{pa:"asawi",en:"marry",pos:"verb"},{pa:"asawo",en:"spouse / husband / wife",pos:"noun"},{pa:"aspa",en:"hopeful / hopefully",pos:"adj"},{pa:"aspi",en:"hope / expect",pos:"verb"},{pa:"aspo",en:"hope",pos:"noun"},{pa:"audo",en:"sound",pos:"noun"},{pa:"autuno",en:"autumn",pos:"noun"},{pa:"avanta",en:"forward / advantageous",pos:"adj"},{pa:"avanti",en:"move forward",pos:"verb"},{pa:"avanto",en:"advantage",pos:"noun"},{pa:"aviono",en:"airplane",pos:"noun"},
+  {pa:"balda",en:"soon",pos:"adv"},{pa:"bani",en:"use the bathroom",pos:"verb"},{pa:"bano",en:"bathroom",pos:"noun"},{pa:"bebo",en:"baby",pos:"noun"},{pa:"bela",en:"beautiful / beautifully",pos:"adj"},{pa:"bem",en:"well (interjection)",pos:"intj"},{pa:"bigo",en:"building",pos:"noun"},{pa:"bigi",en:"build",pos:"verb"},{pa:"bigio",en:"builder",pos:"noun"},{pa:"biklio",en:"cyclist",pos:"noun"},{pa:"biklo",en:"bicycle",pos:"noun"},{pa:"blanka",en:"white",pos:"adj"},{pa:"blua",en:"blue",pos:"adj"},{pa:"bona",en:"good / correct / well",pos:"adj"},{pa:"bonapova",en:"lucky",pos:"adj"},{pa:"bonapovo",en:"luck",pos:"noun"},{pa:"boti",en:"operate a boat",pos:"verb"},{pa:"botio",en:"boat captain",pos:"noun"},{pa:"boto",en:"boat",pos:"noun"},{pa:"bovo",en:"cow",pos:"noun"},{pa:"brako",en:"arm",pos:"noun"},{pa:"braki",en:"reach",pos:"verb"},{pa:"brava",en:"brave",pos:"adj"},{pa:"bravi",en:"act bravely",pos:"verb"},{pa:"bravo",en:"bravery",pos:"noun"},{pa:"bruna",en:"brown",pos:"adj"},{pa:"buko",en:"mouth",pos:"noun"},{pa:"buski",en:"search",pos:"verb"},{pa:"buso",en:"bus",pos:"noun"},
+  {pa:"da",en:"yes",pos:"particle"},{pa:"dansi",en:"dance",pos:"verb"},{pa:"danso",en:"dance",pos:"noun"},{pa:"de",en:"of",pos:"prep"},{pa:"debi",en:"should",pos:"verb"},{pa:"debifaro",en:"rule",pos:"noun"},{pa:"deka",en:"ten",pos:"num"},{pa:"dekadualuno",en:"December",pos:"noun"},{pa:"dekaunaluno",en:"November",pos:"noun"},{pa:"dekaluno",en:"October",pos:"noun"},{pa:"dena",en:"rich",pos:"adj"},{pa:"deni",en:"buy",pos:"verb"},{pa:"denio",en:"buyer",pos:"noun"},{pa:"deno",en:"money",pos:"noun"},{pa:"denti",en:"bite",pos:"verb"},{pa:"dentio",en:"dentist",pos:"noun"},{pa:"dento",en:"tooth",pos:"noun"},{pa:"dentopuro",en:"toothbrush",pos:"noun",note:"dento + puro"},{pa:"dilemo",en:"problem",pos:"noun"},{pa:"dipa",en:"deep",pos:"adj"},{pa:"dipla",en:"used",pos:"adj"},{pa:"dipli",en:"use",pos:"verb"},{pa:"doktio",en:"doctor",pos:"noun"},{pa:"dola",en:"painful",pos:"adj"},{pa:"doli",en:"hurt",pos:"verb"},{pa:"domo",en:"room",pos:"noun"},{pa:"doni",en:"give",pos:"verb"},{pa:"dono",en:"gift",pos:"noun"},{pa:"dorma",en:"sleepy / tiredly / sleepily",pos:"adj"},{pa:"dormi",en:"sleep",pos:"verb"},{pa:"dormo",en:"sleep",pos:"noun"},{pa:"drogo",en:"drug",pos:"noun"},{pa:"dua",en:"two",pos:"num"},{pa:"dualuno",en:"February",pos:"noun"},{pa:"duayo",en:"Monday",pos:"noun"},{pa:"dura",en:"hard",pos:"adj"},{pa:"duramalabro",en:"lock",pos:"noun",note:"dura + malabro"},{pa:"durel",en:"during / while",pos:"conj"},{pa:"dureli",en:"continue / endure / last",pos:"verb"},
+  {pa:"elefano",en:"elephant",pos:"noun"},{pa:"eleki",en:"choose",pos:"verb"},{pa:"eleko",en:"choice",pos:"noun"},{pa:"elori",en:"having the urge to squeeze something cute",pos:"verb"},{pa:"en",en:"in",pos:"prep"},{pa:"esi",en:"be / is / am",pos:"verb"},{pa:"eso",en:"thing",pos:"noun"},{pa:"espliki",en:"explain",pos:"verb"},{pa:"espliko",en:"explanation",pos:"noun"},{pa:"evali",en:"test",pos:"verb"},{pa:"evalo",en:"exam / test",pos:"noun"},
+  {pa:"fabula",en:"storied / legendary",pos:"adj"},{pa:"fabuli",en:"tell stories / narrate",pos:"verb"},{pa:"fabulo",en:"story",pos:"noun"},{pa:"famila",en:"family",pos:"adj"},{pa:"familo",en:"family",pos:"noun"},{pa:"faram",en:"there",pos:"adv"},{pa:"fari",en:"do / make",pos:"verb"},{pa:"farlan",en:"that / those",pos:"dem"},{pa:"fasila",en:"easy / easily",pos:"adj"},{pa:"fasa",en:"front",pos:"adj"},{pa:"fasi",en:"face",pos:"verb"},{pa:"faso",en:"face",pos:"noun"},{pa:"febro",en:"fever",pos:"noun"},{pa:"feli",en:"feel",pos:"verb"},{pa:"felibona",en:"comfortable",pos:"adj"},{pa:"feliboni",en:"comfort",pos:"verb"},{pa:"felibono",en:"comfort",pos:"noun"},{pa:"felifasi",en:"smile",pos:"verb",note:"feli + fasi"},{pa:"felifaso",en:"smile",pos:"noun",note:"feli + faso"},{pa:"felisa",en:"happy",pos:"adj"},{pa:"feliso",en:"happiness",pos:"noun"},{pa:"felo",en:"feeling",pos:"noun"},{pa:"femo",en:"woman",pos:"noun"},{pa:"feno",en:"window",pos:"noun"},{pa:"feto",en:"feature / trait / characteristic",pos:"noun"},{pa:"fika",en:"fixed",pos:"adj"},{pa:"fiki",en:"repair",pos:"verb"},{pa:"fikio",en:"repairman",pos:"noun"},{pa:"fili",en:"enjoy / like",pos:"verb"},{pa:"filmido",en:"show (TV show)",pos:"noun",note:"filmo + -ido"},{pa:"filmo",en:"movie",pos:"noun"},{pa:"fina",en:"last / end",pos:"adj"},{pa:"fingo",en:"finger",pos:"noun"},{pa:"fini",en:"finish",pos:"verb"},{pa:"fino",en:"end / last",pos:"noun"},{pa:"filo",en:"friend",pos:"noun"},{pa:"flora",en:"floral",pos:"adj"},{pa:"floro",en:"flower",pos:"noun"},{pa:"fogo",en:"fire",pos:"noun"},{pa:"fogida",en:"burnt",pos:"adj"},{pa:"fogidi",en:"burn",pos:"verb"},{pa:"fogido",en:"flame",pos:"noun",note:"fogo + -ido"},{pa:"fogidido",en:"spark",pos:"noun",note:"fogido + -ido"},{pa:"foli",en:"fly",pos:"verb"},{pa:"for",en:"for",pos:"prep"},{pa:"for ke",en:"so that",pos:"conj"},{pa:"forke",en:"because",pos:"conj"},{pa:"formiko",en:"ant",pos:"noun"},{pa:"foro",en:"forest",pos:"noun"},{pa:"forta",en:"strong / strongly",pos:"adj"},{pa:"foti",en:"take a photo",pos:"verb"},{pa:"fotio",en:"photographer",pos:"noun"},{pa:"foto",en:"picture / photo",pos:"noun"},{pa:"frato",en:"brother",pos:"noun"},{pa:"frigi",en:"cool",pos:"verb"},{pa:"friga",en:"cold",pos:"adj"},{pa:"frigo",en:"refrigerator",pos:"noun"},{pa:"fruko",en:"fruit",pos:"noun"},{pa:"frukotendo",en:"fruit store",pos:"noun",note:"fruko + tendo"},{pa:"fu",en:"(future tense marker) / next",pos:"particle"},{pa:"fula",en:"full",pos:"adj"},{pa:"fuli",en:"fill",pos:"verb"},{pa:"fumo",en:"smoke",pos:"noun"},{pa:"fumi",en:"smoke",pos:"verb"},{pa:"fuyo",en:"tomorrow",pos:"noun"},
+  {pa:"galo",en:"chicken",pos:"noun"},{pa:"gambo",en:"leg",pos:"noun"},{pa:"garfo",en:"fork",pos:"noun"},{pa:"gardi",en:"keep / hold",pos:"verb"},{pa:"gato",en:"cat",pos:"noun"},{pa:"goro",en:"hat",pos:"noun"},{pa:"granda",en:"big",pos:"adj"},{pa:"grata",en:"thankful",pos:"adj"},{pa:"grati",en:"please / thank you / you're welcome",pos:"verb"},{pa:"grato",en:"thanks",pos:"noun"},{pa:"grava",en:"important",pos:"adj"},{pa:"grisa",en:"gray",pos:"adj"},{pa:"gusti",en:"taste",pos:"verb"},{pa:"gusto",en:"flavor",pos:"noun"},
+  {pa:"hapo",en:"occurrence",pos:"noun"},{pa:"haro",en:"hair",pos:"noun"},{pa:"havi",en:"have",pos:"verb"},{pa:"hema",en:"bloody",pos:"adj"},{pa:"hemi",en:"bleed",pos:"verb"},{pa:"hemo",en:"blood",pos:"noun"},{pa:"hemopuri",en:"dialyze",pos:"verb",note:"hemo + puri"},{pa:"hemopuro",en:"hemodialysis",pos:"noun",note:"hemo + puro"},{pa:"helpa",en:"helpful",pos:"adj"},{pa:"helpi",en:"help",pos:"verb"},{pa:"helpio",en:"helper",pos:"noun"},{pa:"helpo",en:"help",pos:"noun"},{pa:"hivero",en:"winter",pos:"noun"},{pa:"hospito",en:"hospital",pos:"noun"},{pa:"huma",en:"human",pos:"adj"},{pa:"humo",en:"person / human",pos:"noun"},
+  {pa:"i",en:"and",pos:"conj"},{pa:"ideo",en:"idea",pos:"noun"},{pa:"ili",en:"or",pos:"conj"},{pa:"insekto",en:"insect",pos:"noun"},{pa:"inter",en:"between",pos:"prep"},{pa:"intera",en:"until",pos:"conj"},{pa:"interligo",en:"internet",pos:"noun",note:"inter + ligo"},{pa:"iri",en:"go",pos:"verb"},
+  {pa:"kafo",en:"coffee",pos:"noun"},{pa:"kambi",en:"change",pos:"verb"},{pa:"kamo",en:"bed",pos:"noun"},{pa:"kamelo",en:"camel",pos:"noun"},{pa:"kanto",en:"song",pos:"noun"},{pa:"kanti",en:"sing",pos:"verb"},{pa:"kantio",en:"singer",pos:"noun"},{pa:"kapi",en:"understand",pos:"verb"},{pa:"kapo",en:"understanding",pos:"noun"},{pa:"kapro",en:"goat",pos:"noun"},{pa:"kargi",en:"carry",pos:"verb"},{pa:"kargi am",en:"bring",pos:"verb"},{pa:"kari",en:"drive",pos:"verb"},{pa:"kario",en:"driver",pos:"noun"},{pa:"karno",en:"meat",pos:"noun"},{pa:"karnotendo",en:"meat store",pos:"noun",note:"karno + tendo"},{pa:"karo",en:"car",pos:"noun"},{pa:"karto",en:"card",pos:"noun"},{pa:"kasi",en:"reside / live",pos:"verb"},{pa:"kaso",en:"house",pos:"noun"},{pa:"kavalo",en:"horse",pos:"noun"},{pa:"ke",en:"that (conjunction) / who, which (relative pronoun)",pos:"conj"},{pa:"ki",en:"question particle (yes/no)",pos:"particle"},{pa:"kido",en:"child",pos:"noun"},{pa:"kiki",en:"kick",pos:"verb"},{pa:"kiko",en:"foot",pos:"noun"},{pa:"kiparli",en:"ask",pos:"verb"},{pa:"kiparlo",en:"question",pos:"noun"},{pa:"kila",en:"thousand",pos:"num"},{pa:"kina",en:"five",pos:"num"},{pa:"kinaluno",en:"May",pos:"noun"},{pa:"kinayo",en:"Thursday",pos:"noun"},{pa:"kiri",en:"get / acquire",pos:"verb"},{pa:"klara",en:"clear / clearly",pos:"adj"},{pa:"klavi",en:"lock",pos:"verb"},{pa:"klavo",en:"key",pos:"noun"},{pa:"kleva",en:"smart",pos:"adj"},{pa:"kolo",en:"neck",pos:"noun"},{pa:"kom",en:"how",pos:"adv"},{pa:"komensi",en:"start",pos:"verb"},{pa:"komenso",en:"start / beginning",pos:"noun"},{pa:"kompo",en:"computer",pos:"noun"},{pa:"kompoludo",en:"videogame",pos:"noun",note:"kompo + ludo"},{pa:"kon",en:"with",pos:"prep"},{pa:"kora",en:"careful / carefully",pos:"adj"},{pa:"kori",en:"care",pos:"verb"},{pa:"koro",en:"heart",pos:"noun"},{pa:"korpo",en:"body",pos:"noun"},{pa:"kova",en:"hidden",pos:"adj"},{pa:"kovi",en:"hide",pos:"verb"},{pa:"kovo",en:"hiding place",pos:"noun"},{pa:"kredi",en:"believe",pos:"verb"},{pa:"kredio",en:"believer",pos:"noun"},{pa:"krea",en:"creative",pos:"adj"},{pa:"krei",en:"create",pos:"verb"},{pa:"kreo",en:"creation",pos:"noun"},{pa:"krano",en:"head / top",pos:"noun"},{pa:"kroma",en:"color",pos:"adj"},{pa:"kromi",en:"color",pos:"verb"},{pa:"kromo",en:"color",pos:"noun"},{pa:"kuri",en:"run",pos:"verb"},{pa:"kurio",en:"runner",pos:"noun"},{pa:"kumi",en:"stop",pos:"verb"},{pa:"kumo",en:"stop",pos:"noun"},{pa:"kusa",en:"cooked",pos:"adj"},{pa:"kusi",en:"cook",pos:"verb"},{pa:"kuso",en:"kitchen",pos:"noun"},{pa:"kuti",en:"cut",pos:"verb"},{pa:"kuto",en:"knife",pos:"noun"},{pa:"kwa",en:"what",pos:"pronoun"},{pa:"kwant",en:"how many",pos:"adv"},{pa:"kwaraluno",en:"April",pos:"noun"},{pa:"kwarayo",en:"Wednesday",pos:"noun"},{pa:"kwe",en:"where",pos:"adv"},{pa:"kwen",en:"when",pos:"adv"},{pa:"kwi",en:"why",pos:"adv"},{pa:"kwo",en:"who (question)",pos:"pronoun"},
+  {pa:"la",en:"the",pos:"article"},{pa:"la ada",en:"most",pos:"adj"},{pa:"la fu",en:"after",pos:"prep"},{pa:"la mina",en:"least",pos:"adj"},{pa:"la pa",en:"before",pos:"prep"},{pa:"labori",en:"work",pos:"verb"},{pa:"laborio",en:"worker",pos:"noun"},{pa:"laboro",en:"work",pos:"noun"},{pa:"lago",en:"lake",pos:"noun"},{pa:"lagoma",en:"enough",pos:"adj"},{pa:"lakto",en:"milk",pos:"noun"},{pa:"lan",en:"this / these",pos:"dem"},{pa:"lano",en:"sheep",pos:"noun"},{pa:"larga",en:"wide / widely",pos:"adj"},{pa:"largi",en:"widen",pos:"verb"},{pa:"le",en:"he",pos:"pronoun"},{pa:"legi",en:"read",pos:"verb"},{pa:"len",en:"his",pos:"pronoun"},{pa:"les",en:"they / them (male group)",pos:"pronoun"},{pa:"lesin",en:"their / theirs (male group)",pos:"pronoun"},{pa:"lerni",en:"learn",pos:"verb"},{pa:"levo",en:"elevator",pos:"noun"},{pa:"levi",en:"lift",pos:"verb"},{pa:"libera",en:"free",pos:"adj"},{pa:"libero",en:"freedom",pos:"noun"},{pa:"liberi",en:"liberate / free",pos:"verb"},{pa:"libo",en:"book",pos:"noun"},{pa:"libotendo",en:"bookstore",pos:"noun",note:"libo + tendo"},{pa:"ligi",en:"connect",pos:"verb"},{pa:"ligo",en:"bridge / connection",pos:"noun"},{pa:"lingi",en:"lick",pos:"verb"},{pa:"lingo",en:"tongue",pos:"noun"},{pa:"lista",en:"ready",pos:"adj"},{pa:"listi",en:"get ready",pos:"verb"},{pa:"lo",en:"it / they (gender-neutral sg.)",pos:"pronoun"},{pa:"lon",en:"its",pos:"pronoun"},{pa:"longa",en:"long",pos:"adj"},{pa:"longi",en:"stretch",pos:"verb"},{pa:"los",en:"they / them (mixed group)",pos:"pronoun"},{pa:"losin",en:"their / theirs (mixed group)",pos:"pronoun"},{pa:"lu",en:"she",pos:"pronoun"},{pa:"lun",en:"her",pos:"pronoun"},{pa:"lus",en:"they / them (female group)",pos:"pronoun"},{pa:"lusin",en:"their / theirs (female group)",pos:"pronoun"},{pa:"luda",en:"fun",pos:"adj"},{pa:"ludi",en:"play",pos:"verb"},{pa:"ludo",en:"game",pos:"noun"},{pa:"luma",en:"light / bright / shiny",pos:"adj"},{pa:"lumi",en:"shine",pos:"verb"},{pa:"luno",en:"moon / month",pos:"noun"},
+  {pa:"ma",en:"but / although",pos:"conj"},{pa:"maki",en:"make",pos:"verb"},{pa:"mala",en:"bad / wrong / incorrect",pos:"adj"},{pa:"malabra",en:"closed",pos:"adj"},{pa:"malabri",en:"close",pos:"verb"},{pa:"malagwa",en:"dry",pos:"adj"},{pa:"malagwi",en:"dry",pos:"verb"},{pa:"malamabla",en:"cruel / cruelly",pos:"adj"},{pa:"malami",en:"hate",pos:"verb"},{pa:"malbela",en:"ugly",pos:"adj"},{pa:"malbravi",en:"fear",pos:"verb"},{pa:"malbravo",en:"fear",pos:"noun"},{pa:"maldena",en:"poor",pos:"adj"},{pa:"maldeni",en:"steal",pos:"verb"},{pa:"maldilemi",en:"forgive",pos:"verb"},{pa:"maldipa",en:"shallow",pos:"adj"},{pa:"maldoni",en:"take",pos:"verb"},{pa:"maldura",en:"soft",pos:"adj"},{pa:"malen",en:"out",pos:"adv"},{pa:"malevi",en:"drop",pos:"verb"},{pa:"malfasa",en:"behind",pos:"adj"},{pa:"malfasi",en:"face away / turn around",pos:"verb"},{pa:"malfasila",en:"difficult / hard",pos:"adj"},{pa:"malfelisa",en:"sad",pos:"adj"},{pa:"malfeliso",en:"sadness",pos:"noun"},{pa:"malfiki",en:"break",pos:"verb"},{pa:"malfilo",en:"enemy",pos:"noun"},{pa:"malfriga",en:"hot",pos:"adj"},{pa:"malfrigi",en:"heat",pos:"verb"},{pa:"malfrigo",en:"heat",pos:"noun"},{pa:"malfruko",en:"vegetable",pos:"noun"},{pa:"malfula",en:"empty",pos:"adj"},{pa:"malfuli",en:"empty",pos:"verb"},{pa:"malgardi",en:"release / let go",pos:"verb"},{pa:"malgranda",en:"small",pos:"adj"},{pa:"malhelpa",en:"unhelpful",pos:"adj"},{pa:"malkapi",en:"misunderstand",pos:"verb"},{pa:"malkapo",en:"misunderstanding",pos:"noun"},{pa:"malkiri",en:"give away",pos:"verb"},{pa:"malkora",en:"careless / carelessly",pos:"adj"},{pa:"malkori",en:"disregard / ignore",pos:"verb"},{pa:"malkreda",en:"unbelievable",pos:"adj"},{pa:"malkredi",en:"doubt",pos:"verb"},{pa:"malkredo",en:"doubt",pos:"noun"},{pa:"malkrei",en:"destroy",pos:"verb"},{pa:"malkreo",en:"destruction",pos:"noun"},{pa:"malkrano",en:"bottom",pos:"noun"},{pa:"malmanga",en:"few",pos:"adj"},{pa:"malmiga",en:"left (direction)",pos:"adj"},{pa:"malnebo",en:"storm",pos:"noun"},{pa:"malnuva",en:"old",pos:"adj"},{pa:"malofta",en:"rare / rarely",pos:"adj"},{pa:"malongi",en:"squish",pos:"verb"},{pa:"malpaso",en:"war",pos:"noun"},{pa:"malpova",en:"impossible",pos:"adj"},{pa:"malprenti",en:"lose (opposite of win)",pos:"verb"},{pa:"malprento",en:"loss",pos:"noun"},{pa:"malprentio",en:"loser",pos:"noun"},{pa:"malpresi",en:"pull",pos:"verb"},{pa:"malpura",en:"dirty",pos:"adj"},{pa:"malpuro",en:"dirt",pos:"noun"},{pa:"malrapida",en:"slow / slowly",pos:"adj"},{pa:"malrapidi",en:"slow down",pos:"verb"},{pa:"malsama",en:"different",pos:"adj"},{pa:"malsana",en:"ill / sick",pos:"adj"},{pa:"malsano",en:"illness",pos:"noun"},{pa:"malsendi",en:"receive",pos:"verb"},{pa:"maltagi",en:"turn off",pos:"verb"},{pa:"maltrova",en:"lost",pos:"adj"},{pa:"maltrovi",en:"lose (opposite of find)",pos:"verb"},{pa:"maltranka",en:"chaotic / chaotically",pos:"adj"},{pa:"maltranko",en:"chaos",pos:"noun"},{pa:"maludi",en:"fight",pos:"verb"},{pa:"maludio",en:"fighter",pos:"noun"},{pa:"maludo",en:"fight",pos:"noun"},{pa:"maluma",en:"dark",pos:"adj"},{pa:"malumi",en:"darken",pos:"verb"},{pa:"malumo",en:"darkness",pos:"noun"},{pa:"malveni",en:"leave",pos:"verb"},{pa:"malvera",en:"false",pos:"adj"},{pa:"malveri",en:"lie",pos:"verb"},{pa:"malvero",en:"lie",pos:"noun"},{pa:"malyusto",en:"revenge",pos:"noun"},{pa:"manga",en:"many",pos:"adj"},{pa:"mani",en:"punch",pos:"verb"},{pa:"mano",en:"hand",pos:"noun"},{pa:"mapo",en:"map",pos:"noun"},{pa:"maro",en:"sea",pos:"noun"},{pa:"marsi",en:"walk",pos:"verb"},{pa:"marsimoro",en:"zombie",pos:"noun",note:"marsi + moro"},{pa:"marso",en:"step",pos:"noun"},{pa:"marsos",en:"stairs",pos:"noun"},{pa:"matina",en:"morning",pos:"adj"},{pa:"matino",en:"morning",pos:"noun"},{pa:"matro",en:"mother",pos:"noun"},{pa:"matura",en:"mature",pos:"adj"},{pa:"me",en:"I / me",pos:"pronoun"},{pa:"mediko",en:"medicine",pos:"noun"},{pa:"men",en:"my / mine",pos:"pronoun"},{pa:"merko",en:"market",pos:"noun"},{pa:"mesagi",en:"text / message",pos:"verb"},{pa:"mesago",en:"text / message",pos:"noun"},{pa:"miga",en:"right (direction)",pos:"adj"},{pa:"mina",en:"less",pos:"adj"},{pa:"mora",en:"dead",pos:"adj"},{pa:"morahumo",en:"ghost",pos:"noun",note:"mora + humo"},{pa:"mori",en:"die",pos:"verb"},{pa:"moro",en:"death",pos:"noun"},{pa:"moto",en:"motorcycle",pos:"noun"},{pa:"moti",en:"ride a motorcycle",pos:"verb"},{pa:"motio",en:"motorcycle rider",pos:"noun"},{pa:"movi",en:"move",pos:"verb"},{pa:"mondo",en:"world",pos:"noun"},{pa:"monto",en:"mountain",pos:"noun"},{pa:"muro",en:"wall",pos:"noun"},{pa:"musiko",en:"music",pos:"noun"},{pa:"musko",en:"fly (insect)",pos:"noun"},
+  {pa:"na",en:"no / not",pos:"particle"},{pa:"nadi",en:"swim",pos:"verb"},{pa:"nadio",en:"swimmer",pos:"noun"},{pa:"naski",en:"be born",pos:"verb"},{pa:"nasi",en:"smell",pos:"verb"},{pa:"naso",en:"nose",pos:"noun"},{pa:"nula",en:"zero",pos:"num"},{pa:"nuli",en:"nullify / cancel",pos:"verb"},{pa:"nulo",en:"nothing",pos:"noun"},{pa:"nebo",en:"sky",pos:"noun"},{pa:"nebofelo",en:"weather",pos:"noun",note:"nebo + felo"},{pa:"nedi",en:"need",pos:"verb"},{pa:"nedo",en:"need",pos:"noun"},{pa:"nedifaro",en:"law",pos:"noun"},{pa:"negra",en:"black",pos:"adj"},{pa:"nerva",en:"nervous / nervously",pos:"adj"},{pa:"nervo",en:"nerve",pos:"noun"},{pa:"nomi",en:"name",pos:"verb"},{pa:"nomo",en:"name",pos:"noun"},{pa:"nokto",en:"night",pos:"noun"},{pa:"nos",en:"we / us",pos:"pronoun"},{pa:"nos ke",en:"let's",pos:"phrase"},{pa:"nosin",en:"our / ours",pos:"pronoun"},{pa:"nova",en:"nine",pos:"num"},{pa:"novaluno",en:"September",pos:"noun"},{pa:"nufemo",en:"girl",pos:"noun"},{pa:"nuro",en:"brain",pos:"noun"},{pa:"nurovidi",en:"imagine",pos:"verb"},{pa:"nurovido",en:"imagination",pos:"noun"},{pa:"nursio",en:"nurse",pos:"noun"},{pa:"nutri",en:"eat",pos:"verb"},{pa:"nutro",en:"food",pos:"noun"},{pa:"numi",en:"count",pos:"verb"},{pa:"numo",en:"number",pos:"noun"},{pa:"nuna",en:"now",pos:"adv"},{pa:"nuva",en:"new",pos:"adj"},
+  {pa:"odoro",en:"smell / scent",pos:"noun"},{pa:"ofiso",en:"office",pos:"noun"},{pa:"ofta",en:"often",pos:"adv"},{pa:"okta",en:"eight",pos:"num"},{pa:"oktaluno",en:"August",pos:"noun"},{pa:"okli",en:"look / watch",pos:"verb"},{pa:"oklo",en:"eye",pos:"noun"},{pa:"oleo",en:"oil",pos:"noun"},{pa:"onesta",en:"honest",pos:"adj"},{pa:"onesto",en:"honesty",pos:"noun"},{pa:"orana",en:"orange",pos:"adj"},{pa:"oreli",en:"hear",pos:"verb"},{pa:"orelo",en:"ear",pos:"noun"},{pa:"orido",en:"minute",pos:"noun",note:"oro + -ido"},{pa:"oridido",en:"second",pos:"noun",note:"orido + -ido"},{pa:"orlo",en:"clock",pos:"noun"},{pa:"oro",en:"hour / time",pos:"noun"},{pa:"otra",en:"other",pos:"adj"},{pa:"otra hapa",en:"again",pos:"adv"},{pa:"otro",en:"other",pos:"noun"},{pa:"ovo",en:"egg",pos:"noun"},{pa:"oyo",en:"today",pos:"noun"},
+  {pa:"pa",en:"(past tense marker)",pos:"particle"},{pa:"paki",en:"pack",pos:"verb"},{pa:"pako",en:"package",pos:"noun"},{pa:"pano",en:"bread",pos:"noun"},{pa:"panotendo",en:"bakery",pos:"noun",note:"pano + tendo"},{pa:"papelo",en:"paper",pos:"noun"},{pa:"parko",en:"park",pos:"noun"},{pa:"parli",en:"speak",pos:"verb"},{pa:"parlo",en:"word / sentence",pos:"noun"},{pa:"pasa",en:"peaceful / peacefully",pos:"adj"},{pa:"paso",en:"peace",pos:"noun"},{pa:"patro",en:"father",pos:"noun"},{pa:"pawa",en:"electric",pos:"adj"},{pa:"pawo",en:"electricity / energy",pos:"noun"},{pa:"payo",en:"yesterday",pos:"noun"},{pa:"pelo",en:"skin",pos:"noun"},{pa:"pensi",en:"think",pos:"verb"},{pa:"penso",en:"thought",pos:"noun"},{pa:"periga",en:"dangerous / dangerously",pos:"adj"},{pa:"perigi",en:"endanger",pos:"verb"},{pa:"perigo",en:"danger",pos:"noun"},{pa:"permi",en:"allow / permit / let",pos:"verb"},{pa:"pinto",en:"paint",pos:"noun"},{pa:"pinti",en:"paint",pos:"verb"},{pa:"pintio",en:"painter",pos:"noun"},{pa:"pipo",en:"dog",pos:"noun"},{pa:"pipido",en:"puppy",pos:"noun",note:"pipo + -ido"},{pa:"piski",en:"fish",pos:"verb"},{pa:"piskio",en:"fisherman",pos:"noun"},{pa:"pisko",en:"fish",pos:"noun"},{pa:"piso",en:"floor",pos:"noun"},{pa:"plasta",en:"plastic",pos:"adj"},{pa:"plasto",en:"plastic",pos:"noun"},{pa:"plato",en:"plate",pos:"noun"},{pa:"playo",en:"beach",pos:"noun"},{pa:"plori",en:"cry",pos:"verb"},{pa:"ploro",en:"tear",pos:"noun"},{pa:"plumi",en:"write",pos:"verb"},{pa:"plumio",en:"writer",pos:"noun"},{pa:"plumo",en:"pen",pos:"noun"},{pa:"pluvi",en:"raining",pos:"verb"},{pa:"pluvo",en:"rain",pos:"noun"},{pa:"pordo",en:"pig",pos:"noun"},{pa:"porto",en:"door",pos:"noun"},{pa:"posti",en:"mail",pos:"verb"},{pa:"posto",en:"mail",pos:"noun"},{pa:"pova",en:"possible / possibly / maybe / might",pos:"adj"},{pa:"povi",en:"can",pos:"verb"},{pa:"povo",en:"possibility",pos:"noun"},{pa:"preferi",en:"prefer",pos:"verb"},{pa:"prenti",en:"win",pos:"verb"},{pa:"prentio",en:"winner",pos:"noun"},{pa:"prento",en:"win",pos:"noun"},{pa:"presi",en:"push / press",pos:"verb"},{pa:"preska",en:"almost",pos:"adv"},{pa:"printemo",en:"spring",pos:"noun"},{pa:"propi",en:"own",pos:"verb"},{pa:"propi kon",en:"belong",pos:"verb"},{pa:"propo",en:"property",pos:"noun"},{pa:"proti",en:"cover / protect",pos:"verb"},{pa:"proto",en:"cover / lid",pos:"noun"},{pa:"puli",en:"jump",pos:"verb"},{pa:"pulmi",en:"breathe",pos:"verb"},{pa:"pulmo",en:"lung",pos:"noun"},{pa:"pura",en:"clean",pos:"adj"},{pa:"puri",en:"clean",pos:"verb"},{pa:"purio",en:"cleaner",pos:"noun"},{pa:"purpa",en:"purple",pos:"adj"},{pa:"kwara",en:"four",pos:"num"},
+  {pa:"rapida",en:"fast / quickly",pos:"adj"},{pa:"rapidi",en:"speed up",pos:"verb"},{pa:"rebigi",en:"rebuild",pos:"verb",note:"re- + bigi"},{pa:"reda",en:"red",pos:"adj"},{pa:"refari",en:"redo",pos:"verb",note:"re- + fari"},{pa:"refusi",en:"refuse",pos:"verb"},{pa:"refuso",en:"refusal",pos:"noun"},{pa:"rekomensi",en:"restart",pos:"verb",note:"re- + komensi"},{pa:"relegi",en:"reread",pos:"verb",note:"re- + legi"},{pa:"repensi",en:"remember",pos:"verb",note:"re- + pensi"},{pa:"repenso",en:"memory",pos:"noun",note:"re- + penso"},{pa:"replumi",en:"rewrite",pos:"verb",note:"re- + plumi"},{pa:"resti",en:"stay / rest / wait / pause",pos:"verb"},{pa:"rida",en:"funny",pos:"adj"},{pa:"ridi",en:"laugh",pos:"verb"},{pa:"rido",en:"joke",pos:"noun"},{pa:"rivo",en:"river",pos:"noun"},{pa:"roko",en:"rock",pos:"noun"},{pa:"ropo",en:"clothes",pos:"noun"},{pa:"ropi",en:"dress / get dressed",pos:"verb"},{pa:"ropopuro",en:"washing machine",pos:"noun",note:"ropo + puro"},
+  {pa:"sabi",en:"know",pos:"verb"},{pa:"sabo",en:"knowledge",pos:"noun"},{pa:"sako",en:"bag",pos:"noun"},{pa:"salo",en:"salt",pos:"noun"},{pa:"sami",en:"resemble / copy / duplicate",pos:"verb"},{pa:"sama",en:"same",pos:"adj"},{pa:"sana",en:"healthy",pos:"adj"},{pa:"sano",en:"health",pos:"noun"},{pa:"sapo",en:"shoe",pos:"noun"},{pa:"sauro",en:"dinosaur",pos:"noun"},{pa:"sedi",en:"sit",pos:"verb"},{pa:"sedo",en:"chair",pos:"noun"},{pa:"seka",en:"dry",pos:"adj"},{pa:"seki",en:"dry",pos:"verb"},{pa:"sela",en:"frozen",pos:"adj"},{pa:"seli",en:"freeze",pos:"verb"},{pa:"selo",en:"ice",pos:"noun"},{pa:"selido",en:"ice cube",pos:"noun",note:"selo + -ido"},{pa:"semano",en:"week",pos:"noun"},{pa:"sempra",en:"always",pos:"adv"},{pa:"sen",en:"without",pos:"prep"},{pa:"sendi",en:"send",pos:"verb"},{pa:"senta",en:"hundred",pos:"num"},{pa:"sepa",en:"seven",pos:"num"},{pa:"sepaluno",en:"July",pos:"noun"},{pa:"sepayo",en:"Saturday",pos:"noun"},{pa:"serka",en:"next to / near / approximately",pos:"prep"},{pa:"serpo",en:"snake",pos:"noun"},{pa:"sesa",en:"six",pos:"num"},{pa:"sesaluno",en:"June",pos:"noun"},{pa:"sesayo",en:"Friday",pos:"noun"},{pa:"sesono",en:"season",pos:"noun"},{pa:"si",en:"if",pos:"conj"},{pa:"simo",en:"monkey",pos:"noun"},{pa:"sina",en:"unless",pos:"conj"},{pa:"skato",en:"box",pos:"noun"},{pa:"skoli",en:"teach",pos:"verb"},{pa:"skolio",en:"teacher",pos:"noun"},{pa:"skolo",en:"school",pos:"noun"},{pa:"skusa",en:"sorry",pos:"adj"},{pa:"skusi",en:"apologize",pos:"verb"},{pa:"skuso",en:"apology",pos:"noun"},{pa:"sofo",en:"sofa",pos:"noun"},{pa:"sola",en:"only / just / alone",pos:"adj"},{pa:"solvi",en:"solve",pos:"verb"},{pa:"solvo",en:"solution",pos:"noun"},{pa:"somero",en:"summer",pos:"noun"},{pa:"somni",en:"dream",pos:"verb"},{pa:"somno",en:"dream",pos:"noun"},{pa:"spero",en:"evening",pos:"noun"},{pa:"sporto",en:"sport",pos:"noun"},{pa:"sporti",en:"play a sport",pos:"verb"},{pa:"sportio",en:"athlete",pos:"noun"},{pa:"spiro",en:"breath",pos:"noun"},{pa:"spiso",en:"spice",pos:"noun"},{pa:"spuno",en:"spoon",pos:"noun"},{pa:"stari",en:"stand",pos:"verb"},{pa:"stelo",en:"star",pos:"noun"},{pa:"strado",en:"street",pos:"noun"},{pa:"studi",en:"study",pos:"verb"},{pa:"studio",en:"student",pos:"noun"},{pa:"sub",en:"under",pos:"prep"},{pa:"sukra",en:"sweet",pos:"adj"},{pa:"sukro",en:"sugar",pos:"noun"},{pa:"suko",en:"juice",pos:"noun"},{pa:"suma",en:"some",pos:"adj"},{pa:"sumeso",en:"something",pos:"noun"},{pa:"sumoro",en:"sometime(s)",pos:"adv"},{pa:"suna",en:"sunny",pos:"adj"},{pa:"suno",en:"sun",pos:"noun"},{pa:"sur",en:"on / about",pos:"prep"},
+  {pa:"tabako",en:"tobacco",pos:"noun"},{pa:"tablo",en:"table",pos:"noun"},{pa:"tagi",en:"toggle / turn on",pos:"verb"},{pa:"tago",en:"switch",pos:"noun"},{pa:"tarda",en:"late",pos:"adj"},{pa:"taso",en:"cup",pos:"noun"},{pa:"teko",en:"ceiling",pos:"noun"},{pa:"telo",en:"phone",pos:"noun"},{pa:"tendo",en:"shop / store",pos:"noun"},{pa:"teo",en:"tea",pos:"noun"},{pa:"terfa",en:"grassy",pos:"adj"},{pa:"terfo",en:"grass",pos:"noun"},{pa:"tero",en:"ground",pos:"noun"},{pa:"teramaludi",en:"do jiu jitsu",pos:"verb",note:"tera + maludi"},{pa:"teramaludo",en:"jiu jitsu",pos:"noun",note:"tera + maludo"},{pa:"tivo",en:"television / TV",pos:"noun"},{pa:"toda",en:"all",pos:"adj"},{pa:"todabona",en:"perfect",pos:"adj",note:"toda + bona"},{pa:"todaboni",en:"perfect",pos:"verb",note:"toda + boni"},{pa:"toki",en:"touch",pos:"verb"},{pa:"tolo",en:"towel",pos:"noun"},{pa:"topi",en:"put / place",pos:"verb"},{pa:"topo",en:"place",pos:"noun"},{pa:"tramo",en:"tram / train",pos:"noun"},{pa:"tranka",en:"calm / calmly",pos:"adj"},{pa:"tranki",en:"calm down",pos:"verb"},{pa:"tranko",en:"calmness",pos:"noun"},{pa:"trati",en:"try",pos:"verb"},{pa:"trema",en:"shaky",pos:"adj"},{pa:"tremi",en:"shake",pos:"verb"},{pa:"tria",en:"three",pos:"num"},{pa:"triayo",en:"Tuesday",pos:"noun"},{pa:"trialuno",en:"March",pos:"noun"},{pa:"tro",en:"too much",pos:"adv"},{pa:"trovi",en:"find",pos:"verb"},{pa:"tru",en:"through",pos:"prep"},
+  {pa:"una",en:"one",pos:"num"},{pa:"una hapo",en:"once",pos:"adv"},{pa:"unaluno",en:"January",pos:"noun"},{pa:"unayo",en:"Sunday",pos:"noun"},{pa:"urbo",en:"city",pos:"noun"},
+  {pa:"vapo",en:"ship",pos:"noun"},{pa:"vaso",en:"container",pos:"noun"},{pa:"venaro",en:"wind",pos:"noun"},{pa:"vendi",en:"sell",pos:"verb"},{pa:"veni",en:"come / arrive",pos:"verb"},{pa:"vera",en:"true / truly / real / really",pos:"adj"},{pa:"vero",en:"truth",pos:"noun"},{pa:"verda",en:"green",pos:"adj"},{pa:"vidi",en:"see",pos:"verb"},{pa:"vilo",en:"village",pos:"noun"},{pa:"viro",en:"man",pos:"noun"},{pa:"viva",en:"alive",pos:"adj"},{pa:"vivi",en:"live",pos:"verb"},{pa:"vivo",en:"life",pos:"noun"},{pa:"voli",en:"want",pos:"verb"},{pa:"voliparli",en:"mean",pos:"verb"},{pa:"voliparlo",en:"meaning",pos:"noun"},{pa:"volvi",en:"return / put back",pos:"verb"},
+  {pa:"wadi",en:"promise",pos:"verb"},{pa:"wado",en:"promise",pos:"noun"},{pa:"walda",en:"wooden",pos:"adj"},{pa:"waldo",en:"wood",pos:"noun"},{pa:"waka",en:"awake",pos:"adj"},{pa:"waki",en:"wake",pos:"verb"},{pa:"waso",en:"bird",pos:"noun"},{pa:"wundido",en:"small cut / scrape",pos:"noun",note:"wundo + -ido"},{pa:"wundo",en:"wound",pos:"noun"},
+  {pa:"ya",en:"already",pos:"adv"},{pa:"yela",en:"yellow",pos:"adj"},{pa:"yo",en:"day",pos:"noun"},{pa:"yoyo",en:"sister",pos:"noun"},{pa:"yu",en:"you (singular)",pos:"pronoun"},{pa:"yun",en:"your / yours (singular)",pos:"pronoun"},{pa:"yus",en:"you (plural)",pos:"pronoun"},{pa:"yusin",en:"your / yours (plural)",pos:"pronoun"},
+  {pa:"ad",en:"to / at",pos:"prep"},{pa:"far",en:"far",pos:"adv"},{pa:"esi vidi ke",en:"seem (is seen as)",pos:"phrase"},
+];
+const seenDict = new Set();
+const DICTIONARY = DICT_RAW.filter(e => {
+  if(seenDict.has(e.pa)) return false;
+  seenDict.add(e.pa);
+  return true;
+}).sort((a,b) => a.pa.localeCompare(b.pa));
+
+// ═══════════════════════════════════════════════════════════════
+// GRAMMAR RENDERER
+// ═══════════════════════════════════════════════════════════════
+const GRAMMAR_SECTIONS = [
+  {
+    icon:"🌍", title:"Introduction",
+    body:`<p>ParliAspo is a constructed language designed for simplicity and accessibility. It borrows words from languages across the world — English, Spanish, Portuguese, French, Latin, Arabic, Japanese — as well as from constructed languages like Esperanto and Toki Pona.</p>
+    <p>With approximately <strong>350 base words</strong> and straightforward grammar rules, ParliAspo facilitates basic communication across diverse linguistic backgrounds.</p>
+    <div class="grammar-callout"><strong>Core principle:</strong> Every rule is consistent — no exceptions, no irregular verbs, no gendered articles.</div>`
+  },
+  {
+    icon:"🔤", title:"Phonology",
+    body:`<div class="grammar-sub-header">Vowels</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead><tbody>
+    <tr><td>a</td><td>/a/ as in "father"</td><td><em>kaso</em> /ka.so/ — house</td></tr>
+    <tr><td>e</td><td>/e/ as in "then"</td><td><em>bela</em> /be.la/ — beautiful</td></tr>
+    <tr><td>i</td><td>/i/ as in "pizza"</td><td><em>vidi</em> /vi.di/ — see</td></tr>
+    <tr><td>o</td><td>/o/ as in "core"</td><td><em>domo</em> /do.mo/ — room</td></tr>
+    <tr><td>u</td><td>/u/ as in "June"</td><td><em>nutro</em> /nu.tro/ — food</td></tr>
+    </tbody></table></div>
+    <div class="grammar-sub-header">Consonants</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead><tbody>
+    <tr><td>b</td><td>/b/ as in "boy"</td><td><em>bela</em></td></tr>
+    <tr><td>d</td><td>/d/ as in "dog"</td><td><em>domo</em></td></tr>
+    <tr><td>f</td><td>/f/ as in "fish"</td><td><em>filo</em> — friend</td></tr>
+    <tr><td>g</td><td>/g/ as in "gate"</td><td><em>granda</em> — big</td></tr>
+    <tr><td>h</td><td>/h/ as in "hot"</td><td><em>humo</em> — person</td></tr>
+    <tr><td>k</td><td>/k/ as in "kite"</td><td><em>kaso</em></td></tr>
+    <tr><td>l</td><td>/l/ as in "love"</td><td><em>lumo</em> — light</td></tr>
+    <tr><td>m</td><td>/m/ as in "man"</td><td><em>moro</em> — death</td></tr>
+    <tr><td>n</td><td>/n/ as in "nice"</td><td><em>nervo</em> — nerve</td></tr>
+    <tr><td>p</td><td>/p/ as in "pen"</td><td><em>pano</em> — bread</td></tr>
+    <tr><td>r</td><td>/r/ as in "red"</td><td><em>ropo</em> — clothes</td></tr>
+    <tr><td>s</td><td>/s/ as in "sun"</td><td><em>suno</em> — sun</td></tr>
+    <tr><td>t</td><td>/t/ as in "top"</td><td><em>tivo</em> — television</td></tr>
+    <tr><td>v</td><td>/v/ as in "voice"</td><td><em>vivo</em> — life</td></tr>
+    <tr><td>w</td><td>/w/ as in "wet"</td><td><em>agwa</em> — wet</td></tr>
+    <tr><td>y</td><td>/y/ as in "yes"</td><td><em>yu</em> — you</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout"><strong>Stress:</strong> Always on the first syllable — <em>KA.so</em>, <em>FI.lo</em>, <em>BE.la</em>.<br><strong>No digraphs:</strong> Every letter is a single sound. No "sh", "th", "ch", etc.</div>`
+  },
+  {
+    icon:"📝", title:"Word Classes",
+    body:`<p>Word class is determined entirely by the final letter — no exceptions.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Ending</th><th>Class</th><th>Example</th></tr></thead><tbody>
+    <tr><td><strong>-o</strong></td><td>Noun</td><td><em>libo</em> (book)</td></tr>
+    <tr><td><strong>-i</strong></td><td>Verb (present/infinitive)</td><td><em>legi</em> (read)</td></tr>
+    <tr><td><strong>-a</strong></td><td>Adjective / Adverb</td><td><em>bela</em> (beautiful), <em>rapida</em> (quickly)</td></tr>
+    </tbody></table></div>
+    <div class="grammar-sub-header">Nouns</div>
+    <ul>
+      <li>Plural: add <strong>-s</strong> → <em>libo</em> → <em>libos</em></li>
+      <li>Agent suffix <strong>-io</strong>: turns verb into doer → <em>kanti</em> → <em>kantio</em> (singer)</li>
+      <li>Diminutive suffix <strong>-ido</strong>: smaller version → <em>pipo</em> → <em>pipido</em> (puppy)</li>
+      <li>-ido can stack: <em>fogo</em> → <em>fogido</em> (flame) → <em>fogidido</em> (spark)</li>
+    </ul>
+    <div class="grammar-sub-header">Verbs</div>
+    <ul>
+      <li><strong>Past tense:</strong> <em>pa</em> before verb → <em>pa vidi</em> (saw)</li>
+      <li><strong>Future tense:</strong> <em>fu</em> before verb → <em>fu vidi</em> (will see)</li>
+      <li>Verbs are <strong>never conjugated</strong> for person or number</li>
+      <li>Auxiliary verbs: <em>povi</em> (can), <em>debi</em> (should), <em>voli</em> (want)</li>
+    </ul>
+    <div class="grammar-sub-header">Adjectives &amp; Adverbs</div>
+    <ul>
+      <li>Both end in <strong>-a</strong></li>
+      <li>Adjectives <strong>precede</strong> nouns: <em>bela kaso</em></li>
+      <li>Adverbs generally <strong>follow</strong> verbs: <em>kuri rapida</em></li>
+    </ul>`
+  },
+  {
+    icon:"⛓️", title:"Verb Chaining",
+    body:`<p>Multiple verbs can be chained in sequence. Only the first verb (or its tense marker) carries the tense for the whole chain.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Me voli komensi labori.</em></td><td>I want to start working.</td></tr>
+    <tr><td><em>Yu debi trati lerni.</em></td><td>You should try to learn.</td></tr>
+    <tr><td><em>Nos pa komensi kusi nutro.</em></td><td>We started cooking food.</td></tr>
+    <tr><td><em>Los fu povi veni helpi.</em></td><td>They will be able to come help.</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout">Pattern: <strong>subject + (tense) + verb₁ + verb₂ + verb₃ + ... + object</strong></div>
+    <div class="grammar-sub-header">The Copula esi</div>
+    <p>The verb <strong>esi</strong> (be/is/am) is <em>always</em> required — never omitted.</p>
+    <ul>
+      <li><strong>Identity:</strong> <em>Me esi Maria.</em> — I am Maria.</li>
+      <li><strong>Description:</strong> <em>La kaso esi bela.</em> — The house is beautiful.</li>
+      <li><strong>Location:</strong> <em>La gato esi en la kaso.</em> — The cat is in the house.</li>
+      <li><strong>Existence:</strong> <em>Faram esi manga arbos.</em> — There are many trees there.</li>
+    </ul>`
+  },
+  {
+    icon:"🗣️", title:"Sentence Structure",
+    body:`<p>ParliAspo follows <strong>Subject-Verb-Object (SVO)</strong> order.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Me plumi libo.</em></td><td>I write a book.</td></tr>
+    <tr><td><em>Le pa agwi suko.</em></td><td>He drank juice.</td></tr>
+    <tr><td><em>Yun ropas esi reda.</em></td><td>Your clothes are red.</td></tr>
+    <tr><td><em>Ki yun ropas esi reda?</em></td><td>Are your clothes red?</td></tr>
+    <tr><td><em>Kwa yu fari?</em></td><td>What are you doing?</td></tr>
+    <tr><td><em>Kwo esi en la kaso?</em></td><td>Who is in the house?</td></tr>
+    </tbody></table></div>`
+  },
+  {
+    icon:"❓", title:"Questions",
+    body:`<ul>
+      <li><strong>Yes/No questions:</strong> Start with <em>ki</em> → <em>Ki yu kasi am?</em> (Do you live here?)</li>
+      <li><strong>Wh-questions:</strong> Start with the question word</li>
+    </ul>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>ki</em></td><td>question particle (yes/no)</td></tr>
+    <tr><td><em>kwo</em></td><td>who</td></tr>
+    <tr><td><em>kwa</em></td><td>what</td></tr>
+    <tr><td><em>kwe</em></td><td>where</td></tr>
+    <tr><td><em>kwen</em></td><td>when</td></tr>
+    <tr><td><em>kwi</em></td><td>why</td></tr>
+    <tr><td><em>kom</em></td><td>how</td></tr>
+    <tr><td><em>kwant</em></td><td>how many</td></tr>
+    </tbody></table></div>`
+  },
+  {
+    icon:"👤", title:"Pronouns",
+    body:`<div class="grammar-sub-header">Singular</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Pronoun</th><th>Meaning</th><th>Possessive</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>me</em></td><td>I / me</td><td><em>men</em></td><td>my / mine</td></tr>
+    <tr><td><em>yu</em></td><td>you (singular)</td><td><em>yun</em></td><td>your / yours</td></tr>
+    <tr><td><em>le</em></td><td>he</td><td><em>len</em></td><td>his</td></tr>
+    <tr><td><em>lu</em></td><td>she</td><td><em>lun</em></td><td>her</td></tr>
+    <tr><td><em>lo</em></td><td>it / they (gender-neutral sg.)</td><td><em>lon</em></td><td>its</td></tr>
+    </tbody></table></div>
+    <div class="grammar-sub-header">Plural</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Pronoun</th><th>Meaning</th><th>Possessive</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>nos</em></td><td>we / us</td><td><em>nosin</em></td><td>our / ours</td></tr>
+    <tr><td><em>yus</em></td><td>you (plural)</td><td><em>yusin</em></td><td>your / yours (pl.)</td></tr>
+    <tr><td><em>les</em></td><td>they (male group)</td><td><em>lesin</em></td><td>their (male group)</td></tr>
+    <tr><td><em>lus</em></td><td>they (female group)</td><td><em>lusin</em></td><td>their (female group)</td></tr>
+    <tr><td><em>los</em></td><td>they (mixed group)</td><td><em>losin</em></td><td>their (mixed group)</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout">Possessives: add <strong>-n</strong> to singular pronouns; add <strong>-in</strong> to plural pronouns.</div>`
+  },
+  {
+    icon:"🔗", title:"Relative Clauses",
+    body:`<p>The conjunction <strong>ke</strong> ("that / who / which") introduces relative clauses. The clause follows the noun it modifies.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>La humo ke labori am esi men filo.</em></td><td>The person who works here is my friend.</td></tr>
+    <tr><td><em>La libo ke me pa legi esi bela.</em></td><td>The book that I read is beautiful.</td></tr>
+    <tr><td><em>Me vidi la gato ke dormi sur la sedo.</em></td><td>I see the cat that sleeps on the chair.</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout"><strong>Structure:</strong> noun + ke + clause<br>When the noun is the object of the relative clause, it is omitted after the verb.</div>`
+  },
+  {
+    icon:"🔢", title:"Numbers",
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Number</th><th>Word</th><th>Number</th></tr></thead><tbody>
+    <tr><td><em>nula</em></td><td>zero</td><td><em>sesa</em></td><td>six</td></tr>
+    <tr><td><em>una</em></td><td>one</td><td><em>sepa</em></td><td>seven</td></tr>
+    <tr><td><em>dua</em></td><td>two</td><td><em>okta</em></td><td>eight</td></tr>
+    <tr><td><em>tria</em></td><td>three</td><td><em>nova</em></td><td>nine</td></tr>
+    <tr><td><em>kwara</em></td><td>four</td><td><em>deka</em></td><td>ten</td></tr>
+    <tr><td><em>kina</em></td><td>five</td><td><em>senta</em></td><td>hundred</td></tr>
+    </tbody></table></div>
+    <ul>
+      <li><strong>11–19:</strong> <em>deka-una</em> (11), <em>deka-nova</em> (19)</li>
+      <li><strong>20–99:</strong> <em>dua-deka</em> (20), <em>dua-deka-una</em> (21)</li>
+      <li><strong>Ordinals:</strong> place <em>la</em> before the cardinal → <em>la una</em> (first)</li>
+      <li><strong>Days:</strong> cardinal + <em>yo</em> → <em>unayo</em> (Sunday), <em>duayo</em> (Monday)…</li>
+      <li><strong>Months:</strong> cardinal + <em>luno</em> → <em>unaluno</em> (January)…</li>
+    </ul>`
+  },
+  {
+    icon:"🔨", title:"Word Building",
+    body:`<div class="grammar-sub-header">mal- Prefix (opposite)</div>
+    <ul>
+      <li><em>filo</em> (friend) → <em>malfilo</em> (enemy)</li>
+      <li><em>bela</em> (beautiful) → <em>malbela</em> (ugly)</li>
+      <li><em>veni</em> (come) → <em>malveni</em> (leave)</li>
+      <li><em>granda</em> (big) → <em>malgranda</em> (small)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">re- Prefix (do again)</div>
+    <ul>
+      <li><em>legi</em> (read) → <em>relegi</em> (reread)</li>
+      <li><em>fari</em> (do) → <em>refari</em> (redo)</li>
+      <li><em>pensi</em> (think) → <em>repensi</em> (remember — literally "re-think")</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">-ido Suffix (diminutive)</div>
+    <ul>
+      <li><em>pipo</em> (dog) → <em>pipido</em> (puppy)</li>
+      <li><em>fogo</em> (fire) → <em>fogido</em> (flame) → <em>fogidido</em> (spark)</li>
+      <li><em>oro</em> (hour) → <em>orido</em> (minute) → <em>oridido</em> (second)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">-io Suffix (agent / doer)</div>
+    <ul>
+      <li><em>kanti</em> (sing) → <em>kantio</em> (singer)</li>
+      <li><em>labori</em> (work) → <em>laborio</em> (worker)</li>
+      <li><em>skoli</em> (teach) → <em>skolio</em> (teacher)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">Compound Words</div>
+    <p>Two words may be combined when no existing word covers the concept. The second word determines the part of speech.</p>
+    <ul>
+      <li><em>pano</em> + <em>tendo</em> → <em>panotendo</em> (bakery)</li>
+      <li><em>ropo</em> + <em>puro</em> → <em>ropopuro</em> (washing machine)</li>
+      <li><em>kompo</em> + <em>ludo</em> → <em>kompoludo</em> (videogame)</li>
+    </ul>`
+  },
+  {
+    icon:"💬", title:"Particles & Conjunctions",
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>i</em></td><td>and</td></tr>
+    <tr><td><em>ili</em></td><td>or</td></tr>
+    <tr><td><em>ma</em></td><td>but / although</td></tr>
+    <tr><td><em>da</em></td><td>yes</td></tr>
+    <tr><td><em>na</em></td><td>no / not</td></tr>
+    <tr><td><em>si</em></td><td>if</td></tr>
+    <tr><td><em>bem</em></td><td>well (interjection)</td></tr>
+    <tr><td><em>forke</em></td><td>because</td></tr>
+    <tr><td><em>for ke</em></td><td>so that</td></tr>
+    <tr><td><em>sina</em></td><td>unless</td></tr>
+    <tr><td><em>durel</em></td><td>during / while</td></tr>
+    <tr><td><em>intera</em></td><td>until</td></tr>
+    <tr><td><em>la</em></td><td>the (definite article)</td></tr>
+    </tbody></table></div>`
+  },
+  {
+    icon:"📏", title:"Common Phrases",
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Kom yu esi?</em></td><td>How are you?</td></tr>
+    <tr><td><em>Me esi bona, grati.</em></td><td>I am good, thank you.</td></tr>
+    <tr><td><em>Kwa esi yun nomo?</em></td><td>What is your name?</td></tr>
+    <tr><td><em>Men nomo esi [name].</em></td><td>My name is [name].</td></tr>
+    <tr><td><em>Grati for yun helpo.</em></td><td>Thank you for your help.</td></tr>
+    <tr><td><em>Kwe yu kasi?</em></td><td>Where do you live?</td></tr>
+    <tr><td><em>Me kasi en [place].</em></td><td>I live in [place].</td></tr>
+    <tr><td><em>Ki oro esi?</em></td><td>What time is it?</td></tr>
+    </tbody></table></div>`
+  }
+];
+
+function renderGrammar() {
+  const el = document.getElementById('grammar-body');
+  let html = `<div class="grammar-intro">
+    <strong>ParliAspo</strong> — a constructed language built for accessibility and elegance, 
+    drawing vocabulary from languages across the globe. Every rule is consistent: no exceptions, 
+    no irregular forms, no surprises.
+  </div>`;
+
+  GRAMMAR_SECTIONS.forEach((sec, i) => {
+    html += `<div class="grammar-section" id="gsec-${i}">
+      <div class="grammar-section-header" onclick="toggleGrammarSection(${i})">
+        <span class="grammar-section-icon">${sec.icon}</span>
+        <span class="grammar-section-title">${sec.title}</span>
+        <span class="grammar-section-chevron">▾</span>
+      </div>
+      <div class="grammar-section-body">${sec.body}</div>
+    </div>`;
+  });
+  el.innerHTML = html;
+  // Open first section by default
+  document.getElementById('gsec-0').classList.add('open');
+}
+
+function toggleGrammarSection(i) {
+  const sec = document.getElementById('gsec-' + i);
+  sec.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DICTIONARY RENDERER
+// ═══════════════════════════════════════════════════════════════
+let dictEnQuery = '';
+let dictPaQuery = '';
+let dictBrowseLetter = '';
+
+function searchEnToPA(q) {
+  q = q.toLowerCase().trim();
+  if(!q) return [];
+  const exact=[],startsWith=[],contains=[];
+  DICTIONARY.forEach(e => {
+    const meanings = e.en.toLowerCase().split(/\s*\/\s*|\s*\(\s*|\s*\)\s*/).filter(Boolean);
+    const enLower = e.en.toLowerCase();
+    if(meanings.some(m=>m.trim()===q)) exact.push(e);
+    else if(meanings.some(m=>m.trim().startsWith(q))||enLower.startsWith(q)) startsWith.push(e);
+    else if(enLower.includes(q)) contains.push(e);
+  });
+  return [...exact,...startsWith,...contains];
+}
+function searchPAToEn(q) {
+  q = q.toLowerCase().trim();
+  if(!q) return [];
+  const exact=[],startsWith=[],contains=[];
+  DICTIONARY.forEach(e => {
+    const p = e.pa.toLowerCase();
+    if(p===q) exact.push(e);
+    else if(p.startsWith(q)) startsWith.push(e);
+    else if(p.includes(q)) contains.push(e);
+  });
+  return [...exact,...startsWith,...contains];
+}
+
+function renderDictResultItem(entry, direction) {
+  const word = direction==='en' ? entry.pa : entry.en;
+  const trans = direction==='en' ? entry.en : entry.pa;
+  const arrow = direction==='en' ? '→' : '←';
+  const noteHTML = entry.note ? `<div class="dict-result-note">🧩 ${entry.note}</div>` : '';
+  return `<div class="dict-result-item">
+    <span class="dict-result-arrow">${arrow}</span>
+    <div style="flex:1;min-width:0">
+      <div class="dict-result-word">${word}</div>
+      <div class="dict-result-translation">${trans}</div>
+      <span class="dict-result-pos">${entry.pos}</span>
+      ${noteHTML}
+    </div>
+  </div>`;
+}
+
+function renderDict() {
+  const el = document.getElementById('dict-body');
+  const enResults = searchEnToPA(dictEnQuery);
+  const paResults = searchPAToEn(dictPaQuery);
+
+  let enResultsHTML = '';
+  if(dictEnQuery.trim()) {
+    if(enResults.length>0) {
+      enResultsHTML = `<div class="dict-result-count">${enResults.length} result${enResults.length!==1?'s':''}</div>`;
+      enResultsHTML += enResults.slice(0,30).map(e=>renderDictResultItem(e,'en')).join('');
+      if(enResults.length>30) enResultsHTML += `<div class="dict-result-count" style="text-align:center;padding:12px">...and ${enResults.length-30} more</div>`;
+    } else {
+      enResultsHTML = `<div class="dict-no-results"><div class="dict-no-results-icon">🤔</div>No results for "${dictEnQuery}"</div>`;
+    }
+  }
+
+  let paResultsHTML = '';
+  if(dictPaQuery.trim()) {
+    if(paResults.length>0) {
+      paResultsHTML = `<div class="dict-result-count">${paResults.length} result${paResults.length!==1?'s':''}</div>`;
+      paResultsHTML += paResults.slice(0,30).map(e=>renderDictResultItem(e,'pa')).join('');
+      if(paResults.length>30) paResultsHTML += `<div class="dict-result-count" style="text-align:center;padding:12px">...and ${paResults.length-30} more</div>`;
+    } else {
+      paResultsHTML = `<div class="dict-no-results"><div class="dict-no-results-icon">🤔</div>No results for "${dictPaQuery}"</div>`;
+    }
+  }
+
+  const letters = 'ABDEFGHIKLMNOPRSTUVWY'.split('');
+  const paLetters = new Set(DICTIONARY.map(e=>e.pa[0].toUpperCase()));
+  let browseHTML = '';
+  if(dictBrowseLetter) {
+    const br = DICTIONARY.filter(e=>e.pa[0].toUpperCase()===dictBrowseLetter);
+    browseHTML = `<div class="dict-browse-results">${br.map(e=>renderDictResultItem(e,'pa')).join('')}</div>`;
+  }
+
+  const tips = [
+    {title:"Nouns end in -o", text:"All nouns end in <strong>-o</strong>. Plurals add <strong>-s</strong>: libo → libos (books)"},
+    {title:"Verbs end in -i", text:"Present/infinitive ends in <strong>-i</strong>. Past: <strong>pa</strong> + verb. Future: <strong>fu</strong> + verb."},
+    {title:"Adjectives end in -a", text:"Both adjectives and adverbs end in <strong>-a</strong>. Adjectives precede nouns: bela kaso"},
+    {title:"mal- = opposite", text:"Add <strong>mal-</strong> for opposites: bela → malbela (ugly), veni → malveni (leave)"},
+    {title:"re- = again", text:"Add <strong>re-</strong> for repetition: legi → relegi (reread), pensi → repensi (remember)"},
+    {title:"-ido = smaller", text:"<strong>-ido</strong> makes diminutives: pipo (dog) → pipido (puppy), fogo → fogido (flame)"},
+    {title:"-io = doer", text:"<strong>-io</strong> creates agents: kanti → kantio (singer), labori → laborio (worker)"},
+  ];
+  const tip = tips[Math.floor(Date.now()/60000) % tips.length];
+
+  el.innerHTML = `
+    <div class="dict-stats">
+      <span class="dict-stat-chip">📖 ${DICTIONARY.length} words</span>
+      <span class="dict-stat-chip blue">🔤 Bidirectional</span>
+      <span class="dict-stat-chip green">⚡ Instant</span>
+    </div>
+
+    <div class="dict-panel">
+      <div class="dict-panel-label">
+        <div class="dict-flag flag-en">EN</div>
+        <span class="dict-panel-lang">English → Parli Aspo</span>
+      </div>
+      <div class="dict-input-wrap">
+        <input class="dict-search-input" id="dictEnInput" type="text" placeholder="Type an English word..." value="${dictEnQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button class="dict-clear-btn ${dictEnQuery?'visible':''}" id="dictEnClear">✕</button>
+      </div>
+      <div class="dict-results">${enResultsHTML}</div>
+    </div>
+
+    <div class="dict-divider">
+      <div class="dict-divider-line"></div>
+      <div class="dict-divider-icon">⇅</div>
+      <div class="dict-divider-line"></div>
+    </div>
+
+    <div class="dict-panel pa-panel">
+      <div class="dict-panel-label">
+        <div class="dict-flag flag-pa">PA</div>
+        <span class="dict-panel-lang">Parli Aspo → English</span>
+      </div>
+      <div class="dict-input-wrap">
+        <input class="dict-search-input" id="dictPaInput" type="text" placeholder="Topi parlo de Parli Aspo..." value="${dictPaQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button class="dict-clear-btn ${dictPaQuery?'visible':''}" id="dictPaClear">✕</button>
+      </div>
+      <div class="dict-results">${paResultsHTML}</div>
+    </div>
+
+    <div class="dict-grammar-tip">
+      <div class="dict-grammar-tip-title">💡 ${tip.title}</div>
+      <div class="dict-grammar-tip-text">${tip.text}</div>
+    </div>
+
+    <div class="dict-browse-section">
+      <div class="dict-browse-title">📚 Browse by letter</div>
+      <div class="dict-letter-nav">
+        ${letters.map(l=>{
+          const has=paLetters.has(l);
+          const active=dictBrowseLetter===l;
+          return `<button class="dict-letter-btn ${active?'active':''} ${!has?'disabled':''}" data-letter="${l}" ${!has?'disabled':''}>${l}</button>`;
+        }).join('')}
+      </div>
+      ${browseHTML}
+    </div>
+  `;
+
+  // Bind events
+  const enIn = document.getElementById('dictEnInput');
+  const paIn = document.getElementById('dictPaInput');
+  const sCaret = enIn.selectionStart;
+
+  enIn.addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    dictEnQuery = e.target.value;
+    renderDict();
+    const el2 = document.getElementById('dictEnInput');
+    el2.focus(); el2.setSelectionRange(pos,pos);
+  });
+  paIn.addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    dictPaQuery = e.target.value;
+    renderDict();
+    const el2 = document.getElementById('dictPaInput');
+    el2.focus(); el2.setSelectionRange(pos,pos);
+  });
+  document.getElementById('dictEnClear').addEventListener('click', () => { dictEnQuery=''; renderDict(); document.getElementById('dictEnInput').focus(); });
+  document.getElementById('dictPaClear').addEventListener('click', () => { dictPaQuery=''; renderDict(); document.getElementById('dictPaInput').focus(); });
+  document.querySelectorAll('.dict-letter-btn:not(.disabled)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = btn.dataset.letter;
+      dictBrowseLetter = dictBrowseLetter===l ? '' : l;
+      renderDict();
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTACT RENDERER
+// ═══════════════════════════════════════════════════════════════
+function renderContact() {
+  const el = document.getElementById('contact-body');
+  el.innerHTML = `
+    <div class="contact-intro">
+      <div class="contact-intro-icon">💬</div>
+      <div class="contact-intro-title">Get in Touch</div>
+      <div class="contact-intro-desc">Have a suggestion for Parli Aspo? Found a bug in the app? Want to share feedback? We'd love to hear from you.</div>
+    </div>
+
+    <div id="contact-form-wrap">
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-name">Your Name <span style="color:var(--dim);font-weight:600">(optional)</span></label>
+        <input class="contact-input" type="text" id="cf-name" placeholder="How should we call you?" autocomplete="name">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-email">Your Email <span style="color:var(--dim);font-weight:600">(optional — if you'd like a reply)</span></label>
+        <input class="contact-input" type="email" id="cf-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-category">Category</label>
+        <select class="contact-select" id="cf-category">
+          <option value="Suggestion">💡 Suggestion</option>
+          <option value="Bug Report">🐛 Bug Report</option>
+          <option value="Feedback">⭐ General Feedback</option>
+          <option value="New Word">📖 New Word Request</option>
+          <option value="Other">💬 Other</option>
+        </select>
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-message">Message <span style="color:var(--red);font-size:12px">*</span></label>
+        <textarea class="contact-textarea" id="cf-message" placeholder="Tell us what's on your mind..." maxlength="2000" oninput="document.getElementById('cf-chars').textContent=this.value.length+'/2000'"></textarea>
+        <div class="contact-char-count" id="cf-chars">0 / 2000</div>
+      </div>
+
+      <div id="contact-emailjs-notice" class="contact-notice" style="display:${emailJSReady?'none':'block'}">
+        <strong>⚠️ EmailJS not configured yet.</strong> To enable message sending, set up your EmailJS credentials in the script section of index.html (search for EMAILJS_PUBLIC_KEY). Until then, you can still copy your message manually.
+      </div>
+
+      <button class="contact-submit" id="cf-submit" onclick="submitContact()">
+        Send Message ✉️
+      </button>
+    </div>
+
+    <div id="contact-success" class="contact-success" style="display:none">
+      <div class="contact-success-icon">✅</div>
+      <div class="contact-success-title">Message Sent!</div>
+      <div class="contact-success-desc">Grati for yun mesago!<br>Thank you for your message. We'll get back to you if you left an email.</div>
+      <button class="btn-primary" style="max-width:240px;margin:0 auto" onclick="resetContact()">Send Another</button>
+    </div>
+  `;
+}
+
+function submitContact() {
+  const name = document.getElementById('cf-name').value.trim() || 'Anonymous';
+  const email = document.getElementById('cf-email').value.trim() || 'Not provided';
+  const category = document.getElementById('cf-category').value;
+  const message = document.getElementById('cf-message').value.trim();
+
+  if(!message) {
+    const ta = document.getElementById('cf-message');
+    ta.style.borderColor = 'var(--red)';
+    ta.focus();
+    setTimeout(() => ta.style.borderColor = '', 1500);
+    return;
+  }
+
+  const btn = document.getElementById('cf-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  if(emailJSReady) {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: name,
+      from_email: email,
+      category: category,
+      message: message,
+      to_email: 'njprentiss@gmail.com'
+    }).then(() => {
+      showContactSuccess();
+    }).catch(err => {
+      console.error('EmailJS error:', err);
+      btn.disabled = false;
+      btn.textContent = 'Send Message ✉️';
+      alert('Failed to send. Please try again or email njprentiss@gmail.com directly.');
+    });
+  } else {
+    // EmailJS not configured — show what would be sent
+    console.log('Would send:', {from_name:name, from_email:email, category, message});
+    setTimeout(showContactSuccess, 800);
+  }
+}
+
+function showContactSuccess() {
+  document.getElementById('contact-form-wrap').style.display = 'none';
+  document.getElementById('contact-success').style.display = 'block';
+}
+
+function resetContact() {
+  document.getElementById('contact-form-wrap').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+  document.getElementById('cf-name').value = '';
+  document.getElementById('cf-email').value = '';
+  document.getElementById('cf-message').value = '';
+  document.getElementById('cf-chars').textContent = '0 / 2000';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LEARNING APP ENGINE (from parli-aspo.html)
+// ═══════════════════════════════════════════════════════════════
+function shuffle(arr) {
+  const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;
+}
+function pick(arr,n){return shuffle(arr).slice(0,n);}
+function saveLocal(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}}
+function loadLocal(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def}}
+function getCurrentUsername(){return loadLocal("pa_current_user","");}
+function setCurrentUsername(name){saveLocal("pa_current_user",name);}
+function loadUserData(username){
+  if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
+  const data=loadLocal("pa_user_"+username,{username,xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null});
+  data.username=username;
+  if(data.lastActiveDate){
+    const today=new Date().toDateString();
+    const yesterday=new Date(Date.now()-86400000).toDateString();
+    if(data.lastActiveDate!==today&&data.lastActiveDate!==yesterday)data.streak=0;
+    if(data.lastActiveDate!==today){data.streak=(data.streak||0)+1;data.lastActiveDate=today;saveLocal("pa_user_"+username,data);}
+  }
+  return data;
+}
+function saveUserData(data){if(!data.username)return;saveLocal("pa_user_"+data.username,data);}
+async function pushToLeaderboard(data){
+  if(!firebaseReady||!db||!data.username)return;
+  try{await db.ref("leaderboard/"+data.username.replace(/[.#$\/\[\]]/g,"_")).set({name:data.username,xp:data.xp,streak:data.streak,lessons:data.lessonsCompleted.length,updatedAt:Date.now()});}
+  catch(e){console.warn("Firebase push error:",e);}
+}
+async function fetchLeaderboard(){
+  if(!firebaseReady||!db)return[];
+  try{const snap=await db.ref("leaderboard").orderByChild("xp").limitToLast(50).once("value");const entries=[];snap.forEach(c=>{entries.push(c.val());});return entries.sort((a,b)=>b.xp-a.xp);}
+  catch(e){console.warn("Firebase fetch error:",e);return[];}
+}
+
+const LESSONS=[
+  {id:"greetings1",title:"Greetings 1",desc:"Yes, no, good, sorry",icon:"👋",vocabKey:"greetings1",xp:15},
+  {id:"pronouns1",title:"Pronouns 1",desc:"I, you, he, she, it",icon:"👤",vocabKey:"pronouns1",xp:15},
+  {id:"possessives",title:"Possessives",desc:"My, your, his, her",icon:"🫂",vocabKey:"possessives",xp:15},
+  {id:"people1",title:"People 1",desc:"Person, friend, family",icon:"👨‍👩‍👧",vocabKey:"people1",xp:15},
+  {id:"people2",title:"People 2",desc:"Father, mother, brother",icon:"👨‍👩‍👦",vocabKey:"people2",xp:15},
+  {id:"colors1",title:"Colors 1",desc:"Red, blue, green",icon:"🎨",vocabKey:"colors1",xp:15},
+  {id:"colors2",title:"Colors 2",desc:"Orange, purple, gray",icon:"🖌️",vocabKey:"colors2",xp:15},
+  {id:"numbers",title:"Numbers",desc:"Zero through ten",icon:"🔢",vocabKey:"numbers",xp:15},
+  {id:"articles",title:"Articles & Questions",desc:"The, this, what, who",icon:"📌",vocabKey:"articles",xp:18},
+  {id:"s1",title:"Sentences 1",desc:"Basic sentences",icon:"📝",vocabKey:"s1",xp:20,isSentence:true},
+  {id:"food1",title:"Food 1",desc:"Bread, meat, fruit",icon:"🍎",vocabKey:"food1",xp:15},
+  {id:"food2",title:"Food 2",desc:"Water, milk, coffee",icon:"☕",vocabKey:"food2",xp:15},
+  {id:"cooking",title:"Cooking & Eating",desc:"Cook, eat, drink",icon:"🍳",vocabKey:"cooking",xp:18},
+  {id:"animals1",title:"Animals 1",desc:"Dog, cat, fish, bird",icon:"🐾",vocabKey:"animals1",xp:15},
+  {id:"animals2",title:"Animals 2",desc:"Elephant, monkey, cow",icon:"🐘",vocabKey:"animals2",xp:15},
+  {id:"animals3",title:"Animals 3",desc:"Snake, insect, bee",icon:"🐍",vocabKey:"animals3",xp:15},
+  {id:"home1",title:"Home 1",desc:"House, room, door",icon:"🏠",vocabKey:"home1",xp:15},
+  {id:"home2",title:"Home 2",desc:"Table, chair, bed",icon:"🛋️",vocabKey:"home2",xp:15},
+  {id:"objects1",title:"Objects 1",desc:"Book, phone, computer",icon:"📱",vocabKey:"objects1",xp:15},
+  {id:"objects2",title:"Objects 2",desc:"Money, bag, clothes",icon:"👜",vocabKey:"objects2",xp:15},
+  {id:"s2",title:"Sentences 2",desc:"Questions & family",icon:"📝",vocabKey:"s2",xp:22,isSentence:true},
+  {id:"verbs1",title:"Verbs 1",desc:"Be, have, do, go",icon:"⚡",vocabKey:"verbs1",xp:18},
+  {id:"verbs2",title:"Verbs 2",desc:"Know, want, can",icon:"💭",vocabKey:"verbs2",xp:18},
+  {id:"verbs3",title:"Verbs 3",desc:"Run, walk, sit, jump",icon:"🏃",vocabKey:"verbs3",xp:18},
+  {id:"verbs4",title:"Verbs 4",desc:"Work, play, read, write",icon:"✍️",vocabKey:"verbs4",xp:18},
+  {id:"verbs5",title:"Verbs 5",desc:"Think, learn, teach",icon:"🧠",vocabKey:"verbs5",xp:18},
+  {id:"verbs6",title:"Verbs 6",desc:"Give, take, buy, sell",icon:"🤝",vocabKey:"verbs6",xp:18},
+  {id:"verbs7",title:"Verbs 7",desc:"Love, help, find",icon:"❤️",vocabKey:"verbs7",xp:20},
+  {id:"verbs8",title:"Verbs 8",desc:"Start, finish, change",icon:"🔄",vocabKey:"verbs8",xp:20},
+  {id:"adj1",title:"Adjectives 1",desc:"Big, small, tall",icon:"📏",vocabKey:"adj1",xp:18},
+  {id:"adj2",title:"Adjectives 2",desc:"Fast, strong, easy",icon:"💪",vocabKey:"adj2",xp:18},
+  {id:"adj3",title:"Adjectives 3",desc:"New, clean, hot, cold",icon:"🌡️",vocabKey:"adj3",xp:20},
+  {id:"adj4",title:"Adjectives 4",desc:"Happy, brave, smart",icon:"😊",vocabKey:"adj4",xp:20},
+  {id:"s3",title:"Sentences 3",desc:"Descriptions & places",icon:"📝",vocabKey:"s3",xp:25,isSentence:true},
+  {id:"nature1",title:"Sky & Weather",desc:"Sun, moon, rain",icon:"☀️",vocabKey:"nature1",xp:18},
+  {id:"nature2",title:"Land & Plants",desc:"Tree, flower, forest",icon:"🌳",vocabKey:"nature2",xp:18},
+  {id:"nature3",title:"Water & Terrain",desc:"River, lake, mountain",icon:"🏔️",vocabKey:"nature3",xp:20},
+  {id:"places",title:"Places",desc:"City, school, store",icon:"🏙️",vocabKey:"places",xp:20},
+  {id:"body1",title:"Body 1",desc:"Head, eyes, mouth",icon:"👤",vocabKey:"body1",xp:18},
+  {id:"body2",title:"Body 2",desc:"Hand, arm, leg, heart",icon:"🫀",vocabKey:"body2",xp:20},
+  {id:"health",title:"Health",desc:"Sick, medicine, doctor",icon:"🏥",vocabKey:"health",xp:22},
+  {id:"s4",title:"Sentences 4",desc:"Longer sentences",icon:"📝",vocabKey:"s4",xp:28,isSentence:true},
+  {id:"preps1",title:"Prepositions 1",desc:"In, on, with, under",icon:"📍",vocabKey:"preps1",xp:18},
+  {id:"preps2",title:"Prepositions 2",desc:"For, between, through",icon:"🔀",vocabKey:"preps2",xp:20},
+  {id:"conjunctions",title:"Conjunctions",desc:"And, or, but, because",icon:"🔗",vocabKey:"conjunctions",xp:20},
+  {id:"time1",title:"Time 1",desc:"Hour, today, tomorrow",icon:"🕐",vocabKey:"time1",xp:18},
+  {id:"time2",title:"Time 2",desc:"Morning, week, year",icon:"📅",vocabKey:"time2",xp:18},
+  {id:"days",title:"Days of the Week",desc:"Monday through Sunday",icon:"📆",vocabKey:"days",xp:20},
+  {id:"seasons",title:"Seasons & Weather",desc:"Spring, summer, winter",icon:"🍂",vocabKey:"seasons",xp:20},
+  {id:"s5",title:"Sentences 5",desc:"Complex sentences",icon:"📝",vocabKey:"s5",xp:30,isSentence:true},
+  {id:"transport",title:"Transport",desc:"Car, bus, airplane",icon:"🚗",vocabKey:"transport",xp:20},
+  {id:"travel",title:"Travel",desc:"Drive, fly, map, world",icon:"🌍",vocabKey:"travel",xp:20},
+  {id:"feelings1",title:"Emotions 1",desc:"Joy, sadness, love, fear",icon:"💗",vocabKey:"feelings1",xp:22},
+  {id:"feelings2",title:"Emotions 2",desc:"States & traits",icon:"🎭",vocabKey:"feelings2",xp:22},
+  {id:"personality",title:"Personality",desc:"Kind, honest, careful",icon:"🪞",vocabKey:"personality",xp:22},
+  {id:"mal1",title:"mal- Prefix 1",desc:"Opposites with mal-",icon:"🔄",vocabKey:"mal1",xp:25},
+  {id:"mal2",title:"mal- Prefix 2",desc:"More opposites",icon:"↩️",vocabKey:"mal2",xp:25},
+  {id:"tense1",title:"Past & Future 1",desc:"pa and fu",icon:"⏳",vocabKey:"tense1",xp:25},
+  {id:"tense2",title:"Past & Future 2",desc:"More tense practice",icon:"⏰",vocabKey:"tense2",xp:25},
+  {id:"compound1",title:"Compound Words 1",desc:"Store + noun words",icon:"🧩",vocabKey:"compound1",xp:25},
+  {id:"compound2",title:"Compound Words 2",desc:"Creative compounds",icon:"🔧",vocabKey:"compound2",xp:25},
+  {id:"diminutive",title:"Diminutives",desc:"The -ido suffix",icon:"🔬",vocabKey:"diminutive",xp:25},
+  {id:"reprefix",title:"re- Prefix",desc:"Redo, reread, rebuild",icon:"🔁",vocabKey:"reprefix",xp:25},
+  {id:"relclauses",title:"Relative Clauses",desc:"Who, which, that with ke",icon:"🔗",vocabKey:"relclauses",xp:28,isSentence:true},
+  {id:"verbchain",title:"Verb Chaining",desc:"Stack verbs together",icon:"⛓️",vocabKey:"verbchain",xp:28,isSentence:true},
+  {id:"daily1",title:"Daily Routine 1",desc:"Wake, eat, dress",icon:"🌅",vocabKey:"daily1",xp:22},
+  {id:"daily2",title:"Daily Routine 2",desc:"Clean, cook, study",icon:"📖",vocabKey:"daily2",xp:22},
+  {id:"communication",title:"Entertainment",desc:"Music, movies, sports",icon:"🎵",vocabKey:"communication",xp:22},
+  {id:"abstract1",title:"Abstract 1",desc:"Idea, problem, memory",icon:"💡",vocabKey:"abstract1",xp:25},
+  {id:"abstract2",title:"Abstract 2",desc:"Life, death, truth",icon:"⚖️",vocabKey:"abstract2",xp:25},
+  {id:"advanced1",title:"Advanced Verbs",desc:"Own, promise, allow",icon:"🎓",vocabKey:"advanced1",xp:25},
+  {id:"adverbs",title:"Adverbs",desc:"Always, often, soon",icon:"⚡",vocabKey:"adverbs",xp:22},
+  {id:"quantities",title:"Quantities",desc:"All, some, many, few",icon:"📊",vocabKey:"quantities",xp:22},
+  {id:"s6",title:"Sentences 6",desc:"Advanced sentences",icon:"📜",vocabKey:"s6",xp:35,isSentence:true},
+];
+
+function generateExercises(lessonId){
+  const lesson=LESSONS.find(l=>l.id===lessonId);
+  const vocab=V[lesson.vocabKey];
+  const mcExercises=[];const matchExercises=[];const fillExercises=[];const wordOrderExercises=[];
+  if(lesson.isSentence){
+    vocab.forEach(item=>{wordOrderExercises.push({type:"wordOrder",prompt:`Translate: "${item.en}"`,correctOrder:item.pa,shuffled:shuffle([...item.pa])});});
+    vocab.slice(0,5).forEach(item=>{const wrong=pick(vocab.filter(v=>v.en!==item.en),3).map(v=>v.en);mcExercises.push({type:"mc",prompt:`What does "${item.pa.join(" ")}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});});
+  } else {
+    const items=vocab.map(v=>({pa:v.pa,en:v.en,note:v.note,pr:v.pr}));
+    items.forEach(item=>{const wrong=pick(items.filter(v=>v.en!==item.en),3).map(v=>v.en);mcExercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong]),note:item.note,pr:item.pr,paWord:item.pa});});
+    items.slice(0,5).forEach(item=>{const wrong=pick(items.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);mcExercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});});
+    const matchItems=pick(items,4);matchExercises.push({type:"match",pairs:matchItems.map(v=>({left:v.pa,right:v.en}))});
+    const miniSentences=buildMiniSentences(items,lessonId);miniSentences.forEach(s=>wordOrderExercises.push(s));
+    items.slice(0,3).forEach(item=>{fillExercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});});
+  }
+  const ordered=[...shuffle(mcExercises).slice(0,5),...matchExercises,...shuffle(wordOrderExercises).slice(0,3),...shuffle(fillExercises).slice(0,2)];
+  return ordered.slice(0,12);
+}
+
+const LS={greetings1:[],pronouns1:[],possessives:[],articles:[],
+people1:[{en:"The child plays",pa:["La","kido","ludi"]},{en:"The woman reads a book",pa:["La","femo","legi","libo"]}],
+people2:[{en:"My mother cooks",pa:["Men","matro","kusi"]},{en:"My father works",pa:["Men","patro","labori"]}],
+colors1:[{en:"The house is red",pa:["La","kaso","esi","reda"]},{en:"The book is blue",pa:["La","libo","esi","blua"]}],
+colors2:[{en:"The cat is orange",pa:["La","gato","esi","orana"]},{en:"The flower is purple",pa:["La","floro","esi","purpa"]}],
+numbers:[{en:"I have two books",pa:["Me","havi","dua","libos"]},{en:"We see three dogs",pa:["Nos","vidi","tria","pipos"]}],
+food1:[{en:"I eat bread",pa:["Me","nutri","pano"]},{en:"We eat fruit",pa:["Nos","nutri","fruko"]}],
+food2:[{en:"I drink water",pa:["Me","agwi","agwo"]},{en:"She drinks coffee",pa:["Lu","agwi","kafo"]}],
+cooking:[{en:"I cook in the kitchen",pa:["Me","kusi","en","la","kuso"]},{en:"I need a plate",pa:["Me","nedi","plato"]}],
+animals1:[{en:"The dog runs",pa:["La","pipo","kuri"]},{en:"I see the cat",pa:["Me","vidi","la","gato"]},{en:"The bird sings",pa:["La","waso","kanti"]}],
+animals2:[{en:"The elephant is big",pa:["La","elefano","esi","granda"]},{en:"The monkey plays",pa:["La","simo","ludi"]}],
+animals3:[{en:"The spider is small",pa:["La","arano","esi","malgranda"]},{en:"The bee is here",pa:["La","abelo","esi","am"]}],
+home1:[{en:"The house is beautiful",pa:["La","kaso","esi","bela"]},{en:"I open the door",pa:["Me","abri","la","porto"]}],
+home2:[{en:"I sit on the chair",pa:["Me","sedi","sur","la","sedo"]},{en:"The bed is soft",pa:["La","kamo","esi","maldura"]}],
+objects1:[{en:"I read a book",pa:["Me","legi","libo"]},{en:"I have a new phone",pa:["Me","havi","nuva","telo"]}],
+objects2:[{en:"I need money",pa:["Me","nedi","deno"]},{en:"The shoes are new",pa:["La","sapos","esi","nuva"]}],
+verbs1:[{en:"I am here",pa:["Me","esi","am"]},{en:"We go to the park",pa:["Nos","iri","ad","la","parko"]}],
+verbs2:[{en:"I want water",pa:["Me","voli","agwo"]},{en:"We should eat",pa:["Nos","debi","nutri"]}],
+verbs3:[{en:"The dog runs fast",pa:["La","pipo","kuri","rapida"]},{en:"The child jumps",pa:["La","kido","puli"]}],
+verbs4:[{en:"I work in the office",pa:["Me","labori","en","la","ofiso"]},{en:"She writes a book",pa:["Lu","plumi","libo"]}],
+verbs5:[{en:"I think about you",pa:["Me","pensi","sur","yu"]},{en:"I remember my friend",pa:["Me","repensi","men","filo"]}],
+verbs6:[{en:"I give a gift",pa:["Me","doni","dono"]},{en:"She buys bread",pa:["Lu","deni","pano"]}],
+verbs7:[{en:"I love my family",pa:["Me","ami","men","familo"]},{en:"I find the key",pa:["Me","trovi","la","klavo"]}],
+verbs8:[{en:"I start to work",pa:["Me","komensi","labori"]},{en:"We continue to walk",pa:["Nos","dureli","marsi"]}],
+adj1:[{en:"The house is big",pa:["La","kaso","esi","granda"]},{en:"The dog is small",pa:["La","pipo","esi","malgranda"]}],
+adj2:[{en:"The horse runs fast",pa:["La","kavalo","kuri","rapida"]},{en:"She is strong",pa:["Lu","esi","forta"]}],
+adj3:[{en:"The water is cold",pa:["La","agwo","esi","friga"]},{en:"The coffee is hot",pa:["La","kafo","esi","malfriga"]}],
+adj4:[{en:"I am happy",pa:["Me","esi","felisa"]},{en:"She is smart",pa:["Lu","esi","kleva"]}],
+nature1:[{en:"The sun is bright",pa:["La","suno","esi","luma"]},{en:"The wind is strong",pa:["La","venaro","esi","forta"]}],
+nature2:[{en:"The flower is beautiful",pa:["La","floro","esi","bela"]},{en:"I walk in the forest",pa:["Me","marsi","en","la","foro"]}],
+nature3:[{en:"The river is long",pa:["La","rivo","esi","longa"]},{en:"The mountain is tall",pa:["La","monto","esi","alta"]}],
+places:[{en:"I go to the city",pa:["Me","iri","ad","la","urbo"]},{en:"The school is big",pa:["La","skolo","esi","granda"]}],
+body1:[{en:"My head hurts",pa:["Men","krano","doli"]},{en:"The face is beautiful",pa:["La","faso","esi","bela"]}],
+body2:[{en:"I write with my hand",pa:["Me","plumi","kon","men","mano"]},{en:"The heart is strong",pa:["La","koro","esi","forta"]}],
+health:[{en:"I am sick",pa:["Me","esi","malsana"]},{en:"I need medicine",pa:["Me","nedi","mediko"]},{en:"The doctor helps",pa:["La","doktio","helpi"]}],
+preps1:[{en:"The cat is in the house",pa:["La","gato","esi","en","la","kaso"]},{en:"The book is on the table",pa:["La","libo","esi","sur","la","tablo"]}],
+preps2:[{en:"I walk through the forest",pa:["Me","marsi","tru","la","foro"]},{en:"The store is near",pa:["La","tendo","esi","serka"]}],
+conjunctions:[{en:"I eat and drink",pa:["Me","nutri","i","agwi"]},{en:"I work but I am tired",pa:["Me","labori","ma","me","esi","dorma"]}],
+time1:[{en:"I eat today",pa:["Me","nutri","oyo"]},{en:"I will go tomorrow",pa:["Me","fu","iri","fuyo"]}],
+time2:[{en:"I work in the morning",pa:["Me","labori","en","la","matino"]},{en:"We eat in the evening",pa:["Nos","nutri","en","la","spero"]}],
+days:[{en:"Today is Monday",pa:["Oyo","esi","duayo"]},{en:"I rest on Saturday",pa:["Me","resti","sur","sepayo"]}],
+seasons:[{en:"Summer is hot",pa:["Somero","esi","malfriga"]},{en:"The weather is good",pa:["La","nebofelo","esi","bona"]}],
+transport:[{en:"I drive a car",pa:["Me","kari","karo"]},{en:"The airplane flies",pa:["La","aviono","foli"]}],
+travel:[{en:"I live in the city",pa:["Me","kasi","en","la","urbo"]},{en:"The world is big",pa:["La","mondo","esi","granda"]}],
+feelings1:[{en:"Love is beautiful",pa:["Amo","esi","bela"]},{en:"I hope for peace",pa:["Me","aspi","paso"]}],
+feelings2:[{en:"I am sleepy",pa:["Me","esi","dorma"]},{en:"She is ready",pa:["Lu","esi","lista"]}],
+personality:[{en:"She is kind",pa:["Lu","esi","amabla"]},{en:"They are helpful",pa:["Los","esi","helpa"]}],
+mal1:[{en:"The old house is ugly",pa:["La","malnuva","kaso","esi","malbela"]},{en:"It is hot today",pa:["Lo","esi","malfriga","oyo"]}],
+mal2:[{en:"I take the book",pa:["Me","maldoni","la","libo"]},{en:"She leaves the room",pa:["Lu","malveni","la","domo"]}],
+tense1:[{en:"I saw the dog",pa:["Me","pa","vidi","la","pipo"]},{en:"I will eat bread",pa:["Me","fu","nutri","pano"]}],
+tense2:[{en:"They came home",pa:["Los","pa","veni","ad","kaso"]},{en:"She will sing tomorrow",pa:["Lu","fu","kanti","fuyo"]}],
+compound1:[{en:"I go to the bakery",pa:["Me","iri","ad","la","panotendo"]},{en:"I play videogames",pa:["Me","ludi","kompoludos"]}],
+compound2:[{en:"She smiles at me",pa:["Lu","felifasi","ad","me"]},{en:"I see a ghost",pa:["Me","vidi","morahumo"]}],
+diminutive:[{en:"The puppy is small",pa:["La","pipido","esi","malgranda"]},{en:"I see a flame",pa:["Me","vidi","fogido"]}],
+reprefix:[{en:"I reread the book",pa:["Me","relegi","la","libo"]},{en:"She rewrites the message",pa:["Lu","replumi","la","mesago"]},{en:"We restart the game",pa:["Nos","rekomensi","la","ludo"]}],
+relclauses:[],verbchain:[],
+daily1:[{en:"I wake in the morning",pa:["Me","waki","en","la","matino"]},{en:"I eat and drink",pa:["Me","nutri","i","agwi"]}],
+daily2:[{en:"I clean the house",pa:["Me","puri","la","kaso"]},{en:"I send a message",pa:["Me","sendi","mesago"]}],
+communication:[{en:"I listen to music",pa:["Me","oreli","musiko"]},{en:"We watch a movie",pa:["Nos","okli","filmo"]},{en:"I do jiu jitsu",pa:["Me","teramaludi"]}],
+abstract1:[{en:"I have an idea",pa:["Me","havi","ideo"]},{en:"I find a solution",pa:["Me","trovi","solvo"]}],
+abstract2:[{en:"Life is beautiful",pa:["Vivo","esi","bela"]},{en:"Freedom is important",pa:["Libero","esi","grava"]}],
+advanced1:[{en:"I own a house",pa:["Me","propi","kaso"]},{en:"I promise to help",pa:["Me","wadi","helpi"]}],
+adverbs:[{en:"I always work",pa:["Me","sempra","labori"]},{en:"He arrives soon",pa:["Le","veni","balda"]}],
+quantities:[{en:"I have many books",pa:["Me","havi","manga","libos"]},{en:"That is enough",pa:["Farlan","esi","lagoma"]}],
+};
+
+function buildMiniSentences(items,lessonId){
+  const predefined=LS[lessonId];
+  if(!predefined||predefined.length===0)return[];
+  return pick(predefined,Math.min(2,predefined.length)).map(s=>({type:"wordOrder",prompt:`Translate: "${s.en}"`,correctOrder:s.pa,shuffled:shuffle([...s.pa])}));
+}
+
+const app=document.getElementById("app");
+let state={
+  screen:"loading",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null},
+  tab:"learn",lesson:null,exercises:[],exIdx:0,correct:0,hearts:3,accXP:0,leaderboard:[],
+  mcSelected:null,mcAnswered:false,matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:[],
+  fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:[],woAnswered:false,woCorrect:false,waitingContinue:false,
+};
+function setState(partial){Object.assign(state,partial);renderApp();}
+setTimeout(()=>{
+  const savedName=getCurrentUsername();
+  if(savedName){const user=loadUserData(savedName);setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));}
+  else{setState({screen:"username"});}
+},400);
+
+function renderApp(){
+  if(currentView!=='app')return;
+  switch(state.screen){
+    case"loading":renderLoading();break;
+    case"username":renderUsername();break;
+    case"home":renderHome();break;
+    case"lesson":renderLesson();break;
+    case"complete":renderComplete();break;
+  }
+}
+
+function renderLoading(){
+  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;flex-direction:column">
+    <div class="float" style="font-size:64px;margin-bottom:16px">🌍</div>
+    <div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800">Parli Aspo</div>
+    <div style="color:var(--dim);font-size:14px;margin-top:6px">The language of hope</div>
+  </div>`;
+}
+
+function renderUsername(){
+  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="text-align:center;max-width:360px;width:100%">
+      <div class="float" style="font-size:72px;margin-bottom:16px">🌍</div>
+      <div style="font-family:var(--display);font-size:32px;color:var(--green);font-weight:800;margin-bottom:4px">Parli Aspo</div>
+      <div style="color:var(--dim);font-size:15px;margin-bottom:36px">The language of hope</div>
+      <input id="nameInput" type="text" placeholder="Enter your username" maxlength="20" value=""
+        style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);
+        color:var(--text);font-size:17px;font-weight:700;text-align:center;margin-bottom:8px">
+      <div style="color:var(--dim);font-size:12px;margin-bottom:16px">New username = new account · Existing username = resume progress</div>
+      <button id="startBtn" class="btn-primary">START LEARNING</button>
+    </div>
+  </div>`;
+  const input=document.getElementById("nameInput");const btn=document.getElementById("startBtn");
+  input.focus();
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")doSetUsername(input.value);});
+  btn.addEventListener("click",()=>doSetUsername(input.value));
+}
+
+function doSetUsername(val){
+  const name=val.trim();if(!name)return;
+  setCurrentUsername(name);
+  const existing=loadUserData(name);
+  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:new Date().toDateString()};
+  saveUserData(user);pushToLeaderboard(user);
+  setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+}
+
+function renderHome(){
+  const u=state.user;const completedSet=new Set(u.lessonsCompleted||[]);
+  const UNITS=[
+    {at:0,name:"Unit 1: Basics"},{at:5,name:"Unit 2: Basics 2"},{at:9,name:"Unit 3: Food & Drink"},
+    {at:12,name:"Unit 4: Animals"},{at:15,name:"Unit 5: Home & Objects"},{at:19,name:"Checkpoint 1"},
+    {at:20,name:"Checkpoint 2"},{at:21,name:"Unit 6: Basic Verbs"},{at:25,name:"Unit 7: More Verbs"},
+    {at:29,name:"Unit 8: Adjectives"},{at:33,name:"Checkpoint 3"},{at:34,name:"Unit 9: Nature & Places"},
+    {at:38,name:"Unit 10: Body & Health"},{at:41,name:"Checkpoint 4"},
+    {at:42,name:"Unit 11: Grammar Words"},{at:45,name:"Unit 12: Time"},
+    {at:49,name:"Checkpoint 5"},{at:50,name:"Unit 13: Transport & Travel"},
+    {at:52,name:"Unit 14: Emotions"},{at:55,name:"Unit 15: mal- Prefix"},
+    {at:57,name:"Unit 16: Tenses"},{at:59,name:"Unit 17: Word Building"},
+    {at:65,name:"Unit 18: Daily Life"},{at:68,name:"Unit 19: Advanced"},
+    {at:71,name:"Unit 20: Adverbs & Quantities"},{at:73,name:"Final Challenge"},
+  ];
+  const unitMap={};UNITS.forEach(u=>{unitMap[u.at]=u.name;});
+  let lessonsHTML="";
+  LESSONS.forEach((l,i)=>{
+    if(unitMap[i]){lessonsHTML+=`<div style="margin:${i===0?'0':'18px'} 0 10px;padding:6px 0;color:var(--green);font-size:14px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)">${unitMap[i]}</div>`;}
+    const unlocked=i===0||completedSet.has(LESSONS[i-1].id);
+    const completed=completedSet.has(l.id);
+    const cls=completed?"completed":unlocked?"":"locked";
+    lessonsHTML+=`<button class="lesson-card ${cls}" data-idx="${i}" ${!unlocked?'disabled':''}>
+      <div class="lesson-icon">${completed?"✅":unlocked?l.icon:"🔒"}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:16px;font-weight:800">${l.title}</div>
+        <div style="color:var(--dim);font-size:13px;font-weight:600;margin-top:2px">${l.desc}</div>
+      </div>
+      <div style="color:var(--gold);font-size:12px;font-weight:800;flex-shrink:0">+${l.xp} XP</div>
+    </button>`;
+  });
+  let lbHTML="";
+  if(!firebaseReady){lbHTML=`<div style="text-align:center;padding:40px 20px;color:var(--dim)"><div style="font-size:36px;margin-bottom:12px">🌐</div><div style="font-size:15px;font-weight:700;margin-bottom:8px">Leaderboard available when hosted</div><div style="font-size:13px;line-height:1.5">The shared leaderboard works once this file is hosted on GitHub Pages or similar.</div></div>`;}
+  else if(state.leaderboard.length===0){lbHTML=`<div style="text-align:center;padding:40px;color:var(--dim);font-size:15px">No learners yet. Be the first!</div>`;}
+  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;lbHTML+=`<div class="lb-row ${isMe?'is-me':''}"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div></div>`;}); lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
+  const pct=Math.round((u.lessonsCompleted||[]).length/LESSONS.length*100);
+  app.innerHTML=`<div style="padding-bottom:80px">
+    <div style="padding:16px 20px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌍</span><span style="font-family:var(--display);color:var(--green);font-weight:800;font-size:19px">Parli Aspo</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="badge badge-streak">🔥 ${u.streak||0}</span><span class="badge badge-xp">⚡ ${u.xp||0} XP</span></div>
+    </div>
+    <div style="padding:14px 20px 8px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div><div style="color:var(--dim);font-size:14px">Bonayo, <span style="color:var(--text);font-weight:800">${u.username}</span>!</div><div style="color:var(--dim);font-size:12px;margin-top:4px">${(u.lessonsCompleted||[]).length}/${LESSONS.length} lessons completed</div></div>
+        <button id="switchUserBtn" style="background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;color:var(--dim);font-size:12px;font-weight:700">Switch User</button>
+      </div>
+      <div style="margin-top:8px" class="progress-track"><div class="progress-fill" style="width:${pct}%;background:var(--gold)"></div></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn ${state.tab==='learn'?'active':''}" data-tab="learn">📚 LEARN</button>
+      <button class="tab-btn ${state.tab==='leaderboard'?'active':''}" data-tab="leaderboard">🏆 LEADERBOARD</button>
+    </div>
+    <div style="padding:16px 20px;${state.tab==='learn'?'':'display:none'}" id="learnTab">${lessonsHTML}</div>
+    <div style="padding:16px 20px;${state.tab==='leaderboard'?'':'display:none'}" id="lbTab">${lbHTML}</div>
+  </div>`;
+  document.querySelectorAll(".tab-btn").forEach(btn=>{btn.addEventListener("click",()=>{setState({tab:btn.dataset.tab});if(btn.dataset.tab==="leaderboard")fetchLeaderboard().then(lb=>setState({leaderboard:lb}));});});
+  document.querySelectorAll(".lesson-card:not(.locked)").forEach(card=>{card.addEventListener("click",()=>startLesson(parseInt(card.dataset.idx)));});
+  const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
+  document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
+}
+
+function startLesson(idx){
+  const lesson=LESSONS[idx];const exercises=generateExercises(lesson.id);const ex=exercises[0];
+  setState({screen:"lesson",lesson,exercises,exIdx:0,correct:0,hearts:3,accXP:0,mcSelected:null,mcAnswered:false,matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:ex.type==="match"?shuffle(ex.pairs.map(p=>p.right)):[],fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:ex.type==="wordOrder"?[...ex.shuffled]:[],woAnswered:false,woCorrect:false,waitingContinue:false,});
+}
+
+function renderLesson(){
+  const ex=state.exercises[state.exIdx];const pct=state.exIdx/state.exercises.length*100;
+  const heartsHTML=[...Array(3)].map((_,i)=>`<span style="font-size:20px;opacity:${i<state.hearts?1:0.2}">❤️</span>`).join("");
+  let exHTML="";
+  if(ex.type==="mc")exHTML=renderMC(ex);else if(ex.type==="match")exHTML=renderMatch(ex);else if(ex.type==="fill")exHTML=renderFill(ex);else if(ex.type==="wordOrder")exHTML=renderWordOrder(ex);
+  let continueHTML="";
+  if(state.waitingContinue){continueHTML=`<div class="check-bar"><button id="continueBtn" class="btn-primary" style="background:var(--red);box-shadow:0 4px 20px var(--red-glow)">CONTINUE</button></div>`;}
+  app.innerHTML=`<div style="padding:16px 16px 100px 16px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+      <button id="closeBtn" style="background:none;color:var(--dim);font-size:24px;padding:4px">✕</button>
+      <div style="flex:1" class="progress-track"><div class="progress-fill" style="width:${pct}%;background:var(--green)"></div></div>
+      <div style="display:flex;gap:2px">${heartsHTML}</div>
+    </div>
+    <div style="max-width:480px;margin:0 auto" class="fade-up">${exHTML}</div>
+  </div>${continueHTML}`;
+  document.getElementById("closeBtn").addEventListener("click",()=>setState({screen:"home"}));
+  const contBtn=document.getElementById("continueBtn");if(contBtn)contBtn.addEventListener("click",()=>advanceAfterAnswer());
+  if(ex.type==="mc")bindMC(ex);else if(ex.type==="match")bindMatch(ex);else if(ex.type==="fill")bindFill(ex);else if(ex.type==="wordOrder")bindWordOrder(ex);
+}
+
+function renderMC(ex){
+  const optsHTML=ex.options.map((opt,i)=>{
+    let cls="opt-btn";
+    if(state.mcAnswered){if(opt===ex.correct)cls+=" correct";else if(opt===state.mcSelected&&opt!==ex.correct)cls+=" wrong";else if(opt!==ex.correct)cls+=" faded";}
+    return `<button class="${cls}" data-opt="${i}" style="animation-delay:${i*0.05}s">${opt}</button>`;
+  }).join("");
+  let noteHTML="";
+  if(state.mcAnswered&&ex.note)noteHTML=`<div style="margin-top:14px;color:var(--blue);font-size:13px;font-style:italic;font-weight:600">💡 ${ex.note}</div>`;
+  if(state.mcAnswered&&ex.pr)noteHTML+=`<div class="pronun">🔊 ${ex.paWord}: ${ex.pr}</div>`;
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px;line-height:1.4">${ex.prompt}</div><div style="display:flex;flex-direction:column;gap:10px">${optsHTML}</div>${noteHTML}`;
+}
+function bindMC(ex){
+  if(state.mcAnswered)return;
+  document.querySelectorAll(".opt-btn").forEach((btn,i)=>{
+    btn.addEventListener("click",()=>{
+      if(state.mcAnswered)return;
+      const opt=ex.options[i];state.mcSelected=opt;state.mcAnswered=true;render();
+      const isCorrect=opt===ex.correct;
+      if(isCorrect){setTimeout(()=>handleAnswer(true),900);}else{setTimeout(()=>handleAnswer(false),600);}
+    });
+  });
+}
+
+function renderMatch(ex){
+  const leftHTML=ex.pairs.map((p,i)=>{const matched=state.matchMatched.find(m=>m.left===p.left);const selected=state.matchSelectedLeft===p.left;const wrong=state.matchWrong&&state.matchWrong.left===p.left;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";else if(selected)cls+=" selected";return `<button class="${cls}" data-side="left" data-idx="${i}">${p.left}</button>`;}).join("");
+  const rightHTML=state.matchShuffledRight.map((r,i)=>{const matched=state.matchMatched.find(m=>m.right===r);const wrong=state.matchWrong&&state.matchWrong.right===r;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";return `<button class="${cls}" data-side="right" data-idx="${i}">${r}</button>`;}).join("");
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">Match the pairs</div><div style="display:flex;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:8px">${leftHTML}</div><div style="flex:1;display:flex;flex-direction:column;gap:8px">${rightHTML}</div></div>`;
+}
+function bindMatch(ex){
+  document.querySelectorAll("[data-side='left']").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.idx);const left=ex.pairs[i].left;if(state.matchMatched.find(m=>m.left===left))return;state.matchSelectedLeft=left;state.matchWrong=null;renderApp();});});
+  document.querySelectorAll("[data-side='right']").forEach(btn=>{btn.addEventListener("click",()=>{if(!state.matchSelectedLeft)return;const right=state.matchShuffledRight[parseInt(btn.dataset.idx)];if(state.matchMatched.find(m=>m.right===right))return;const pair=ex.pairs.find(p=>p.left===state.matchSelectedLeft&&p.right===right);if(pair){state.matchMatched=[...state.matchMatched,pair];state.matchSelectedLeft=null;renderApp();if(state.matchMatched.length===ex.pairs.length)setTimeout(()=>handleAnswer(true),600);}else{state.matchWrong={left:state.matchSelectedLeft,right};renderApp();setTimeout(()=>{state.matchWrong=null;state.matchSelectedLeft=null;renderApp();},700);}});});
+}
+
+function renderFill(ex){
+  let feedbackHTML="";
+  if(state.fillAnswered&&!state.fillCorrect){feedbackHTML=`<div style="margin-top:16px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct answer: <span style="color:var(--green)">${ex.correct}</span></div>`;}
+  const borderColor=state.fillAnswered?(state.fillCorrect?"var(--green)":"var(--red)"):"var(--border)";
+  const bgColor=state.fillAnswered?(state.fillCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div>
+    <div style="display:flex;gap:10px">
+      <input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
+        style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">
+      ${!state.fillAnswered?'<button id="fillCheck" class="btn-primary" style="width:auto;padding:14px 20px;font-size:15px">CHECK</button>':''}
+    </div>${feedbackHTML}`;
+}
+function bindFill(ex){
+  if(state.fillAnswered)return;
+  const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
+  input.focus();
+  input.addEventListener("input",e=>{state.fillInput=e.target.value;});
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});
+  if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
+}
+function doFillCheck(ex){
+  if(state.fillAnswered||!state.fillInput.trim())return;
+  const correct=state.fillInput.trim().toLowerCase()===ex.correct.toLowerCase();
+  state.fillAnswered=true;state.fillCorrect=correct;renderApp();
+  if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
+}
+
+function renderWordOrder(ex){
+  const selectedHTML=state.woSelected.length===0?`<span style="color:var(--dim);font-size:14px;padding:4px">Tap words to build the sentence...</span>`:state.woSelected.map((w,i)=>`<button class="word-chip placed" data-rm="${i}">${w}</button>`).join("");
+  const availHTML=state.woAvailable.map((w,i)=>`<button class="word-chip" data-add="${i}">${w}</button>`).join("");
+  const answerBorder=state.woAnswered?(state.woCorrect?"var(--green)":"var(--red)"):"var(--border)";
+  const answerBg=state.woAnswered?(state.woCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
+  let checkHTML="";if(!state.woAnswered&&state.woSelected.length===ex.correctOrder.length){checkHTML=`<button id="woCheck" class="btn-primary" style="margin-top:4px">CHECK</button>`;}
+  let wrongHTML="";if(state.woAnswered&&!state.woCorrect){wrongHTML=`<div style="margin-top:12px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct: <span style="color:var(--green)">${ex.correctOrder.join(" ")}</span></div>`;}
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:20px">${ex.prompt}</div>
+    <div style="min-height:52px;padding:10px 14px;background:${answerBg};border:2.5px dashed ${answerBorder};border-radius:var(--radius);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${selectedHTML}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${availHTML}</div>${checkHTML}${wrongHTML}`;
+}
+function bindWordOrder(ex){
+  if(state.woAnswered)return;
+  document.querySelectorAll("[data-add]").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.add);const word=state.woAvailable[i];state.woSelected=[...state.woSelected,word];state.woAvailable=state.woAvailable.filter((_,j)=>j!==i);renderApp();});});
+  document.querySelectorAll("[data-rm]").forEach(btn=>{btn.addEventListener("click",()=>{if(state.woAnswered)return;const i=parseInt(btn.dataset.rm);const word=state.woSelected[i];state.woSelected=state.woSelected.filter((_,j)=>j!==i);state.woAvailable=[...state.woAvailable,word];renderApp();});});
+  const checkBtn=document.getElementById("woCheck");
+  if(checkBtn)checkBtn.addEventListener("click",()=>{const correct=state.woSelected.every((w,i)=>w===ex.correctOrder[i]);state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
+}
+
+function handleAnswer(correct){
+  if(correct){state.correct++;state.accXP+=state.lesson.xp/state.exercises.length;advanceAfterAnswer();}
+  else{state.hearts--;state.waitingContinue=true;renderApp();}
+}
+
+function advanceAfterAnswer(){
+  state.waitingContinue=false;
+  if(state.hearts<=0){setState({screen:"complete"});return;}
+  if(state.exIdx+1>=state.exercises.length){
+    const totalXP=Math.round(state.accXP);
+    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
+    saveUserData(user);pushToLeaderboard(user);state.user=user;setState({screen:"complete"});
+  } else {
+    const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
+    setState({exIdx:nextIdx,mcSelected:null,mcAnswered:false,matchSelectedLeft:null,matchMatched:[],matchWrong:null,matchShuffledRight:nextEx.type==="match"?shuffle(nextEx.pairs.map(p=>p.right)):[],fillInput:"",fillAnswered:false,fillCorrect:false,woSelected:[],woAvailable:nextEx.type==="wordOrder"?[...nextEx.shuffled]:[],woAnswered:false,woCorrect:false,waitingContinue:false,});
+  }
+}
+
+// Alias so MC bindMC still works (render → renderApp in lesson context)
+function render() { renderApp(); }
+
+function renderComplete(){
+  const passed=state.hearts>0;const earnedXP=Math.round(state.accXP);
+  let confettiHTML="";
+  if(passed){const colors=["#58CC02","#FFC800","#1CB0F6","#CE82FF","#FF4B4B"];for(let i=0;i<20;i++){const color=colors[i%colors.length];const left=Math.random()*100;const delay=Math.random()*0.5;const size=6+Math.random()*8;confettiHTML+=`<div class="confetti-piece" style="left:${left}%;bottom:40%;width:${size}px;height:${size}px;background:${color};animation-delay:${delay}s;border-radius:${Math.random()>0.5?'50%':'2px'}"></div>`;}}
+  app.innerHTML=`${confettiHTML}
+    <div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
+      <div style="text-align:center;max-width:360px" class="pop">
+        <div style="font-size:72px;margin-bottom:16px">${passed?"🎉":"💔"}</div>
+        <div style="font-family:var(--display);font-size:28px;font-weight:800;color:${passed?'var(--green)':'var(--red)'};margin-bottom:8px">${passed?"Lesson Complete!":"Out of Hearts!"}</div>
+        ${passed?`<div style="color:var(--mid);font-size:16px;margin-bottom:20px">${state.correct}/${state.exercises.length} correct</div>
+          <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px">
+            <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
+            <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak}</span>
+          </div>`:`<div style="color:var(--dim);font-size:15px;margin-bottom:28px">Na malbravi! Trati otra hapa.<br><span style="font-size:13px;color:var(--mid)">(Don't fear! Try again.)</span></div>`}
+        <button id="completeBtn" class="btn-primary" style="margin-bottom:10px">${passed?"CONTINUE":"TRY AGAIN"}</button>
+        ${!passed?'<button id="backBtn" class="btn-secondary">BACK TO LESSONS</button>':''}
+      </div>
+    </div>`;
+  document.getElementById("completeBtn").addEventListener("click",()=>{if(!passed){const idx=LESSONS.findIndex(l=>l.id===state.lesson.id);startLesson(idx);}else{setState({screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));}});
+  const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home"}));
+}
+
+// Trigger initial app render when switching to app view
+const _origShowView = showView;
+// Override showView to also trigger renderApp
+(function(){
+  const orig = showView;
+  window.showView = function(name) {
+    orig(name);
+    if(name === 'app') renderApp();
+  };
+})();
+</script>
+</body>
+</html>
