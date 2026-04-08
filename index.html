@@ -1003,7 +1003,7 @@ const LS={
   possessives:[{en:"This is my book",pa:["Lan","esi","men","libo"]},{en:"Your house is big",pa:["Yun","kaso","esi","granda"]},{en:"Her cat is small",pa:["Lun","gato","esi","malgranda"]}],
   articles1:[{en:"Who is there?",pa:["Kwo","esi","faram"]},{en:"What do you want?",pa:["Kwa","yu","voli"]},{en:"Where is the house?",pa:["Kwe","esi","la","kaso"]}],
   coreVerbs1:[{en:"I want to go",pa:["Me","voli","iri"]},{en:"We can help",pa:["Nos","povi","helpi"]},{en:"You should learn",pa:["Yu","debi","lerni"]}],
-  numbers:[{en:"I have two books",pa:["Me","havi","dua","libos"]},{en:"We see three dogs",pa:["Nos","vidi","tria","pipos"]},{en:"There are ten stars",pa:["Faram","esi","deka","stelos"]}],
+  numbers:[{en:"I have two books",pa:["Me","havi","dua","libos"]},{en:"We see three dogs",pa:["Nos","vidi","tria","pipos"]},{en:"There are ten stars",pa:["Esi","deka","stelos"]}],
   people1:[{en:"The child plays",pa:["La","kido","ludi"]},{en:"The woman reads a book",pa:["La","femo","legi","libo"]},{en:"The man works",pa:["La","viro","labori"]}],
   people2:[{en:"My mother cooks",pa:["Men","matro","kusi"]},{en:"My father works",pa:["Men","patro","labori"]},{en:"My sister sings",pa:["Men","yoyo","kanti"]}],
   basicAdj:[{en:"The house is big",pa:["La","kaso","esi","granda"]},{en:"The dog is small",pa:["La","pipo","esi","malgranda"]},{en:"The book is new",pa:["La","libo","esi","nuva"]}],
@@ -1038,9 +1038,9 @@ const LS={
   feelings2:[{en:"I am sleepy",pa:["Me","esi","dorma"]},{en:"She is ready",pa:["Lu","esi","lista"]},{en:"He is calm",pa:["Le","esi","tranka"]}],
   personality:[{en:"She is kind",pa:["Lu","esi","amabla"]},{en:"They are helpful",pa:["Los","esi","helpa"]},{en:"He is honest",pa:["Le","esi","onesta"]}],
   abstract1:[{en:"I have an idea",pa:["Me","havi","ideo"]},{en:"I find a solution",pa:["Me","trovi","solvo"]},{en:"She explains the truth",pa:["Lu","espliki","la","vero"]}],
-  abstract2:[{en:"Life is beautiful",pa:["Vivo","esi","bela"]},{en:"Freedom is important",pa:["Libero","esi","grava"]},{en:"There is danger here",pa:["Faram","esi","perigo","am"]}],
+  abstract2:[{en:"Life is beautiful",pa:["Vivo","esi","bela"]},{en:"Freedom is important",pa:["Libero","esi","grava"]},{en:"There is danger here",pa:["Esi","perigo","am"]}],
   adverbs:[{en:"I always work",pa:["Me","sempra","labori"]},{en:"He arrives soon",pa:["Le","veni","balda"]},{en:"She is almost ready",pa:["Lu","esi","preska","lista"]}],
-  quantities:[{en:"I have many books",pa:["Me","havi","manga","libos"]},{en:"That is enough",pa:["Farlan","esi","lagoma"]},{en:"There are few people",pa:["Faram","esi","malmanga","humos"]}],
+  quantities:[{en:"I have many books",pa:["Me","havi","manga","libos"]},{en:"That is enough",pa:["Farlan","esi","lagoma"]},{en:"There are few people",pa:["Esi","malmanga","humos"]}],
   communication:[{en:"I listen to music",pa:["Me","oreli","musiko"]},{en:"We watch a movie",pa:["Nos","okli","filmo"]},{en:"She asks a question",pa:["Lu","kiparli","kiparlo"]}],
   tense1:[{en:"I saw the dog",pa:["Me","pa","vidi","la","pipo"]},{en:"I will eat bread",pa:["Me","fu","nutri","pano"]},{en:"She sang yesterday",pa:["Lu","pa","kanti","payo"]}],
   tense2:[{en:"They came home",pa:["Los","pa","veni","ad","kaso"]},{en:"She will sing tomorrow",pa:["Lu","fu","kanti","fuyo"]},{en:"We will go to the beach",pa:["Nos","fu","iri","ad","la","playo"]}],
@@ -1765,6 +1765,7 @@ function startLesson(idx){
   if(!exercises||exercises.length===0){alert("No exercises available for this lesson.");return;}
   const ex=exercises[0];
   const isFinal=lesson.isFinalTest;
+  window.scrollTo(0,0);
   setState({
     screen:"lesson",lesson,exercises,exIdx:0,correct:0,
     hearts:isFinal?999:3, // Final test: no hearts (999 = unlimited, handled in renderLesson)
@@ -2275,7 +2276,7 @@ const GRAMMAR_SECTIONS = [
       <li><strong>Identity:</strong> <em>Me esi Maria.</em> — I am Maria.</li>
       <li><strong>Description:</strong> <em>La kaso esi bela.</em> — The house is beautiful.</li>
       <li><strong>Location:</strong> <em>La gato esi en la kaso.</em> — The cat is in the house.</li>
-      <li><strong>Existence:</strong> <em>Faram esi manga arbos.</em> — There are many trees there.</li>
+      <li><strong>Existence:</strong> <em>Esi manga arbos faram.</em> — There are many trees there.</li>
     </ul>`
   },
   {
