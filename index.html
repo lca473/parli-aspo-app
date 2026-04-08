@@ -1762,6 +1762,19 @@ function renderHome(){
   document.querySelectorAll(".lesson-card:not(.locked):not([disabled])").forEach(card=>{card.addEventListener("click",()=>startLesson(parseInt(card.dataset.idx)));});
   const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
   document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
+
+  // Scroll to just-finished lesson if returning from completion
+  if(state.scrollToLessonId){
+    const targetId=state.scrollToLessonId;
+    state.scrollToLessonId=null; // clear marker so it only fires once
+    const idx=LESSONS.findIndex(l=>l.id===targetId);
+    if(idx>=0){
+      requestAnimationFrame(()=>{
+        const card=document.querySelector(`.lesson-card[data-idx="${idx}"]`);
+        if(card)card.scrollIntoView({behavior:"smooth",block:"center"});
+      });
+    }
+  }
 }
 
 function startLesson(idx){
@@ -2155,7 +2168,11 @@ function renderComplete(){
 
   document.getElementById("completeBtn").addEventListener("click",()=>{
     if(!passed){const idx=LESSONS.findIndex(l=>l.id===state.lesson.id);startLesson(idx);}
-    else{setState({screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));}
+    else{
+      const justFinishedId=state.lesson.id;
+      setState({screen:"home",scrollToLessonId:justFinishedId});
+      fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+    }
   });
   const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home"}));
 }
