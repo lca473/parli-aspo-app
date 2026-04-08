@@ -1783,7 +1783,8 @@ function startLesson(idx){
   if(!exercises||exercises.length===0){alert("No exercises available for this lesson.");return;}
   const ex=exercises[0];
   const isFinal=lesson.isFinalTest;
-  window.scrollTo(0,0);
+  // Cancel any in-flight smooth scroll (e.g. from returning home after a lesson) by forcing instant scroll
+  window.scrollTo({top:0,left:0,behavior:"instant"});
   setState({
     screen:"lesson",lesson,exercises,exIdx:0,correct:0,
     hearts:isFinal?999:3, // Final test: no hearts (999 = unlimited, handled in renderLesson)
@@ -1800,6 +1801,9 @@ function startLesson(idx){
     freetextInput:"",freetextSubmitted:false,
     waitingContinue:false,
   });
+  // Re-apply instant scroll after DOM is replaced and any pending animation frame fires,
+  // to defeat in-flight smooth scrolls that survive innerHTML replacement
+  requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"instant"}));
 }
 
 function renderLesson(){
@@ -1839,7 +1843,7 @@ function renderLesson(){
     <div style="max-width:480px;margin:0 auto" class="fade-up">${exHTML}</div>
   </div>${continueHTML}`;
 
-  document.getElementById("closeBtn").addEventListener("click",()=>setState({screen:"home"}));
+  document.getElementById("closeBtn").addEventListener("click",()=>setState({screen:"home",scrollToLessonId:state.lesson.id}));
   const contBtn=document.getElementById("continueBtn");if(contBtn)contBtn.addEventListener("click",()=>advanceAfterAnswer());
 
   if(ex.type==="mc")bindMC(ex);
@@ -2174,7 +2178,7 @@ function renderComplete(){
       fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
     }
   });
-  const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home"}));
+  const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home",scrollToLessonId:state.lesson.id}));
 }
 
 // renderApp() is called directly from showView() above
