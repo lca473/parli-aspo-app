@@ -813,12 +813,12 @@ const V = {
     {pa:["Me","pa","trovi","men","klavo","sub","la","tablo"],en:"I found my key under the table"},
     {pa:["Yu","debi","nutri","malfrukos","for","yun","sano"],en:"You should eat vegetables for your health"},
     {pa:["Me","pensi","ke","lo","esi","bona","ideo"],en:"I think that it is a good idea"},
-    {pa:["La","paso","esi","grava","for","tota","humos"],en:"Peace is important for all people"},
+    {pa:["Paso","esi","grava","for","toda","humos"],en:"Peace is important for all people"},
     {pa:["Men","filo","esi","amabla","i","kleva"],en:"My friend is kind and smart"},
     {pa:["Kwa","yu","feli","sur","lan","hapo"],en:"How do you feel about this event?"},
     {pa:["Me","voli","kapi","yun","espliko"],en:"I want to understand your explanation"},
     {pa:["Los","pa","trati","trovi","la","solvo"],en:"They tried to find the solution"},
-    {pa:["La","libero","esi","grava","for","tota","humos"],en:"Freedom is important for all people"},
+    {pa:["Libero","esi","grava","for","toda","humos"],en:"Freedom is important for all people"},
     {pa:["Me","sabi","ke","yu","esi","brava"],en:"I know that you are brave"},
     {pa:["Me","voli","la","intero"],en:"I want the middle one"},
     {pa:["La","intera","libo","esi","men"],en:"The medium book is mine"},
@@ -927,7 +927,7 @@ const V = {
     {en:"She wants to learn to speak Parli Aspo. She studies every day. She will be able to speak well soon.",
      sentences:[
        {pa:["Lu","voli","lerni","parli","Parli","Aspo"],en:"She wants to learn to speak Parli Aspo"},
-       {pa:["Lu","studi","tota","oyo"],en:"She studies every day"},
+       {pa:["Lu","studi","toda","oyo"],en:"She studies every day"},
        {pa:["Lu","fu","povi","parli","bona","balda"],en:"She will be able to speak well soon"},
      ]},
   ],
@@ -940,7 +940,7 @@ const V = {
      ]},
     {en:"Freedom is important for all people. Without freedom there is no peace. We must fight for it.",
      sentences:[
-       {pa:["Libero","esi","grava","for","tota","humos"],en:"Freedom is important for all people"},
+       {pa:["Libero","esi","grava","for","toda","humos"],en:"Freedom is important for all people"},
        {pa:["Sen","libero","paso","na","esi"],en:"Without freedom there is no peace"},
        {pa:["Nos","debi","trati","for","lo"],en:"We must try for it"},
      ]},
@@ -983,14 +983,14 @@ const V = {
     {en:"My sister chose to study medicine. She wants to become a doctor who helps everyone. I believe she will succeed.",
      sentences:[
        {pa:["Men","yoyo","pa","eleki","studi","mediko"],en:"My sister chose to study medicine"},
-       {pa:["Lu","voli","esi","doktio","ke","helpi","tota","humos"],en:"She wants to be a doctor who helps everyone"},
+       {pa:["Lu","voli","esi","doktio","ke","helpi","toda","humos"],en:"She wants to be a doctor who helps everyone"},
        {pa:["Me","kredi","ke","lu","fu","bona"],en:"I believe that she will succeed"},
      ]},
   ],
   para8:[
     {en:"The law says that all people are equal. Without justice there is no real freedom. We must protect these rules together.",
      sentences:[
-       {pa:["La","nedifaro","parli","ke","tota","humos","esi","bona"],en:"The law says that all people are equal"},
+       {pa:["La","nedifaro","parli","ke","toda","humos","esi","bona"],en:"The law says that all people are equal"},
        {pa:["Sen","paso","libero","na","esi","vera"],en:"Without peace freedom is not real"},
        {pa:["Nos","debi","gardi","lan","debifaro","kon","nos"],en:"We must keep these rules together"},
      ]},
@@ -1566,15 +1566,12 @@ function saveLocal(key,val){try{localStorage.setItem(key,JSON.stringify(val))}ca
 function loadLocal(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def}}
 function getCurrentUsername(){return loadLocal("pa_current_user","");}
 function setCurrentUsername(name){saveLocal("pa_current_user",name);}
-// On app open, only RESET a broken streak. Do not increment.
-// Streak increments happen in advanceAfterAnswer() when a lesson is actually completed.
 function applyStreakLogic(data){
   if(data.lastActiveDate){
     const today=new Date().toDateString();
     const yesterday=new Date(Date.now()-86400000).toDateString();
-    if(data.lastActiveDate!==today&&data.lastActiveDate!==yesterday){
-      data.streak=0;
-    }
+    if(data.lastActiveDate!==today&&data.lastActiveDate!==yesterday)data.streak=0;
+    if(data.lastActiveDate!==today){data.streak=(data.streak||0)+1;data.lastActiveDate=today;}
   }
   return data;
 }
@@ -1593,16 +1590,7 @@ async function loadUserDataCloud(username){
       if(snap.exists()){
         const data=snap.val();
         data.username=username;
-        // Firebase stores arrays as objects with numeric keys when read back;
-        // coerce to a real array so Set/map/filter work correctly.
-        const lc=data.lessonsCompleted;
-        if(Array.isArray(lc)){
-          data.lessonsCompleted=lc;
-        } else if(lc && typeof lc==="object"){
-          data.lessonsCompleted=Object.values(lc);
-        } else {
-          data.lessonsCompleted=[];
-        }
+        data.lessonsCompleted=data.lessonsCompleted||[];
         const updated=applyStreakLogic(data);
         saveLocal("pa_user_"+username,updated);
         return updated;
@@ -1658,12 +1646,10 @@ setTimeout(async()=>{
   if(savedName){
     state.screen="loading";
     const user=await loadUserDataCloud(savedName);
-    // Only write back if applyStreakLogic actually changed something (broken streak reset).
-    // Otherwise skip the write to avoid an unnecessary Firebase round-trip on every open.
-    const cached=loadLocal("pa_user_"+savedName,null);
-    if(!cached || cached.streak!==user.streak){
-      saveUserData(user);
+    if(user.lessonsCompleted && user.lessonsCompleted.some(id=>id==="s6"||id==="communication")){
+      user.lessonsCompleted=[];
     }
+    saveUserData(user);
     state.user=user;
     state.screen="home";
     fetchLeaderboard().then(lb=>{state.leaderboard=lb;renderApp();});
@@ -1716,7 +1702,8 @@ async function doSetUsername(val){
   setCurrentUsername(name);
   setState({screen:"loading"});
   const existing=await loadUserDataCloud(name);
-  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:0,lastActiveDate:null};
+  const today=new Date().toDateString();
+  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
   saveUserData(user);pushToLeaderboard(user);
   setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
 }
@@ -1825,34 +1812,14 @@ function renderHome(){
         return idx>=uStart && idx<uEnd;
       });
       if(parentUnitIdx>=0){
-        // Check whether the parent unit is now complete — if so, let it auto-collapse
-        // and clear any stale override so the collapse actually takes effect.
-        const pStart=UNITS[parentUnitIdx].start;
-        const pEnd=(parentUnitIdx+1<UNITS.length)?UNITS[parentUnitIdx+1].start:LESSONS.length;
-        const pLessons=LESSONS.slice(pStart,pEnd);
-        const pComplete=pLessons.every(l=>completedSet.has(l.id))&&pLessons.length>0;
-        if(pComplete){
-          // Clear override so the default (collapsed-when-complete) applies, and
-          // collapse the body in the current DOM without re-rendering.
-          if(state.unitToggleOverrides[parentUnitIdx]!==undefined){
-            const newOv=Object.assign({},state.unitToggleOverrides);
-            delete newOv[parentUnitIdx];
-            state.unitToggleOverrides=newOv;
-          }
-          const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
-          if(body){body.style.display='none';body.style.marginTop='0';}
+        const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
+        if(body && body.style.display==='none'){
+          body.style.display='';
+          body.style.marginTop='12px';
           const header=document.querySelector(`.unit-header[data-unit-idx="${parentUnitIdx}"] span`);
-          if(header)header.textContent='▸';
-        } else {
-          const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
-          if(body && body.style.display==='none'){
-            body.style.display='';
-            body.style.marginTop='12px';
-            const header=document.querySelector(`.unit-header[data-unit-idx="${parentUnitIdx}"] span`);
-            if(header)header.textContent='▾';
-            // Persist override so re-renders keep it open
-            state.unitToggleOverrides={...state.unitToggleOverrides,[parentUnitIdx]:true};
-          }
+          if(header)header.textContent='▾';
+          // Persist override so re-renders keep it open
+          state.unitToggleOverrides={...state.unitToggleOverrides,[parentUnitIdx]:true};
         }
       }
       requestAnimationFrame(()=>{
@@ -2096,7 +2063,7 @@ function renderFreeText(ex){
 }
 function bindFreeText(ex){
   if(state.freetextSubmitted){setTimeout(()=>handleAnswer(true),1500);return;}
-  const ta=document.getElementById("ftInput");if(ta){ta.focus();ta.addEventListener("input",e=>{state.freetextInput=e.target.value;});}
+  const ta=document.getElementById("ftInput");if(ta){ta.focus({preventScroll:true});ta.addEventListener("input",e=>{state.freetextInput=e.target.value;});}
   const btn=document.getElementById("ftSubmit");
   if(btn)btn.addEventListener("click",()=>{
     if(!(state.freetextInput||"").trim())return;
@@ -2120,7 +2087,7 @@ function renderFill(ex){
 function bindFill(ex){
   if(state.fillAnswered)return;
   const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
-  if(input){input.focus();input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
+  if(input){input.focus({preventScroll:true});input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
   if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
 }
 function doFillCheck(ex){
@@ -2180,20 +2147,13 @@ function advanceAfterAnswer(){
   if(!state.isFinalTest&&state.hearts<=0){setState({screen:"complete"});return;}
   if(state.exIdx+1>=state.exercises.length){
     const totalXP=Math.round(state.accXP);
-    const today=new Date().toDateString();
-    const yesterday=new Date(Date.now()-86400000).toDateString();
-    const prevDate=state.user.lastActiveDate;
-    const prevStreak=state.user.streak||0;
-    // Streak logic: same day = no change; yesterday = +1; otherwise = reset to 1.
-    let newStreak;
-    if(prevDate===today)newStreak=prevStreak||1;
-    else if(prevDate===yesterday)newStreak=prevStreak+1;
-    else newStreak=1;
-    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:today,streak:newStreak};
+    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
     saveUserData(user);pushToLeaderboard(user);state.user=user;
     setState({screen:"complete"});
   } else {
     const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
+    // Cancel any in-flight smooth scroll before re-rendering the next exercise
+    window.scrollTo({top:0,left:0,behavior:"instant"});
     setState({
       exIdx:nextIdx,
       mcSelected:null,mcAnswered:false,
@@ -2207,6 +2167,9 @@ function advanceAfterAnswer(){
       freetextInput:"",freetextSubmitted:false,
       waitingContinue:false,
     });
+    // Re-apply instant scroll after DOM replacement and any pending animation frame,
+    // to defeat in-flight smooth scrolls that survive innerHTML replacement
+    requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"instant"}));
   }
 }
 
