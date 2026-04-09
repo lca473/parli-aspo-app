@@ -1812,34 +1812,14 @@ function renderHome(){
         return idx>=uStart && idx<uEnd;
       });
       if(parentUnitIdx>=0){
-        // Check whether the parent unit is now complete — if so, let it auto-collapse
-        // and clear any stale override so the collapse actually takes effect.
-        const pStart=UNITS[parentUnitIdx].start;
-        const pEnd=(parentUnitIdx+1<UNITS.length)?UNITS[parentUnitIdx+1].start:LESSONS.length;
-        const pLessons=LESSONS.slice(pStart,pEnd);
-        const pComplete=pLessons.every(l=>completedSet.has(l.id))&&pLessons.length>0;
-        if(pComplete){
-          // Clear override so the default (collapsed-when-complete) applies, and
-          // collapse the body in the current DOM without re-rendering.
-          if(state.unitToggleOverrides[parentUnitIdx]!==undefined){
-            const newOv=Object.assign({},state.unitToggleOverrides);
-            delete newOv[parentUnitIdx];
-            state.unitToggleOverrides=newOv;
-          }
-          const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
-          if(body){body.style.display='none';body.style.marginTop='0';}
+        const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
+        if(body && body.style.display==='none'){
+          body.style.display='';
+          body.style.marginTop='12px';
           const header=document.querySelector(`.unit-header[data-unit-idx="${parentUnitIdx}"] span`);
-          if(header)header.textContent='▸';
-        } else {
-          const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
-          if(body && body.style.display==='none'){
-            body.style.display='';
-            body.style.marginTop='12px';
-            const header=document.querySelector(`.unit-header[data-unit-idx="${parentUnitIdx}"] span`);
-            if(header)header.textContent='▾';
-            // Persist override so re-renders keep it open
-            state.unitToggleOverrides={...state.unitToggleOverrides,[parentUnitIdx]:true};
-          }
+          if(header)header.textContent='▾';
+          // Persist override so re-renders keep it open
+          state.unitToggleOverrides={...state.unitToggleOverrides,[parentUnitIdx]:true};
         }
       }
       requestAnimationFrame(()=>{
@@ -2083,7 +2063,7 @@ function renderFreeText(ex){
 }
 function bindFreeText(ex){
   if(state.freetextSubmitted){setTimeout(()=>handleAnswer(true),1500);return;}
-  const ta=document.getElementById("ftInput");if(ta){ta.focus();ta.addEventListener("input",e=>{state.freetextInput=e.target.value;});}
+  const ta=document.getElementById("ftInput");if(ta){ta.focus({preventScroll:true});ta.addEventListener("input",e=>{state.freetextInput=e.target.value;});}
   const btn=document.getElementById("ftSubmit");
   if(btn)btn.addEventListener("click",()=>{
     if(!(state.freetextInput||"").trim())return;
@@ -2107,7 +2087,7 @@ function renderFill(ex){
 function bindFill(ex){
   if(state.fillAnswered)return;
   const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
-  if(input){input.focus();input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
+  if(input){input.focus({preventScroll:true});input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
   if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
 }
 function doFillCheck(ex){
@@ -2172,6 +2152,8 @@ function advanceAfterAnswer(){
     setState({screen:"complete"});
   } else {
     const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
+    // Cancel any in-flight smooth scroll before re-rendering the next exercise
+    window.scrollTo({top:0,left:0,behavior:"instant"});
     setState({
       exIdx:nextIdx,
       mcSelected:null,mcAnswered:false,
@@ -2185,6 +2167,9 @@ function advanceAfterAnswer(){
       freetextInput:"",freetextSubmitted:false,
       waitingContinue:false,
     });
+    // Re-apply instant scroll after DOM replacement and any pending animation frame,
+    // to defeat in-flight smooth scrolls that survive innerHTML replacement
+    requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"instant"}));
   }
 }
 
