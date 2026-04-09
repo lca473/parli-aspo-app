@@ -1853,6 +1853,7 @@ function startLesson(idx){
     errcorrectSelected:null,errcorrectAnswered:false,
     freetextInput:"",freetextSubmitted:false,
     waitingContinue:false,
+    _lastRenderedExIdx:-1,
   });
   // Re-apply instant scroll after DOM is replaced and any pending animation frame fires,
   // to defeat in-flight smooth scrolls that survive innerHTML replacement
@@ -1898,6 +1899,13 @@ function renderLesson(){
 
   document.getElementById("closeBtn").addEventListener("click",()=>setState({screen:"home",scrollToLessonId:state.lesson.id}));
   const contBtn=document.getElementById("continueBtn");if(contBtn)contBtn.addEventListener("click",()=>advanceAfterAnswer());
+  // Ensure the prompt is visible when a NEW exercise loads: scroll to top so the question
+  // isn't hidden behind the sticky headers. Only fire when exIdx changes, not on every re-render.
+  if(state._lastRenderedExIdx!==state.exIdx){
+    state._lastRenderedExIdx=state.exIdx;
+    window.scrollTo(0,0);
+    document.documentElement.scrollTop=0;document.body.scrollTop=0;
+  }
 
   if(ex.type==="mc")bindMC(ex);
   else if(ex.type==="match")bindMatch(ex);
