@@ -1636,6 +1636,7 @@ let state={
   errcorrectSelected:null,errcorrectAnswered:false,
   freetextInput:"",freetextSubmitted:false,
   waitingContinue:false,
+  unitToggleOverrides:{},
 };
 
 function setState(partial){Object.assign(state,partial);renderApp();}
@@ -1712,33 +1713,48 @@ function renderHome(){
   const completedSet=new Set(u.lessonsCompleted||[]);
   const isAdmin=(u.username||"").toLowerCase()==="admin";
 
-  let unitIdx=-1;
+  // Build per-unit lesson groups so units can be collapsed when complete
+  const unitIcons=['🌱','🏠','🌍','💡','⚙️','🔥'];
   let lessonsHTML="";
-  LESSONS.forEach((l,i)=>{
-    // Unit header
-    const unitDef=UNITS.find(un=>un.start===i);
-    if(unitDef){
-      unitIdx++;
-      lessonsHTML+=`<div style="margin:${i===0?'0':'24px'} 0 12px;padding:8px 12px;background:linear-gradient(135deg,var(--card),var(--bg2));border:1.5px solid var(--border);border-radius:12px;color:var(--green);font-size:13px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px">
-        <span>${['🌱','🏠','🌍','💡','⚙️','🔥'][unitIdx]||'📚'}</span>
-        <span>${unitDef.name}</span>
-      </div>`;
-    }
+  UNITS.forEach((unitDef,unitIdx)=>{
+    const start=unitDef.start;
+    const end=(unitIdx+1<UNITS.length)?UNITS[unitIdx+1].start:LESSONS.length;
+    const unitLessons=LESSONS.slice(start,end);
+    const doneCount=unitLessons.filter(l=>completedSet.has(l.id)).length;
+    const unitComplete=doneCount===unitLessons.length && unitLessons.length>0;
+    // Default: collapsed if complete. User override wins if present.
+    const override=state.unitToggleOverrides[unitIdx];
+    const collapsed=(override===undefined)?unitComplete:!override;
 
-    const completed=completedSet.has(l.id);
-    const unlocked=isAdmin||i===0||completedSet.has(LESSONS[i-1].id);
-    const cls=completed?"completed":unlocked?"":"locked";
-    const icon=completed?"✅":unlocked?l.icon:"🔒";
-    const isFinal=l.isFinalTest;
-    const cardStyle=isFinal?`background:linear-gradient(135deg,rgba(255,200,0,0.12),rgba(206,130,255,0.08));border:2.5px solid var(--gold);`:"";
-    lessonsHTML+=`<button class="lesson-card ${cls}" data-idx="${i}" ${!unlocked?'disabled':''} style="${cardStyle}">
-      <div class="lesson-icon" style="${isFinal?'background:var(--gold-glow);border:2px solid var(--gold)':''}">${icon}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:16px;font-weight:800;${isFinal?'color:var(--gold)':''}">${l.title}</div>
-        <div style="color:var(--dim);font-size:13px;font-weight:600;margin-top:2px">${l.desc}</div>
-      </div>
-      <div style="color:var(--gold);font-size:12px;font-weight:800;flex-shrink:0">+${l.xp} XP</div>
-    </button>`;
+    let innerHTML="";
+    unitLessons.forEach((l,offset)=>{
+      const i=start+offset;
+      const completed=completedSet.has(l.id);
+      const unlocked=isAdmin||i===0||completedSet.has(LESSONS[i-1].id);
+      const cls=completed?"completed":unlocked?"":"locked";
+      const icon=completed?"✅":unlocked?l.icon:"🔒";
+      const isFinal=l.isFinalTest;
+      const cardStyle=isFinal?`background:linear-gradient(135deg,rgba(255,200,0,0.12),rgba(206,130,255,0.08));border:2.5px solid var(--gold);`:"";
+      innerHTML+=`<button class="lesson-card ${cls}" data-idx="${i}" ${!unlocked?'disabled':''} style="${cardStyle}">
+        <div class="lesson-icon" style="${isFinal?'background:var(--gold-glow);border:2px solid var(--gold)':''}">${icon}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:16px;font-weight:800;${isFinal?'color:var(--gold)':''}">${l.title}</div>
+          <div style="color:var(--dim);font-size:13px;font-weight:600;margin-top:2px">${l.desc}</div>
+        </div>
+        <div style="color:var(--gold);font-size:12px;font-weight:800;flex-shrink:0">+${l.xp} XP</div>
+      </button>`;
+    });
+
+    const chevron=collapsed?'▸':'▾';
+    lessonsHTML+=`<div style="margin:${unitIdx===0?'0':'24px'} 0 12px">
+      <button class="unit-header" data-unit-idx="${unitIdx}" style="width:100%;text-align:left;padding:10px 12px;background:linear-gradient(135deg,var(--card),var(--bg2));border:1.5px solid var(--border);border-radius:12px;color:var(--green);font-size:13px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px;cursor:pointer">
+        <span style="font-size:14px;width:14px;display:inline-block">${chevron}</span>
+        <span>${unitIcons[unitIdx]||'📚'}</span>
+        <span style="flex:1">${unitDef.name}</span>
+        <span style="color:var(--dim);font-size:11px;font-weight:700;text-transform:none;letter-spacing:0">${doneCount}/${unitLessons.length}${unitComplete?' ✓':''}</span>
+      </button>
+      <div data-unit-body="${unitIdx}" style="${collapsed?'display:none':'margin-top:12px'}">${innerHTML}</div>
+    </div>`;
   });
 
   let lbHTML="";
@@ -1769,6 +1785,17 @@ function renderHome(){
 
   document.querySelectorAll(".tab-btn").forEach(btn=>{btn.addEventListener("click",()=>{setState({tab:btn.dataset.tab});if(btn.dataset.tab==="leaderboard")fetchLeaderboard().then(lb=>setState({leaderboard:lb}));});});
   document.querySelectorAll(".lesson-card:not(.locked):not([disabled])").forEach(card=>{card.addEventListener("click",()=>startLesson(parseInt(card.dataset.idx)));});
+  document.querySelectorAll(".unit-header").forEach(h=>{h.addEventListener("click",()=>{
+    const ui=parseInt(h.dataset.unitIdx);
+    const start=UNITS[ui].start;
+    const end=(ui+1<UNITS.length)?UNITS[ui+1].start:LESSONS.length;
+    const unitLessons=LESSONS.slice(start,end);
+    const unitComplete=unitLessons.every(l=>completedSet.has(l.id))&&unitLessons.length>0;
+    const override=state.unitToggleOverrides[ui];
+    const currentlyCollapsed=(override===undefined)?unitComplete:!override;
+    const newOverrides={...state.unitToggleOverrides,[ui]:currentlyCollapsed}; // expanded = !collapsed → if currently collapsed, set expanded(true)
+    setState({unitToggleOverrides:newOverrides});
+  });});
   const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
   document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
 
@@ -1778,6 +1805,23 @@ function renderHome(){
     state.scrollToLessonId=null; // clear marker so it only fires once
     const idx=LESSONS.findIndex(l=>l.id===targetId);
     if(idx>=0){
+      // Make sure the parent unit is expanded so the card is visible
+      const parentUnitIdx=UNITS.findIndex((u,ui)=>{
+        const uStart=u.start;
+        const uEnd=(ui+1<UNITS.length)?UNITS[ui+1].start:LESSONS.length;
+        return idx>=uStart && idx<uEnd;
+      });
+      if(parentUnitIdx>=0){
+        const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
+        if(body && body.style.display==='none'){
+          body.style.display='';
+          body.style.marginTop='12px';
+          const header=document.querySelector(`.unit-header[data-unit-idx="${parentUnitIdx}"] span`);
+          if(header)header.textContent='▾';
+          // Persist override so re-renders keep it open
+          state.unitToggleOverrides={...state.unitToggleOverrides,[parentUnitIdx]:true};
+        }
+      }
       requestAnimationFrame(()=>{
         const card=document.querySelector(`.lesson-card[data-idx="${idx}"]`);
         if(card)card.scrollIntoView({behavior:"smooth",block:"center"});
