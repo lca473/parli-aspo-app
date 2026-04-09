@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -494,14 +493,12 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
   border-bottom:1px solid var(--border);
 }
 </style>
-
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════
      VIEW: LANDING / HOME
 ═══════════════════════════════════════════════════ -->
-
 <div id="view-home" class="view active">
   <div class="landing-stars" id="starfield"></div>
   <div class="landing-content">
@@ -511,65 +508,61 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
       <div class="landing-tagline">✨ The language of hope</div>
     </div>
 
-```
-<div class="landing-stats fade-up" style="animation-delay:0.1s">
-  <div class="landing-stat">
-    <div class="landing-stat-num">350+</div>
-    <div class="landing-stat-label">Words</div>
-  </div>
-  <div class="landing-stat">
-    <div class="landing-stat-num">100</div>
-    <div class="landing-stat-label">Lessons</div>
-  </div>
-  <div class="landing-stat">
-    <div class="landing-stat-num">∞</div>
-    <div class="landing-stat-label">Aspo</div>
-  </div>
-</div>
-
-<div class="landing-cards fade-up" style="animation-delay:0.2s">
-
-  <button class="landing-card" onclick="showView('grammar')">
-    <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(28,176,246,0.2),rgba(28,176,246,0.05));border:1.5px solid rgba(28,176,246,0.3)">📖</div>
-    <div class="landing-card-body">
-      <div class="landing-card-title">Grammar Guide</div>
-      <div class="landing-card-desc">Phonology · Word classes · Syntax · Examples</div>
+    <div class="landing-stats fade-up" style="animation-delay:0.1s">
+      <div class="landing-stat">
+        <div class="landing-stat-num">350+</div>
+        <div class="landing-stat-label">Words</div>
+      </div>
+      <div class="landing-stat">
+        <div class="landing-stat-num">100</div>
+        <div class="landing-stat-label">Lessons</div>
+      </div>
+      <div class="landing-stat">
+        <div class="landing-stat-num">∞</div>
+        <div class="landing-stat-label">Aspo</div>
+      </div>
     </div>
-    <div class="landing-card-arrow">›</div>
-  </button>
 
-  <button class="landing-card" onclick="showView('dictionary')">
-    <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(255,200,0,0.2),rgba(255,200,0,0.05));border:1.5px solid rgba(255,200,0,0.3)">📚</div>
-    <div class="landing-card-body">
-      <div class="landing-card-title">Dictionary</div>
-      <div class="landing-card-desc">350+ words · Bidirectional search · Browse by letter</div>
+    <div class="landing-cards fade-up" style="animation-delay:0.2s">
+
+      <button class="landing-card" onclick="showView('grammar')">
+        <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(28,176,246,0.2),rgba(28,176,246,0.05));border:1.5px solid rgba(28,176,246,0.3)">📖</div>
+        <div class="landing-card-body">
+          <div class="landing-card-title">Grammar Guide</div>
+          <div class="landing-card-desc">Phonology · Word classes · Syntax · Examples</div>
+        </div>
+        <div class="landing-card-arrow">›</div>
+      </button>
+
+      <button class="landing-card" onclick="showView('dictionary')">
+        <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(255,200,0,0.2),rgba(255,200,0,0.05));border:1.5px solid rgba(255,200,0,0.3)">📚</div>
+        <div class="landing-card-body">
+          <div class="landing-card-title">Dictionary</div>
+          <div class="landing-card-desc">350+ words · Bidirectional search · Browse by letter</div>
+        </div>
+        <div class="landing-card-arrow">›</div>
+      </button>
+
+      <button class="landing-card" onclick="showView('app')">
+        <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(88,204,2,0.2),rgba(88,204,2,0.05));border:1.5px solid rgba(88,204,2,0.3)">🎓</div>
+        <div class="landing-card-body">
+          <div class="landing-card-title">Learn Parli Aspo</div>
+          <div class="landing-card-desc">Duolingo-style lessons · XP · Streaks · Leaderboard</div>
+        </div>
+        <div class="landing-card-arrow">›</div>
+      </button>
+
     </div>
-    <div class="landing-card-arrow">›</div>
-  </button>
 
-  <button class="landing-card" onclick="showView('app')">
-    <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(88,204,2,0.2),rgba(88,204,2,0.05));border:1.5px solid rgba(88,204,2,0.3)">🎓</div>
-    <div class="landing-card-body">
-      <div class="landing-card-title">Learn Parli Aspo</div>
-      <div class="landing-card-desc">Duolingo-style lessons · XP · Streaks · Leaderboard</div>
-    </div>
-    <div class="landing-card-arrow">›</div>
-  </button>
-
-</div>
-
-<button class="landing-contact-link" onclick="showView('contact')">
-  💬 Suggestions &amp; Feedback
-</button>
-```
-
+    <button class="landing-contact-link" onclick="showView('contact')">
+      💬 Suggestions &amp; Feedback
+    </button>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════
      VIEW: GRAMMAR
 ═══════════════════════════════════════════════════ -->
-
 <div id="view-grammar" class="view">
   <nav class="top-nav">
     <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
@@ -584,7 +577,6 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
 <!-- ═══════════════════════════════════════════════════
      VIEW: DICTIONARY
 ═══════════════════════════════════════════════════ -->
-
 <div id="view-dictionary" class="view">
   <nav class="top-nav">
     <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
@@ -599,7 +591,6 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
 <!-- ═══════════════════════════════════════════════════
      VIEW: LEARNING APP
 ═══════════════════════════════════════════════════ -->
-
 <div id="view-app" class="view">
   <nav class="top-nav">
     <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
@@ -612,7 +603,6 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
 <!-- ═══════════════════════════════════════════════════
      VIEW: CONTACT
 ═══════════════════════════════════════════════════ -->
-
 <div id="view-contact" class="view">
   <nav class="top-nav">
     <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
@@ -623,6 +613,7 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
     <!-- rendered by JS -->
   </div>
 </div>
+
 
 <script>
 // ═══════════════════════════════════════════════════════════════
@@ -1831,8 +1822,9 @@ function renderHome(){
           // Clear override so the default (collapsed-when-complete) applies, and
           // collapse the body in the current DOM without re-rendering.
           if(state.unitToggleOverrides[parentUnitIdx]!==undefined){
-            const {[parentUnitIdx]:_,...rest}=state.unitToggleOverrides;
-            state.unitToggleOverrides=rest;
+            const newOv=Object.assign({},state.unitToggleOverrides);
+            delete newOv[parentUnitIdx];
+            state.unitToggleOverrides=newOv;
           }
           const body=document.querySelector(`[data-unit-body="${parentUnitIdx}"]`);
           if(body){body.style.display='none';body.style.marginTop='0';}
@@ -2082,148 +2074,184 @@ function renderFreeText(ex){
     <div style="color:var(--blue);font-size:13px;margin-bottom:16px;font-style:italic">💡 Hint: ${ex.hint}</div>
     <textarea id="ftInput" rows="5" placeholder="Write in Parli Aspo..." autocomplete="off" autocapitalize="off"
       style="width:100%;padding:14px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:15px;font-weight:600;resize:vertical;margin-bottom:12px">${state.freetextInput}</textarea>
-
-```
-<button id="ftSubmit" class="btn-primary">SUBMIT</button>`;
-```
-
-}
-return `<div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:12px;letter-spacing:0.5px">✅ SUBMITTED</div> <div style="font-size:18px;font-weight:800;margin-bottom:12px">${ex.prompt}</div> <div style="padding:14px;background:var(--ok);border:2px solid var(--green);border-radius:var(--radius);color:var(--text);font-size:15px;line-height:1.6;margin-bottom:16px">${state.freetextInput||'(no answer)'}</div> <div style="color:var(--dim);font-size:13px;font-style:italic">Bona labori! Keep practicing — fluency grows with use.</div>`;
+    <button id="ftSubmit" class="btn-primary">SUBMIT</button>`;
+  }
+  return `<div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:12px;letter-spacing:0.5px">✅ SUBMITTED</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:12px">${ex.prompt}</div>
+    <div style="padding:14px;background:var(--ok);border:2px solid var(--green);border-radius:var(--radius);color:var(--text);font-size:15px;line-height:1.6;margin-bottom:16px">${state.freetextInput||'(no answer)'}</div>
+    <div style="color:var(--dim);font-size:13px;font-style:italic">Bona labori! Keep practicing — fluency grows with use.</div>`;
 }
 function bindFreeText(ex){
-if(state.freetextSubmitted){setTimeout(()=>handleAnswer(true),1500);return;}
-const ta=document.getElementById(“ftInput”);if(ta){ta.focus();ta.addEventListener(“input”,e=>{state.freetextInput=e.target.value;});}
-const btn=document.getElementById(“ftSubmit”);
-if(btn)btn.addEventListener(“click”,()=>{
-if(!(state.freetextInput||””).trim())return;
-state.freetextSubmitted=true;renderApp();
-});
+  if(state.freetextSubmitted){setTimeout(()=>handleAnswer(true),1500);return;}
+  const ta=document.getElementById("ftInput");if(ta){ta.focus();ta.addEventListener("input",e=>{state.freetextInput=e.target.value;});}
+  const btn=document.getElementById("ftSubmit");
+  if(btn)btn.addEventListener("click",()=>{
+    if(!(state.freetextInput||"").trim())return;
+    state.freetextSubmitted=true;renderApp();
+  });
 }
 
 // ─── FILL ─────────────────────────────────────────────────────
 function renderFill(ex){
-let feedbackHTML=””;
-if(state.fillAnswered&&!state.fillCorrect){feedbackHTML=`<div style="margin-top:16px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct answer: <span style="color:var(--green)">${ex.correct}</span></div>`;}
-const borderColor=state.fillAnswered?(state.fillCorrect?“var(–green)”:“var(–red)”):“var(–border)”;
-const bgColor=state.fillAnswered?(state.fillCorrect?“var(–ok)”:“var(–bad)”):“var(–input)”;
-return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div> <div style="display:flex;gap:10px"> <input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''} style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700"> ${!state.fillAnswered?'<button id="fillCheck" class="btn-primary" style="width:auto;padding:14px 20px;font-size:15px">CHECK</button>':''} </div>${feedbackHTML}`;
+  let feedbackHTML="";
+  if(state.fillAnswered&&!state.fillCorrect){feedbackHTML=`<div style="margin-top:16px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct answer: <span style="color:var(--green)">${ex.correct}</span></div>`;}
+  const borderColor=state.fillAnswered?(state.fillCorrect?"var(--green)":"var(--red)"):"var(--border)";
+  const bgColor=state.fillAnswered?(state.fillCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div>
+    <div style="display:flex;gap:10px">
+      <input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
+        style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">
+      ${!state.fillAnswered?'<button id="fillCheck" class="btn-primary" style="width:auto;padding:14px 20px;font-size:15px">CHECK</button>':''}
+    </div>${feedbackHTML}`;
 }
 function bindFill(ex){
-if(state.fillAnswered)return;
-const input=document.getElementById(“fillInput”);const btn=document.getElementById(“fillCheck”);
-if(input){input.focus();input.addEventListener(“input”,e=>{state.fillInput=e.target.value;});input.addEventListener(“keydown”,e=>{if(e.key===“Enter”)doFillCheck(ex);});}
-if(btn)btn.addEventListener(“click”,()=>doFillCheck(ex));
+  if(state.fillAnswered)return;
+  const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
+  if(input){input.focus();input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
+  if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
 }
 function doFillCheck(ex){
-if(state.fillAnswered||!(state.fillInput||””).trim())return;
-const correct=state.fillInput.trim().toLowerCase()===ex.correct.toLowerCase();
-state.fillAnswered=true;state.fillCorrect=correct;renderApp();
-if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
+  if(state.fillAnswered||!(state.fillInput||"").trim())return;
+  const correct=state.fillInput.trim().toLowerCase()===ex.correct.toLowerCase();
+  state.fillAnswered=true;state.fillCorrect=correct;renderApp();
+  if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
 }
 
 // ─── WORD ORDER ────────────────────────────────────────────────
 function renderWordOrder(ex){
-const selectedHTML=state.woSelected.length===0?`<span style="color:var(--dim);font-size:14px;padding:4px">Tap words to build the sentence...</span>`:state.woSelected.map((w,i)=>`<button class="word-chip placed" data-rm="${i}">${w}</button>`).join(””);
-const availHTML=state.woAvailable.map((w,i)=>`<button class="word-chip" data-add="${i}">${w}</button>`).join(””);
-const answerBorder=state.woAnswered?(state.woCorrect?“var(–green)”:“var(–red)”):“var(–border)”;
-const answerBg=state.woAnswered?(state.woCorrect?“var(–ok)”:“var(–bad)”):“var(–input)”;
-let checkHTML=””;if(!state.woAnswered&&state.woSelected.length===ex.correctOrder.length){checkHTML=`<button id="woCheck" class="btn-primary" style="margin-top:4px">CHECK</button>`;}
-let wrongHTML=””;if(state.woAnswered&&!state.woCorrect){wrongHTML=`<div style="margin-top:12px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct: <span style="color:var(--green)">${ex.correctOrder.join(" ")}</span></div>`;}
-return `<div style="font-size:20px;font-weight:800;margin-bottom:20px">${ex.prompt}</div> <div style="min-height:52px;padding:10px 14px;background:${answerBg};border:2.5px dashed ${answerBorder};border-radius:var(--radius);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${selectedHTML}</div> <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${availHTML}</div>${checkHTML}${wrongHTML}`;
+  const selectedHTML=state.woSelected.length===0?`<span style="color:var(--dim);font-size:14px;padding:4px">Tap words to build the sentence...</span>`:state.woSelected.map((w,i)=>`<button class="word-chip placed" data-rm="${i}">${w}</button>`).join("");
+  const availHTML=state.woAvailable.map((w,i)=>`<button class="word-chip" data-add="${i}">${w}</button>`).join("");
+  const answerBorder=state.woAnswered?(state.woCorrect?"var(--green)":"var(--red)"):"var(--border)";
+  const answerBg=state.woAnswered?(state.woCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
+  let checkHTML="";if(!state.woAnswered&&state.woSelected.length===ex.correctOrder.length){checkHTML=`<button id="woCheck" class="btn-primary" style="margin-top:4px">CHECK</button>`;}
+  let wrongHTML="";if(state.woAnswered&&!state.woCorrect){wrongHTML=`<div style="margin-top:12px;font-family:var(--font);font-size:28px;font-weight:800;color:var(--text)">Correct: <span style="color:var(--green)">${ex.correctOrder.join(" ")}</span></div>`;}
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:20px">${ex.prompt}</div>
+    <div style="min-height:52px;padding:10px 14px;background:${answerBg};border:2.5px dashed ${answerBorder};border-radius:var(--radius);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${selectedHTML}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${availHTML}</div>${checkHTML}${wrongHTML}`;
 }
 function bindWordOrder(ex){
-if(state.woAnswered)return;
-document.querySelectorAll(”[data-add]”).forEach(btn=>{btn.addEventListener(“click”,()=>{const i=parseInt(btn.dataset.add);const word=state.woAvailable[i];state.woSelected=[…state.woSelected,word];state.woAvailable=state.woAvailable.filter((*,j)=>j!==i);renderApp();});});
-document.querySelectorAll(”[data-rm]”).forEach(btn=>{btn.addEventListener(“click”,()=>{if(state.woAnswered)return;const i=parseInt(btn.dataset.rm);const word=state.woSelected[i];state.woSelected=state.woSelected.filter((*,j)=>j!==i);state.woAvailable=[…state.woAvailable,word];renderApp();});});
-const checkBtn=document.getElementById(“woCheck”);
-if(checkBtn)checkBtn.addEventListener(“click”,()=>{const correct=state.woSelected.every((w,i)=>w===ex.correctOrder[i]);state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
+  if(state.woAnswered)return;
+  document.querySelectorAll("[data-add]").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.add);const word=state.woAvailable[i];state.woSelected=[...state.woSelected,word];state.woAvailable=state.woAvailable.filter((_,j)=>j!==i);renderApp();});});
+  document.querySelectorAll("[data-rm]").forEach(btn=>{btn.addEventListener("click",()=>{if(state.woAnswered)return;const i=parseInt(btn.dataset.rm);const word=state.woSelected[i];state.woSelected=state.woSelected.filter((_,j)=>j!==i);state.woAvailable=[...state.woAvailable,word];renderApp();});});
+  const checkBtn=document.getElementById("woCheck");
+  if(checkBtn)checkBtn.addEventListener("click",()=>{const correct=state.woSelected.every((w,i)=>w===ex.correctOrder[i]);state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
 }
 
 // ─── MATCH ─────────────────────────────────────────────────────
 function renderMatch(ex){
-const leftHTML=ex.pairs.map((p,i)=>{const matched=state.matchMatched.find(m=>m.left===p.left);const selected=state.matchSelectedLeft===p.left;const wrong=state.matchWrong&&state.matchWrong.left===p.left;let cls=“match-btn”;if(matched)cls+=” matched”;else if(wrong)cls+=” wrong-match”;else if(selected)cls+=” selected”;return `<button class="${cls}" data-side="left" data-idx="${i}">${p.left}</button>`;}).join(””);
-const rightHTML=state.matchShuffledRight.map((r,i)=>{const matched=state.matchMatched.find(m=>m.right===r);const wrong=state.matchWrong&&state.matchWrong.right===r;let cls=“match-btn”;if(matched)cls+=” matched”;else if(wrong)cls+=” wrong-match”;return `<button class="${cls}" data-side="right" data-idx="${i}">${r}</button>`;}).join(””);
-return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">Match the pairs</div><div style="display:flex;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:8px">${leftHTML}</div><div style="flex:1;display:flex;flex-direction:column;gap:8px">${rightHTML}</div></div>`;
+  const leftHTML=ex.pairs.map((p,i)=>{const matched=state.matchMatched.find(m=>m.left===p.left);const selected=state.matchSelectedLeft===p.left;const wrong=state.matchWrong&&state.matchWrong.left===p.left;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";else if(selected)cls+=" selected";return `<button class="${cls}" data-side="left" data-idx="${i}">${p.left}</button>`;}).join("");
+  const rightHTML=state.matchShuffledRight.map((r,i)=>{const matched=state.matchMatched.find(m=>m.right===r);const wrong=state.matchWrong&&state.matchWrong.right===r;let cls="match-btn";if(matched)cls+=" matched";else if(wrong)cls+=" wrong-match";return `<button class="${cls}" data-side="right" data-idx="${i}">${r}</button>`;}).join("");
+  return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">Match the pairs</div><div style="display:flex;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:8px">${leftHTML}</div><div style="flex:1;display:flex;flex-direction:column;gap:8px">${rightHTML}</div></div>`;
 }
 function bindMatch(ex){
-document.querySelectorAll(”[data-side=‘left’]”).forEach(btn=>{btn.addEventListener(“click”,()=>{const i=parseInt(btn.dataset.idx);const left=ex.pairs[i].left;if(state.matchMatched.find(m=>m.left===left))return;state.matchSelectedLeft=left;state.matchWrong=null;renderApp();});});
-document.querySelectorAll(”[data-side=‘right’]”).forEach(btn=>{btn.addEventListener(“click”,()=>{if(!state.matchSelectedLeft)return;const right=state.matchShuffledRight[parseInt(btn.dataset.idx)];if(state.matchMatched.find(m=>m.right===right))return;const pair=ex.pairs.find(p=>p.left===state.matchSelectedLeft&&p.right===right);if(pair){state.matchMatched=[…state.matchMatched,pair];state.matchSelectedLeft=null;renderApp();if(state.matchMatched.length===ex.pairs.length)setTimeout(()=>handleAnswer(true),600);}else{state.matchWrong={left:state.matchSelectedLeft,right};renderApp();setTimeout(()=>{state.matchWrong=null;state.matchSelectedLeft=null;renderApp();},700);}});});
+  document.querySelectorAll("[data-side='left']").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.idx);const left=ex.pairs[i].left;if(state.matchMatched.find(m=>m.left===left))return;state.matchSelectedLeft=left;state.matchWrong=null;renderApp();});});
+  document.querySelectorAll("[data-side='right']").forEach(btn=>{btn.addEventListener("click",()=>{if(!state.matchSelectedLeft)return;const right=state.matchShuffledRight[parseInt(btn.dataset.idx)];if(state.matchMatched.find(m=>m.right===right))return;const pair=ex.pairs.find(p=>p.left===state.matchSelectedLeft&&p.right===right);if(pair){state.matchMatched=[...state.matchMatched,pair];state.matchSelectedLeft=null;renderApp();if(state.matchMatched.length===ex.pairs.length)setTimeout(()=>handleAnswer(true),600);}else{state.matchWrong={left:state.matchSelectedLeft,right};renderApp();setTimeout(()=>{state.matchWrong=null;state.matchSelectedLeft=null;renderApp();},700);}});});
 }
 
 // ─── ANSWER FLOW ───────────────────────────────────────────────
 function handleAnswer(correct){
-const isFinal=state.isFinalTest;
-if(correct){
-state.correct++;
-state.accXP+=state.lesson.xp/state.exercises.length;
-advanceAfterAnswer();
-} else {
-if(!isFinal){state.hearts–;}
-state.waitingContinue=true;
-renderApp();
-}
+  const isFinal=state.isFinalTest;
+  if(correct){
+    state.correct++;
+    state.accXP+=state.lesson.xp/state.exercises.length;
+    advanceAfterAnswer();
+  } else {
+    if(!isFinal){state.hearts--;}
+    state.waitingContinue=true;
+    renderApp();
+  }
 }
 
 function advanceAfterAnswer(){
-state.waitingContinue=false;
-if(!state.isFinalTest&&state.hearts<=0){setState({screen:“complete”});return;}
-if(state.exIdx+1>=state.exercises.length){
-const totalXP=Math.round(state.accXP);
-const user={…state.user,xp:state.user.xp+totalXP,lessonsCompleted:[…new Set([…state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
-saveUserData(user);pushToLeaderboard(user);state.user=user;
-setState({screen:“complete”});
-} else {
-const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
-setState({
-exIdx:nextIdx,
-mcSelected:null,mcAnswered:false,
-matchSelectedLeft:null,matchMatched:[],matchWrong:null,
-matchShuffledRight:nextEx.type===“match”?shuffle(nextEx.pairs.map(p=>p.right)):[],
-fillInput:””,fillAnswered:false,fillCorrect:false,
-woSelected:[],woAvailable:nextEx.type===“wordOrder”?[…nextEx.shuffled]:[],woAnswered:false,woCorrect:false,
-tfAnswered:false,tfSelected:null,
-revfillSelected:null,revfillAnswered:false,
-errcorrectSelected:null,errcorrectAnswered:false,
-freetextInput:””,freetextSubmitted:false,
-waitingContinue:false,
-});
-}
+  state.waitingContinue=false;
+  if(!state.isFinalTest&&state.hearts<=0){setState({screen:"complete"});return;}
+  if(state.exIdx+1>=state.exercises.length){
+    const totalXP=Math.round(state.accXP);
+    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
+    saveUserData(user);pushToLeaderboard(user);state.user=user;
+    setState({screen:"complete"});
+  } else {
+    const nextIdx=state.exIdx+1;const nextEx=state.exercises[nextIdx];
+    setState({
+      exIdx:nextIdx,
+      mcSelected:null,mcAnswered:false,
+      matchSelectedLeft:null,matchMatched:[],matchWrong:null,
+      matchShuffledRight:nextEx.type==="match"?shuffle(nextEx.pairs.map(p=>p.right)):[],
+      fillInput:"",fillAnswered:false,fillCorrect:false,
+      woSelected:[],woAvailable:nextEx.type==="wordOrder"?[...nextEx.shuffled]:[],woAnswered:false,woCorrect:false,
+      tfAnswered:false,tfSelected:null,
+      revfillSelected:null,revfillAnswered:false,
+      errcorrectSelected:null,errcorrectAnswered:false,
+      freetextInput:"",freetextSubmitted:false,
+      waitingContinue:false,
+    });
+  }
 }
 
 function render(){renderApp();}
 
 function renderComplete(){
-const passed=state.isFinalTest||state.hearts>0;
-const earnedXP=Math.round(state.accXP);
-const isFinal=state.isFinalTest;
+  const passed=state.isFinalTest||state.hearts>0;
+  const earnedXP=Math.round(state.accXP);
+  const isFinal=state.isFinalTest;
 
-let confettiHTML=””;
-if(passed){
-const colors=[”#58CC02”,”#FFC800”,”#1CB0F6”,”#CE82FF”,”#FF4B4B”];
-const count=isFinal?60:20;
-for(let i=0;i<count;i++){const color=colors[i%colors.length];const left=Math.random()*100;const delay=Math.random()*(isFinal?1.5:0.5);const size=isFinal?8+Math.random()*12:6+Math.random()*8;confettiHTML+=`<div class="confetti-piece" style="left:${left}%;bottom:40%;width:${size}px;height:${size}px;background:${color};animation-delay:${delay}s;border-radius:${Math.random()>0.5?'50%':'2px'}"></div>`;}
-}
+  let confettiHTML="";
+  if(passed){
+    const colors=["#58CC02","#FFC800","#1CB0F6","#CE82FF","#FF4B4B"];
+    const count=isFinal?60:20;
+    for(let i=0;i<count;i++){const color=colors[i%colors.length];const left=Math.random()*100;const delay=Math.random()*(isFinal?1.5:0.5);const size=isFinal?8+Math.random()*12:6+Math.random()*8;confettiHTML+=`<div class="confetti-piece" style="left:${left}%;bottom:40%;width:${size}px;height:${size}px;background:${color};animation-delay:${delay}s;border-radius:${Math.random()>0.5?'50%':'2px'}"></div>`;}
+  }
 
-let innerHTML=””;
-if(isFinal&&passed){
-innerHTML=` <div style="font-size:80px;margin-bottom:8px">🏆</div> <div style="font-family:var(--display);font-size:32px;font-weight:800;color:var(--gold);margin-bottom:8px">Bona Labori!</div> <div style="font-size:18px;color:var(--mid);margin-bottom:8px">You have completed the Parli Aspo course.</div> <div style="font-size:14px;color:var(--dim);margin-bottom:20px;font-style:italic">"Vivo esi bela kon aspo." — Life is beautiful with hope.</div> <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap"> <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span> <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak} day streak</span> <span class="badge badge-lessons" style="font-size:15px;padding:6px 16px">🎓 ${(state.user.lessonsCompleted||[]).length} lessons</span> </div> <div style="padding:16px;background:var(--gold-glow);border:2px solid var(--gold);border-radius:var(--radius);margin-bottom:24px"> <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px">🌟 COURSE COMPLETE</div> <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered 350+ words, all 6 units, and the complete grammar system of Parli Aspo. The language of hope lives in you now.</div> </div>`;
-} else if(passed){
-innerHTML=` <div style="font-size:72px;margin-bottom:16px">🎉</div> <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--green);margin-bottom:8px">Lesson Complete!</div> <div style="color:var(--mid);font-size:16px;margin-bottom:20px">${state.correct}/${state.exercises.length} correct</div> <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px"> <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span> <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak}</span> </div>`;
-} else {
-innerHTML=` <div style="font-size:72px;margin-bottom:16px">💔</div> <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--red);margin-bottom:8px">Out of Hearts!</div> <div style="color:var(--dim);font-size:15px;margin-bottom:28px">Na malbravi! Trati otra hapa.<br><span style="font-size:13px;color:var(--mid)">(Don't fear! Try again.)</span></div>`;
-}
+  let innerHTML="";
+  if(isFinal&&passed){
+    innerHTML=`
+      <div style="font-size:80px;margin-bottom:8px">🏆</div>
+      <div style="font-family:var(--display);font-size:32px;font-weight:800;color:var(--gold);margin-bottom:8px">Bona Labori!</div>
+      <div style="font-size:18px;color:var(--mid);margin-bottom:8px">You have completed the Parli Aspo course.</div>
+      <div style="font-size:14px;color:var(--dim);margin-bottom:20px;font-style:italic">"Vivo esi bela kon aspo." — Life is beautiful with hope.</div>
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
+        <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak} day streak</span>
+        <span class="badge badge-lessons" style="font-size:15px;padding:6px 16px">🎓 ${(state.user.lessonsCompleted||[]).length} lessons</span>
+      </div>
+      <div style="padding:16px;background:var(--gold-glow);border:2px solid var(--gold);border-radius:var(--radius);margin-bottom:24px">
+        <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px">🌟 COURSE COMPLETE</div>
+        <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered 350+ words, all 6 units, and the complete grammar system of Parli Aspo. The language of hope lives in you now.</div>
+      </div>`;
+  } else if(passed){
+    innerHTML=`
+      <div style="font-size:72px;margin-bottom:16px">🎉</div>
+      <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--green);margin-bottom:8px">Lesson Complete!</div>
+      <div style="color:var(--mid);font-size:16px;margin-bottom:20px">${state.correct}/${state.exercises.length} correct</div>
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px">
+        <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
+        <span class="badge badge-streak" style="font-size:15px;padding:6px 16px">🔥 ${state.user.streak}</span>
+      </div>`;
+  } else {
+    innerHTML=`
+      <div style="font-size:72px;margin-bottom:16px">💔</div>
+      <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--red);margin-bottom:8px">Out of Hearts!</div>
+      <div style="color:var(--dim);font-size:15px;margin-bottom:28px">Na malbravi! Trati otra hapa.<br><span style="font-size:13px;color:var(--mid)">(Don't fear! Try again.)</span></div>`;
+  }
 
-app.innerHTML=`${confettiHTML} <div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px"> <div style="text-align:center;max-width:400px;width:100%" class="pop"> ${innerHTML} <button id="completeBtn" class="btn-primary" style="margin-bottom:10px">${passed?"CONTINUE":"TRY AGAIN"}</button> ${!passed?'<button id="backBtn" class="btn-secondary">BACK TO LESSONS</button>':''} </div> </div>`;
+  app.innerHTML=`${confettiHTML}
+    <div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
+      <div style="text-align:center;max-width:400px;width:100%" class="pop">
+        ${innerHTML}
+        <button id="completeBtn" class="btn-primary" style="margin-bottom:10px">${passed?"CONTINUE":"TRY AGAIN"}</button>
+        ${!passed?'<button id="backBtn" class="btn-secondary">BACK TO LESSONS</button>':''}
+      </div>
+    </div>`;
 
-document.getElementById(“completeBtn”).addEventListener(“click”,()=>{
-if(!passed){const idx=LESSONS.findIndex(l=>l.id===state.lesson.id);startLesson(idx);}
-else{
-const justFinishedId=state.lesson.id;
-setState({screen:“home”,scrollToLessonId:justFinishedId});
-fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
-}
-});
-const backBtn=document.getElementById(“backBtn”);if(backBtn)backBtn.addEventListener(“click”,()=>setState({screen:“home”,scrollToLessonId:state.lesson.id}));
+  document.getElementById("completeBtn").addEventListener("click",()=>{
+    if(!passed){const idx=LESSONS.findIndex(l=>l.id===state.lesson.id);startLesson(idx);}
+    else{
+      const justFinishedId=state.lesson.id;
+      setState({screen:"home",scrollToLessonId:justFinishedId});
+      fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+    }
+  });
+  const backBtn=document.getElementById("backBtn");if(backBtn)backBtn.addEventListener("click",()=>setState({screen:"home",scrollToLessonId:state.lesson.id}));
 }
 
 // renderApp() is called directly from showView() above
@@ -2231,404 +2259,591 @@ const backBtn=document.getElementById(“backBtn”);if(backBtn)backBtn.addEvent
 // DICTIONARY DATA
 // ═══════════════════════════════════════════════════════════════
 const DICT_RAW = [
-{pa:“abelo”,en:“bee”,pos:“noun”},{pa:“abra”,en:“open”,pos:“adj”},{pa:“abri”,en:“open”,pos:“verb”},{pa:“ada”,en:“more”,pos:“adj”},{pa:“adapti”,en:“fit”,pos:“verb”},{pa:“agwa”,en:“wet”,pos:“adj”},{pa:“agwi”,en:“drink”,pos:“verb”},{pa:“agwo”,en:“water”,pos:“noun”},{pa:“alkolo”,en:“alcohol”,pos:“noun”},{pa:“alsotu”,en:“also”,pos:“adv”},{pa:“alta”,en:“tall / high / up”,pos:“adj”},{pa:“alti”,en:“raise / increase”,pos:“verb”},{pa:“am”,en:“here”,pos:“adv”},{pa:“amabla”,en:“kind / kindly”,pos:“adj”},{pa:“ami”,en:“love”,pos:“verb”},{pa:“amo”,en:“love”,pos:“noun”},{pa:“anka”,en:“still”,pos:“adv”},{pa:“ano”,en:“year”,pos:“noun”},{pa:“arano”,en:“spider”,pos:“noun”},{pa:“arbo”,en:“tree”,pos:“noun”},{pa:“aro”,en:“air”,pos:“noun”},{pa:“arti”,en:“make art”,pos:“verb”},{pa:“artio”,en:“artist”,pos:“noun”},{pa:“arto”,en:“art”,pos:“noun”},{pa:“asawi”,en:“marry”,pos:“verb”},{pa:“asawo”,en:“spouse / husband / wife”,pos:“noun”},{pa:“aspa”,en:“hopeful / hopefully”,pos:“adj”},{pa:“aspi”,en:“hope / expect”,pos:“verb”},{pa:“aspo”,en:“hope”,pos:“noun”},{pa:“audo”,en:“sound”,pos:“noun”},{pa:“autuno”,en:“autumn”,pos:“noun”},{pa:“avanta”,en:“forward / advantageous”,pos:“adj”},{pa:“avanti”,en:“move forward”,pos:“verb”},{pa:“avanto”,en:“advantage”,pos:“noun”},{pa:“avono”,en:“airplane”,pos:“noun”},
-{pa:“balda”,en:“soon”,pos:“adv”},{pa:“bani”,en:“use the bathroom”,pos:“verb”},{pa:“bano”,en:“bathroom”,pos:“noun”},{pa:“bebo”,en:“baby”,pos:“noun”},{pa:“bela”,en:“beautiful / beautifully”,pos:“adj”},{pa:“bem”,en:“well (interjection)”,pos:“intj”},{pa:“bigo”,en:“building”,pos:“noun”},{pa:“bigi”,en:“build”,pos:“verb”},{pa:“bigio”,en:“builder”,pos:“noun”},{pa:“biklio”,en:“cyclist”,pos:“noun”},{pa:“biklo”,en:“bicycle”,pos:“noun”},{pa:“blanka”,en:“white”,pos:“adj”},{pa:“blua”,en:“blue”,pos:“adj”},{pa:“bona”,en:“good / correct / well”,pos:“adj”},{pa:“bonapova”,en:“lucky”,pos:“adj”},{pa:“bonapovo”,en:“luck”,pos:“noun”},{pa:“boti”,en:“operate a boat”,pos:“verb”},{pa:“botio”,en:“boat captain”,pos:“noun”},{pa:“boto”,en:“boat”,pos:“noun”},{pa:“bovo”,en:“cow”,pos:“noun”},{pa:“brako”,en:“arm”,pos:“noun”},{pa:“braki”,en:“reach”,pos:“verb”},{pa:“brava”,en:“brave”,pos:“adj”},{pa:“bravi”,en:“act bravely”,pos:“verb”},{pa:“bravo”,en:“bravery”,pos:“noun”},{pa:“bruna”,en:“brown”,pos:“adj”},{pa:“buko”,en:“mouth”,pos:“noun”},{pa:“buski”,en:“search”,pos:“verb”},{pa:“buso”,en:“bus”,pos:“noun”},
-{pa:“da”,en:“yes”,pos:“particle”},{pa:“dansi”,en:“dance”,pos:“verb”},{pa:“danso”,en:“dance”,pos:“noun”},{pa:“de”,en:“of / from”,pos:“prep”},{pa:“debi”,en:“should”,pos:“verb”},{pa:“debifaro”,en:“rule”,pos:“noun”},{pa:“deka”,en:“ten”,pos:“num”},{pa:“dekadualuno”,en:“December”,pos:“noun”},{pa:“dekaunaluno”,en:“November”,pos:“noun”},{pa:“dekaluno”,en:“October”,pos:“noun”},{pa:“dena”,en:“rich”,pos:“adj”},{pa:“deni”,en:“buy”,pos:“verb”},{pa:“denio”,en:“buyer”,pos:“noun”},{pa:“deno”,en:“money”,pos:“noun”},{pa:“denti”,en:“bite”,pos:“verb”},{pa:“dentio”,en:“dentist”,pos:“noun”},{pa:“dento”,en:“tooth”,pos:“noun”},{pa:“dentopuro”,en:“toothbrush”,pos:“noun”,note:“dento + puro”},{pa:“dilemo”,en:“problem”,pos:“noun”},{pa:“dipa”,en:“deep”,pos:“adj”},{pa:“dipla”,en:“used”,pos:“adj”},{pa:“dipli”,en:“use”,pos:“verb”},{pa:“doktio”,en:“doctor”,pos:“noun”},{pa:“dola”,en:“painful”,pos:“adj”},{pa:“doli”,en:“hurt”,pos:“verb”},{pa:“domo”,en:“room”,pos:“noun”},{pa:“doni”,en:“give”,pos:“verb”},{pa:“dono”,en:“gift”,pos:“noun”},{pa:“dorma”,en:“sleepy / tiredly / sleepily”,pos:“adj”},{pa:“dormi”,en:“sleep”,pos:“verb”},{pa:“dormo”,en:“sleep”,pos:“noun”},{pa:“drogo”,en:“drug”,pos:“noun”},{pa:“dua”,en:“two”,pos:“num”},{pa:“dualuno”,en:“February”,pos:“noun”},{pa:“duayo”,en:“Monday”,pos:“noun”},{pa:“dura”,en:“hard”,pos:“adj”},{pa:“duramalabro”,en:“lock”,pos:“noun”,note:“dura + malabro”},{pa:“dute”,en:“during / while”,pos:“conj”},{pa:“dureli”,en:“continue / endure / last”,pos:“verb”},
-{pa:“elefano”,en:“elephant”,pos:“noun”},{pa:“eleki”,en:“choose”,pos:“verb”},{pa:“eleko”,en:“choice”,pos:“noun”},{pa:“elori”,en:“having the urge to squeeze something cute”,pos:“verb”},{pa:“en”,en:“in”,pos:“prep”},{pa:“esi”,en:“be / is / am”,pos:“verb”},{pa:“eso”,en:“thing”,pos:“noun”},{pa:“espliki”,en:“explain”,pos:“verb”},{pa:“espliko”,en:“explanation”,pos:“noun”},{pa:“evali”,en:“test”,pos:“verb”},{pa:“evalo”,en:“exam / test”,pos:“noun”},
-{pa:“fabula”,en:“storied / legendary”,pos:“adj”},{pa:“fabuli”,en:“tell stories / narrate”,pos:“verb”},{pa:“fabulo”,en:“story”,pos:“noun”},{pa:“famila”,en:“family”,pos:“adj”},{pa:“familo”,en:“family”,pos:“noun”},{pa:“faram”,en:“there”,pos:“adv”},{pa:“fari”,en:“do”,pos:“verb”},{pa:“farlan”,en:“that / those”,pos:“dem”},{pa:“fasila”,en:“easy / easily”,pos:“adj”},{pa:“fasa”,en:“front”,pos:“adj”},{pa:“fasi”,en:“face”,pos:“verb”},{pa:“faso”,en:“face”,pos:“noun”},{pa:“febro”,en:“fever”,pos:“noun”},{pa:“feli”,en:“feel”,pos:“verb”},{pa:“felibona”,en:“comfortable”,pos:“adj”},{pa:“feliboni”,en:“comfort”,pos:“verb”},{pa:“felibono”,en:“comfort”,pos:“noun”},{pa:“felifasi”,en:“smile”,pos:“verb”,note:“feli + fasi”},{pa:“felifaso”,en:“smile”,pos:“noun”,note:“feli + faso”},{pa:“felisa”,en:“happy”,pos:“adj”},{pa:“feliso”,en:“happiness”,pos:“noun”},{pa:“felo”,en:“feeling”,pos:“noun”},{pa:“femo”,en:“woman”,pos:“noun”},{pa:“feno”,en:“window”,pos:“noun”},{pa:“feto”,en:“feature / trait / characteristic”,pos:“noun”},{pa:“fika”,en:“fixed”,pos:“adj”},{pa:“fiki”,en:“repair”,pos:“verb”},{pa:“fikio”,en:“repairman”,pos:“noun”},{pa:“fili”,en:“enjoy / like”,pos:“verb”},{pa:“filmido”,en:“show (TV show)”,pos:“noun”,note:“filmo + -ido”},{pa:“filmo”,en:“movie”,pos:“noun”},{pa:“fina”,en:“last / end”,pos:“adj”},{pa:“fingo”,en:“finger”,pos:“noun”},{pa:“fini”,en:“finish”,pos:“verb”},{pa:“fino”,en:“end / last”,pos:“noun”},{pa:“finte”,en:“until”,pos:“conj”},{pa:“filo”,en:“friend”,pos:“noun”},{pa:“flora”,en:“floral”,pos:“adj”},{pa:“floro”,en:“flower”,pos:“noun”},{pa:“fogo”,en:“fire”,pos:“noun”},{pa:“fogida”,en:“burnt”,pos:“adj”},{pa:“fogidi”,en:“burn”,pos:“verb”},{pa:“fogido”,en:“flame”,pos:“noun”,note:“fogo + -ido”},{pa:“fogidido”,en:“spark”,pos:“noun”,note:“fogido + -ido”},{pa:“foli”,en:“fly”,pos:“verb”},{pa:“for”,en:“for”,pos:“prep”},{pa:“for ke”,en:“so that”,pos:“conj”},{pa:“forke”,en:“because”,pos:“conj”},{pa:“formiko”,en:“ant”,pos:“noun”},{pa:“foro”,en:“forest”,pos:“noun”},{pa:“forta”,en:“strong / strongly”,pos:“adj”},{pa:“foti”,en:“take a photo”,pos:“verb”},{pa:“fotio”,en:“photographer”,pos:“noun”},{pa:“foto”,en:“picture / photo”,pos:“noun”},{pa:“frato”,en:“brother”,pos:“noun”},{pa:“frigi”,en:“cool”,pos:“verb”},{pa:“friga”,en:“cold”,pos:“adj”},{pa:“frigo”,en:“refrigerator”,pos:“noun”},{pa:“fruko”,en:“fruit”,pos:“noun”},{pa:“frukotendo”,en:“fruit store”,pos:“noun”,note:“fruko + tendo”},{pa:“fu”,en:”(future tense marker) / next”,pos:“particle”},{pa:“fula”,en:“full”,pos:“adj”},{pa:“fuli”,en:“fill”,pos:“verb”},{pa:“fumo”,en:“smoke”,pos:“noun”},{pa:“fumi”,en:“smoke”,pos:“verb”},{pa:“fuyo”,en:“tomorrow”,pos:“noun”},{pa:“fute”,en:“after”,pos:“conj”},
-{pa:“galo”,en:“chicken”,pos:“noun”},{pa:“gambo”,en:“leg”,pos:“noun”},{pa:“garfo”,en:“fork”,pos:“noun”},{pa:“gardi”,en:“keep / hold”,pos:“verb”},{pa:“gato”,en:“cat”,pos:“noun”},{pa:“goro”,en:“hat”,pos:“noun”},{pa:“granda”,en:“big”,pos:“adj”},{pa:“grata”,en:“thankful”,pos:“adj”},{pa:“grati”,en:“please / thank you / you’re welcome”,pos:“verb”},{pa:“grato”,en:“thanks”,pos:“noun”},{pa:“grava”,en:“important”,pos:“adj”},{pa:“grisa”,en:“gray”,pos:“adj”},{pa:“gusti”,en:“taste”,pos:“verb”},{pa:“gusto”,en:“flavor”,pos:“noun”},
-{pa:“hapo”,en:“occurrence”,pos:“noun”},{pa:“haro”,en:“hair”,pos:“noun”},{pa:“havi”,en:“have”,pos:“verb”},{pa:“hema”,en:“bloody”,pos:“adj”},{pa:“hemi”,en:“bleed”,pos:“verb”},{pa:“hemo”,en:“blood”,pos:“noun”},{pa:“hemopuri”,en:“dialyze”,pos:“verb”,note:“hemo + puri”},{pa:“hemopuro”,en:“hemodialysis”,pos:“noun”,note:“hemo + puro”},{pa:“helpa”,en:“helpful”,pos:“adj”},{pa:“helpi”,en:“help”,pos:“verb”},{pa:“helpio”,en:“helper”,pos:“noun”},{pa:“helpo”,en:“help”,pos:“noun”},{pa:“hivero”,en:“winter”,pos:“noun”},{pa:“hospito”,en:“hospital”,pos:“noun”},{pa:“huma”,en:“human”,pos:“adj”},{pa:“humo”,en:“person / human”,pos:“noun”},
-{pa:“i”,en:“and”,pos:“conj”},{pa:“ideo”,en:“idea”,pos:“noun”},{pa:“ili”,en:“or”,pos:“conj”},{pa:“insekto”,en:“insect”,pos:“noun”},{pa:“inter”,en:“between”,pos:“prep”},{pa:“intera”,en:“medium / middle”,pos:“adj”},{pa:“intero”,en:“medium / middle”,pos:“noun”},{pa:“interligo”,en:“internet”,pos:“noun”,note:“inter + ligo”},{pa:“iri”,en:“go”,pos:“verb”},
-{pa:“kafo”,en:“coffee”,pos:“noun”},{pa:“kambi”,en:“change”,pos:“verb”},{pa:“kamo”,en:“bed”,pos:“noun”},{pa:“kamelo”,en:“camel”,pos:“noun”},{pa:“kanto”,en:“song”,pos:“noun”},{pa:“kanti”,en:“sing”,pos:“verb”},{pa:“kantio”,en:“singer”,pos:“noun”},{pa:“kapi”,en:“understand”,pos:“verb”},{pa:“kapo”,en:“understanding”,pos:“noun”},{pa:“kapro”,en:“goat”,pos:“noun”},{pa:“kargi”,en:“carry”,pos:“verb”},{pa:“kargi am”,en:“bring”,pos:“verb”},{pa:“kari”,en:“drive”,pos:“verb”},{pa:“kario”,en:“driver”,pos:“noun”},{pa:“karno”,en:“meat”,pos:“noun”},{pa:“karnotendo”,en:“meat store”,pos:“noun”,note:“karno + tendo”},{pa:“karo”,en:“car”,pos:“noun”},{pa:“karto”,en:“card”,pos:“noun”},{pa:“kasi”,en:“reside / live”,pos:“verb”},{pa:“kaso”,en:“house”,pos:“noun”},{pa:“kavalo”,en:“horse”,pos:“noun”},{pa:“ke”,en:“that (conjunction) / who, which (relative pronoun)”,pos:“conj”},{pa:“ki”,en:“question particle (yes/no)”,pos:“particle”},{pa:“kido”,en:“child”,pos:“noun”},{pa:“kiki”,en:“kick”,pos:“verb”},{pa:“kiko”,en:“foot”,pos:“noun”},{pa:“kiparli”,en:“ask”,pos:“verb”},{pa:“kiparlo”,en:“question”,pos:“noun”},{pa:“kila”,en:“thousand”,pos:“num”},{pa:“kina”,en:“five”,pos:“num”},{pa:“kinaluno”,en:“May”,pos:“noun”},{pa:“kinayo”,en:“Thursday”,pos:“noun”},{pa:“kiri”,en:“get / acquire”,pos:“verb”},{pa:“klara”,en:“clear / clearly”,pos:“adj”},{pa:“klavi”,en:“lock”,pos:“verb”},{pa:“klavo”,en:“key”,pos:“noun”},{pa:“kleva”,en:“smart”,pos:“adj”},{pa:“kolo”,en:“neck”,pos:“noun”},{pa:“kom”,en:“how”,pos:“adv”},{pa:“komensi”,en:“start”,pos:“verb”},{pa:“komenso”,en:“start / beginning”,pos:“noun”},{pa:“kompo”,en:“computer”,pos:“noun”},{pa:“kompoludo”,en:“videogame”,pos:“noun”,note:“kompo + ludo”},{pa:“kon”,en:“with”,pos:“prep”},{pa:“kora”,en:“careful / carefully”,pos:“adj”},{pa:“kori”,en:“care”,pos:“verb”},{pa:“koro”,en:“heart”,pos:“noun”},{pa:“korpo”,en:“body”,pos:“noun”},{pa:“kova”,en:“hidden”,pos:“adj”},{pa:“kovasaba”,en:“secret”,pos:“adj”,note:“kova + sabo”},{pa:“kovasabo”,en:“secret”,pos:“noun”,note:“kova + sabo”},{pa:“kovi”,en:“hide”,pos:“verb”},{pa:“kovo”,en:“hiding place”,pos:“noun”},{pa:“kredi”,en:“believe”,pos:“verb”},{pa:“kredio”,en:“believer”,pos:“noun”},{pa:“krea”,en:“creative”,pos:“adj”},{pa:“krei”,en:“create”,pos:“verb”},{pa:“kreo”,en:“creation”,pos:“noun”},{pa:“krano”,en:“head / top”,pos:“noun”},{pa:“kroma”,en:“color”,pos:“adj”},{pa:“kromi”,en:“color”,pos:“verb”},{pa:“kromo”,en:“color”,pos:“noun”},{pa:“kuri”,en:“run”,pos:“verb”},{pa:“kurio”,en:“runner”,pos:“noun”},{pa:“kumi”,en:“stop”,pos:“verb”},{pa:“kumo”,en:“stop”,pos:“noun”},{pa:“kusa”,en:“cooked”,pos:“adj”},{pa:“kusi”,en:“cook”,pos:“verb”},{pa:“kuso”,en:“kitchen”,pos:“noun”},{pa:“kuti”,en:“cut”,pos:“verb”},{pa:“kuto”,en:“knife”,pos:“noun”},{pa:“kwa”,en:“what”,pos:“pronoun”},{pa:“kwant”,en:“how many”,pos:“adv”},{pa:“kwaraluno”,en:“April”,pos:“noun”},{pa:“kwarayo”,en:“Wednesday”,pos:“noun”},{pa:“kwe”,en:“where”,pos:“adv”},{pa:“kwen”,en:“when”,pos:“adv”},{pa:“kwi”,en:“why”,pos:“adv”},{pa:“kwo”,en:“who (question)”,pos:“pronoun”},
-{pa:“la”,en:“the”,pos:“article”},{pa:“la ada”,en:“most”,pos:“adj”},{pa:“la mina”,en:“least”,pos:“adj”},{pa:“late”,en:“then / next / at that time”,pos:“conj”},{pa:“labori”,en:“work”,pos:“verb”},{pa:“laborio”,en:“worker”,pos:“noun”},{pa:“laboro”,en:“work”,pos:“noun”},{pa:“lago”,en:“lake”,pos:“noun”},{pa:“lagoma”,en:“enough”,pos:“adj”},{pa:“lakto”,en:“milk”,pos:“noun”},{pa:“lan”,en:“this / these”,pos:“dem”},{pa:“lano”,en:“sheep”,pos:“noun”},{pa:“larga”,en:“wide / widely”,pos:“adj”},{pa:“largi”,en:“widen”,pos:“verb”},{pa:“le”,en:“he”,pos:“pronoun”},{pa:“legi”,en:“read”,pos:“verb”},{pa:“len”,en:“his”,pos:“pronoun”},{pa:“les”,en:“they / them (male group)”,pos:“pronoun”},{pa:“lesin”,en:“their / theirs (male group)”,pos:“pronoun”},{pa:“lerni”,en:“learn”,pos:“verb”},{pa:“levo”,en:“elevator”,pos:“noun”},{pa:“levi”,en:“lift”,pos:“verb”},{pa:“libera”,en:“free”,pos:“adj”},{pa:“libero”,en:“freedom”,pos:“noun”},{pa:“liberi”,en:“liberate / free”,pos:“verb”},{pa:“libo”,en:“book”,pos:“noun”},{pa:“libotendo”,en:“bookstore”,pos:“noun”,note:“libo + tendo”},{pa:“ligi”,en:“connect”,pos:“verb”},{pa:“ligo”,en:“bridge / connection”,pos:“noun”},{pa:“lingi”,en:“lick”,pos:“verb”},{pa:“lingo”,en:“tongue”,pos:“noun”},{pa:“lista”,en:“ready”,pos:“adj”},{pa:“listi”,en:“get ready”,pos:“verb”},{pa:“lo”,en:“it / they (gender-neutral sg.)”,pos:“pronoun”},{pa:“lon”,en:“its”,pos:“pronoun”},{pa:“longa”,en:“long”,pos:“adj”},{pa:“longi”,en:“stretch”,pos:“verb”},{pa:“los”,en:“they / them (mixed group)”,pos:“pronoun”},{pa:“losin”,en:“their / theirs (mixed group)”,pos:“pronoun”},{pa:“lu”,en:“she”,pos:“pronoun”},{pa:“lun”,en:“her”,pos:“pronoun”},{pa:“lus”,en:“they / them (female group)”,pos:“pronoun”},{pa:“lusin”,en:“their / theirs (female group)”,pos:“pronoun”},{pa:“luda”,en:“fun”,pos:“adj”},{pa:“ludi”,en:“play”,pos:“verb”},{pa:“ludo”,en:“game”,pos:“noun”},{pa:“luma”,en:“light / bright / shiny”,pos:“adj”},{pa:“lumi”,en:“shine”,pos:“verb”},{pa:“luno”,en:“moon / month”,pos:“noun”},
-{pa:“ma”,en:“but / although”,pos:“conj”},{pa:“maki”,en:“make”,pos:“verb”},{pa:“mala”,en:“bad / wrong / incorrect”,pos:“adj”},{pa:“malabra”,en:“closed”,pos:“adj”},{pa:“malabri”,en:“close”,pos:“verb”},{pa:“malagwa”,en:“dry”,pos:“adj”},{pa:“malagwi”,en:“dry”,pos:“verb”},{pa:“malamabla”,en:“cruel / cruelly”,pos:“adj”},{pa:“malami”,en:“hate”,pos:“verb”},{pa:“malbela”,en:“ugly”,pos:“adj”},{pa:“malbrava”,en:“afraid / scared (adj.) / cowardly”,pos:“adj”},{pa:“malbravi”,en:“fear”,pos:“verb”},{pa:“malbravo”,en:“fear”,pos:“noun”},{pa:“maldena”,en:“poor”,pos:“adj”},{pa:“maldeni”,en:“steal”,pos:“verb”},{pa:“maldilemi”,en:“forgive”,pos:“verb”},{pa:“maldipa”,en:“shallow”,pos:“adj”},{pa:“maldoni”,en:“take”,pos:“verb”},{pa:“maldura”,en:“soft”,pos:“adj”},{pa:“malen”,en:“out”,pos:“adv”},{pa:“malevi”,en:“drop”,pos:“verb”},{pa:“malfasa”,en:“behind”,pos:“adj”},{pa:“malfasi”,en:“face away / turn around”,pos:“verb”},{pa:“malfasila”,en:“difficult / hard”,pos:“adj”},{pa:“malfelisa”,en:“sad”,pos:“adj”},{pa:“malfeliso”,en:“sadness”,pos:“noun”},{pa:“malfiki”,en:“break”,pos:“verb”},{pa:“malfilo”,en:“enemy”,pos:“noun”},{pa:“malfriga”,en:“hot”,pos:“adj”},{pa:“malfrigi”,en:“heat”,pos:“verb”},{pa:“malfrigo”,en:“heat”,pos:“noun”},{pa:“malfruko”,en:“vegetable”,pos:“noun”},{pa:“malfula”,en:“empty”,pos:“adj”},{pa:“malfuli”,en:“empty”,pos:“verb”},{pa:“malgardi”,en:“release / let go”,pos:“verb”},{pa:“malgranda”,en:“small”,pos:“adj”},{pa:“malhelpa”,en:“unhelpful”,pos:“adj”},{pa:“malkapi”,en:“misunderstand”,pos:“verb”},{pa:“malkapo”,en:“misunderstanding”,pos:“noun”},{pa:“malkiri”,en:“give away”,pos:“verb”},{pa:“malkora”,en:“careless / carelessly”,pos:“adj”},{pa:“malkori”,en:“disregard / ignore”,pos:“verb”},{pa:“malkreda”,en:“unbelievable”,pos:“adj”},{pa:“malkredi”,en:“doubt”,pos:“verb”},{pa:“malkredo”,en:“doubt”,pos:“noun”},{pa:“malkrei”,en:“destroy”,pos:“verb”},{pa:“malkreo”,en:“destruction”,pos:“noun”},{pa:“malkrano”,en:“bottom”,pos:“noun”},{pa:“malmanga”,en:“few”,pos:“adj”},{pa:“malmiga”,en:“left (direction)”,pos:“adj”},{pa:“malnebo”,en:“storm”,pos:“noun”},{pa:“malnuva”,en:“old”,pos:“adj”},{pa:“malofta”,en:“rare / rarely”,pos:“adj”},{pa:“malongi”,en:“squish”,pos:“verb”},{pa:“malpaso”,en:“war”,pos:“noun”},{pa:“malpova”,en:“impossible”,pos:“adj”},{pa:“malprenti”,en:“lose (opposite of win)”,pos:“verb”},{pa:“malprento”,en:“loss”,pos:“noun”},{pa:“malprentio”,en:“loser”,pos:“noun”},{pa:“malpresi”,en:“pull”,pos:“verb”},{pa:“malpura”,en:“dirty”,pos:“adj”},{pa:“malpuro”,en:“dirt”,pos:“noun”},{pa:“malrapida”,en:“slow / slowly”,pos:“adj”},{pa:“malrapidi”,en:“slow down”,pos:“verb”},{pa:“malsama”,en:“different”,pos:“adj”},{pa:“malsana”,en:“ill / sick”,pos:“adj”},{pa:“malsano”,en:“illness”,pos:“noun”},{pa:“malsendi”,en:“receive”,pos:“verb”},{pa:“maltagi”,en:“turn off”,pos:“verb”},{pa:“maltrova”,en:“lost”,pos:“adj”},{pa:“maltrovi”,en:“lose (opposite of find)”,pos:“verb”},{pa:“maltranka”,en:“chaotic / chaotically”,pos:“adj”},{pa:“maltranko”,en:“chaos”,pos:“noun”},{pa:“maludi”,en:“fight”,pos:“verb”},{pa:“maludio”,en:“fighter”,pos:“noun”},{pa:“maludo”,en:“fight”,pos:“noun”},{pa:“maluma”,en:“dark”,pos:“adj”},{pa:“malumi”,en:“darken”,pos:“verb”},{pa:“malumo”,en:“darkness”,pos:“noun”},{pa:“malveni”,en:“leave”,pos:“verb”},{pa:“malvera”,en:“false”,pos:“adj”},{pa:“malveri”,en:“lie”,pos:“verb”},{pa:“malvero”,en:“lie”,pos:“noun”},{pa:“malyusto”,en:“revenge”,pos:“noun”},{pa:“manga”,en:“many”,pos:“adj”},{pa:“mani”,en:“punch”,pos:“verb”},{pa:“mano”,en:“hand”,pos:“noun”},{pa:“mapo”,en:“map”,pos:“noun”},{pa:“maro”,en:“sea”,pos:“noun”},{pa:“marsi”,en:“walk”,pos:“verb”},{pa:“marsimoro”,en:“zombie”,pos:“noun”,note:“marsi + moro”},{pa:“marso”,en:“step”,pos:“noun”},{pa:“marsos”,en:“stairs”,pos:“noun”},{pa:“matina”,en:“morning”,pos:“adj”},{pa:“matino”,en:“morning”,pos:“noun”},{pa:“matro”,en:“mother”,pos:“noun”},{pa:“matura”,en:“mature”,pos:“adj”},{pa:“me”,en:“I / me”,pos:“pronoun”},{pa:“mediko”,en:“medicine”,pos:“noun”},{pa:“men”,en:“my / mine”,pos:“pronoun”},{pa:“merko”,en:“market”,pos:“noun”},{pa:“mesagi”,en:“text / message”,pos:“verb”},{pa:“mesago”,en:“text / message”,pos:“noun”},{pa:“miga”,en:“right (direction)”,pos:“adj”},{pa:“mina”,en:“less”,pos:“adj”},{pa:“mora”,en:“dead”,pos:“adj”},{pa:“morahumo”,en:“ghost”,pos:“noun”,note:“mora + humo”},{pa:“mori”,en:“die”,pos:“verb”},{pa:“moro”,en:“death”,pos:“noun”},{pa:“moto”,en:“motorcycle”,pos:“noun”},{pa:“moti”,en:“ride a motorcycle”,pos:“verb”},{pa:“motio”,en:“motorcycle rider”,pos:“noun”},{pa:“movi”,en:“move”,pos:“verb”},{pa:“mondo”,en:“world”,pos:“noun”},{pa:“monto”,en:“mountain”,pos:“noun”},{pa:“muro”,en:“wall”,pos:“noun”},{pa:“musiko”,en:“music”,pos:“noun”},{pa:“musko”,en:“fly (insect)”,pos:“noun”},
-{pa:“na”,en:“no / not”,pos:“particle”},{pa:“nadi”,en:“swim”,pos:“verb”},{pa:“nadio”,en:“swimmer”,pos:“noun”},{pa:“naski”,en:“be born”,pos:“verb”},{pa:“nasi”,en:“smell”,pos:“verb”},{pa:“naso”,en:“nose”,pos:“noun”},{pa:“nula”,en:“zero”,pos:“num”},{pa:“nuli”,en:“nullify / cancel”,pos:“verb”},{pa:“nulo”,en:“nothing”,pos:“noun”},{pa:“nebo”,en:“sky”,pos:“noun”},{pa:“nebofelo”,en:“weather”,pos:“noun”,note:“nebo + felo”},{pa:“nedi”,en:“need”,pos:“verb”},{pa:“nedo”,en:“need”,pos:“noun”},{pa:“nedifaro”,en:“law”,pos:“noun”},{pa:“negra”,en:“black”,pos:“adj”},{pa:“nerva”,en:“nervous / nervously”,pos:“adj”},{pa:“nervo”,en:“nerve”,pos:“noun”},{pa:“nomi”,en:“name”,pos:“verb”},{pa:“nomo”,en:“name”,pos:“noun”},{pa:“nokto”,en:“night”,pos:“noun”},{pa:“nos”,en:“we / us”,pos:“pronoun”},{pa:“nos ke”,en:“let’s”,pos:“phrase”},{pa:“nosin”,en:“our / ours”,pos:“pronoun”},{pa:“nova”,en:“nine”,pos:“num”},{pa:“novaluno”,en:“September”,pos:“noun”},{pa:“nufemo”,en:“girl”,pos:“noun”},{pa:“nuro”,en:“brain”,pos:“noun”},{pa:“nurovidi”,en:“imagine”,pos:“verb”},{pa:“nurovido”,en:“imagination”,pos:“noun”},{pa:“nursio”,en:“nurse”,pos:“noun”},{pa:“nutri”,en:“eat”,pos:“verb”},{pa:“nutro”,en:“food”,pos:“noun”},{pa:“numi”,en:“count”,pos:“verb”},{pa:“numo”,en:“number”,pos:“noun”},{pa:“nuna”,en:“now”,pos:“adv”},{pa:“nuva”,en:“new”,pos:“adj”},
-{pa:“odoro”,en:“smell / scent”,pos:“noun”},{pa:“ofiso”,en:“office”,pos:“noun”},{pa:“ofta”,en:“often”,pos:“adv”},{pa:“okta”,en:“eight”,pos:“num”},{pa:“oktaluno”,en:“August”,pos:“noun”},{pa:“okli”,en:“look / watch”,pos:“verb”},{pa:“oklo”,en:“eye”,pos:“noun”},{pa:“oleo”,en:“oil”,pos:“noun”},{pa:“onesta”,en:“honest”,pos:“adj”},{pa:“onesto”,en:“honesty”,pos:“noun”},{pa:“orana”,en:“orange”,pos:“adj”},{pa:“oreli”,en:“hear”,pos:“verb”},{pa:“orelo”,en:“ear”,pos:“noun”},{pa:“orido”,en:“minute”,pos:“noun”,note:“oro + -ido”},{pa:“oridido”,en:“second”,pos:“noun”,note:“orido + -ido”},{pa:“orlo”,en:“clock”,pos:“noun”},{pa:“oro”,en:“hour / time”,pos:“noun”},{pa:“otra”,en:“other”,pos:“adj”},{pa:“otra hapa”,en:“again”,pos:“adv”},{pa:“otro”,en:“other”,pos:“noun”},{pa:“ovo”,en:“egg”,pos:“noun”},{pa:“oyo”,en:“today”,pos:“noun”},
-{pa:“pa”,en:”(past tense marker)”,pos:“particle”},{pa:“paki”,en:“pack”,pos:“verb”},{pa:“pako”,en:“package”,pos:“noun”},{pa:“pano”,en:“bread”,pos:“noun”},{pa:“panotendo”,en:“bakery”,pos:“noun”,note:“pano + tendo”},{pa:“papelo”,en:“paper”,pos:“noun”},{pa:“parko”,en:“park”,pos:“noun”},{pa:“parli”,en:“speak”,pos:“verb”},{pa:“parlo”,en:“word / sentence”,pos:“noun”},{pa:“pasa”,en:“peaceful / peacefully”,pos:“adj”},{pa:“paso”,en:“peace”,pos:“noun”},{pa:“patro”,en:“father”,pos:“noun”},{pa:“pate”,en:“before”,pos:“conj”},{pa:“pawa”,en:“electric”,pos:“adj”},{pa:“pawo”,en:“electricity / energy”,pos:“noun”},{pa:“payo”,en:“yesterday”,pos:“noun”},{pa:“pelo”,en:“skin”,pos:“noun”},{pa:“pensi”,en:“think”,pos:“verb”},{pa:“penso”,en:“thought”,pos:“noun”},{pa:“periga”,en:“dangerous / dangerously”,pos:“adj”},{pa:“perigi”,en:“endanger”,pos:“verb”},{pa:“perigo”,en:“danger”,pos:“noun”},{pa:“permi”,en:“allow / permit / let”,pos:“verb”},{pa:“pinto”,en:“paint”,pos:“noun”},{pa:“pinti”,en:“paint”,pos:“verb”},{pa:“pintio”,en:“painter”,pos:“noun”},{pa:“pipo”,en:“dog”,pos:“noun”},{pa:“pipido”,en:“puppy”,pos:“noun”,note:“pipo + -ido”},{pa:“piski”,en:“fish”,pos:“verb”},{pa:“piskio”,en:“fisherman”,pos:“noun”},{pa:“pisko”,en:“fish”,pos:“noun”},{pa:“piso”,en:“floor”,pos:“noun”},{pa:“plasta”,en:“plastic”,pos:“adj”},{pa:“plasto”,en:“plastic”,pos:“noun”},{pa:“plato”,en:“plate”,pos:“noun”},{pa:“playo”,en:“beach”,pos:“noun”},{pa:“plori”,en:“cry”,pos:“verb”},{pa:“ploro”,en:“tear”,pos:“noun”},{pa:“plumi”,en:“write”,pos:“verb”},{pa:“plumio”,en:“writer”,pos:“noun”},{pa:“plumo”,en:“pen”,pos:“noun”},{pa:“pluvi”,en:“raining”,pos:“verb”},{pa:“pluvo”,en:“rain”,pos:“noun”},{pa:“pordo”,en:“pig”,pos:“noun”},{pa:“porto”,en:“door”,pos:“noun”},{pa:“posti”,en:“mail”,pos:“verb”},{pa:“posto”,en:“mail”,pos:“noun”},{pa:“pova”,en:“possible / possibly / maybe / might”,pos:“adj”},{pa:“povi”,en:“can”,pos:“verb”},{pa:“povo”,en:“possibility”,pos:“noun”},{pa:“preferi”,en:“prefer”,pos:“verb”},{pa:“prenti”,en:“win”,pos:“verb”},{pa:“prentio”,en:“winner”,pos:“noun”},{pa:“prento”,en:“win”,pos:“noun”},{pa:“presi”,en:“push / press”,pos:“verb”},{pa:“preska”,en:“almost”,pos:“adv”},{pa:“printemo”,en:“spring”,pos:“noun”},{pa:“propi”,en:“own”,pos:“verb”},{pa:“propi kon”,en:“belong”,pos:“verb”},{pa:“propo”,en:“property”,pos:“noun”},{pa:“proti”,en:“cover / protect”,pos:“verb”},{pa:“proto”,en:“cover / lid”,pos:“noun”},{pa:“puli”,en:“jump”,pos:“verb”},{pa:“pulmi”,en:“breathe”,pos:“verb”},{pa:“pulmo”,en:“lung”,pos:“noun”},{pa:“pura”,en:“clean”,pos:“adj”},{pa:“puri”,en:“clean”,pos:“verb”},{pa:“purio”,en:“cleaner”,pos:“noun”},{pa:“purpa”,en:“purple”,pos:“adj”},{pa:“kwara”,en:“four”,pos:“num”},
-{pa:“rapida”,en:“fast / quickly”,pos:“adj”},{pa:“rapidi”,en:“speed up”,pos:“verb”},{pa:“rebigi”,en:“rebuild”,pos:“verb”,note:“re- + bigi”},{pa:“reda”,en:“red”,pos:“adj”},{pa:“refari”,en:“redo”,pos:“verb”,note:“re- + fari”},{pa:“refusi”,en:“refuse”,pos:“verb”},{pa:“refuso”,en:“refusal”,pos:“noun”},{pa:“rekomensi”,en:“restart”,pos:“verb”,note:“re- + komensi”},{pa:“relegi”,en:“reread”,pos:“verb”,note:“re- + legi”},{pa:“repensi”,en:“remember”,pos:“verb”,note:“re- + pensi”},{pa:“repenso”,en:“memory”,pos:“noun”,note:“re- + penso”},{pa:“replumi”,en:“rewrite”,pos:“verb”,note:“re- + plumi”},{pa:“resti”,en:“stay / rest / wait / pause”,pos:“verb”},{pa:“rida”,en:“funny”,pos:“adj”},{pa:“ridi”,en:“laugh”,pos:“verb”},{pa:“rido”,en:“joke”,pos:“noun”},{pa:“rivo”,en:“river”,pos:“noun”},{pa:“roko”,en:“rock”,pos:“noun”},{pa:“ropo”,en:“clothes”,pos:“noun”},{pa:“ropi”,en:“dress / get dressed”,pos:“verb”},{pa:“ropopuro”,en:“washing machine”,pos:“noun”,note:“ropo + puro”},
-{pa:“sabi”,en:“know”,pos:“verb”},{pa:“sabo”,en:“knowledge”,pos:“noun”},{pa:“sako”,en:“bag”,pos:“noun”},{pa:“salo”,en:“salt”,pos:“noun”},{pa:“sami”,en:“resemble / copy / duplicate”,pos:“verb”},{pa:“sama”,en:“same”,pos:“adj”},{pa:“sana”,en:“healthy”,pos:“adj”},{pa:“sano”,en:“health”,pos:“noun”},{pa:“sapo”,en:“shoe”,pos:“noun”},{pa:“sauro”,en:“dinosaur”,pos:“noun”},{pa:“sedi”,en:“sit”,pos:“verb”},{pa:“sedo”,en:“chair”,pos:“noun”},{pa:“seka”,en:“dry”,pos:“adj”},{pa:“seki”,en:“dry”,pos:“verb”},{pa:“sela”,en:“frozen”,pos:“adj”},{pa:“seli”,en:“freeze”,pos:“verb”},{pa:“selo”,en:“ice”,pos:“noun”},{pa:“selido”,en:“ice cube”,pos:“noun”,note:“selo + -ido”},{pa:“semano”,en:“week”,pos:“noun”},{pa:“sempra”,en:“always”,pos:“adv”},{pa:“sen”,en:“without”,pos:“prep”},{pa:“sendi”,en:“send”,pos:“verb”},{pa:“senta”,en:“hundred”,pos:“num”},{pa:“sepa”,en:“seven”,pos:“num”},{pa:“sepaluno”,en:“July”,pos:“noun”},{pa:“sepayo”,en:“Saturday”,pos:“noun”},{pa:“serka”,en:“next to / near / approximately”,pos:“prep”},{pa:“serpo”,en:“snake”,pos:“noun”},{pa:“sesa”,en:“six”,pos:“num”},{pa:“sesaluno”,en:“June”,pos:“noun”},{pa:“sesayo”,en:“Friday”,pos:“noun”},{pa:“sesono”,en:“season”,pos:“noun”},{pa:“si”,en:“if”,pos:“conj”},{pa:“simo”,en:“monkey”,pos:“noun”},{pa:“sina”,en:“unless”,pos:“conj”},{pa:“skato”,en:“box”,pos:“noun”},{pa:“skoli”,en:“teach”,pos:“verb”},{pa:“skolio”,en:“teacher”,pos:“noun”},{pa:“skolo”,en:“school”,pos:“noun”},{pa:“skusa”,en:“sorry”,pos:“adj”},{pa:“skusi”,en:“apologize”,pos:“verb”},{pa:“skuso”,en:“apology”,pos:“noun”},{pa:“sofo”,en:“sofa”,pos:“noun”},{pa:“sola”,en:“only / just / alone”,pos:“adj”},{pa:“solvi”,en:“solve”,pos:“verb”},{pa:“solvo”,en:“solution”,pos:“noun”},{pa:“somero”,en:“summer”,pos:“noun”},{pa:“somni”,en:“dream”,pos:“verb”},{pa:“somno”,en:“dream”,pos:“noun”},{pa:“spero”,en:“evening”,pos:“noun”},{pa:“sporto”,en:“sport”,pos:“noun”},{pa:“sporti”,en:“play a sport”,pos:“verb”},{pa:“sportio”,en:“athlete”,pos:“noun”},{pa:“spiro”,en:“breath”,pos:“noun”},{pa:“spiso”,en:“spice”,pos:“noun”},{pa:“spuno”,en:“spoon”,pos:“noun”},{pa:“stari”,en:“stand”,pos:“verb”},{pa:“stelo”,en:“star”,pos:“noun”},{pa:“strado”,en:“street”,pos:“noun”},{pa:“studi”,en:“study”,pos:“verb”},{pa:“studio”,en:“student”,pos:“noun”},{pa:“sub”,en:“under”,pos:“prep”},{pa:“sukra”,en:“sweet”,pos:“adj”},{pa:“sukro”,en:“sugar”,pos:“noun”},{pa:“suko”,en:“juice”,pos:“noun”},{pa:“suma”,en:“some”,pos:“adj”},{pa:“sumeso”,en:“something”,pos:“noun”},{pa:“sumoro”,en:“sometime(s)”,pos:“adv”},{pa:“suna”,en:“sunny”,pos:“adj”},{pa:“suno”,en:“sun”,pos:“noun”},{pa:“sur”,en:“on / about”,pos:“prep”},
-{pa:“tabako”,en:“tobacco”,pos:“noun”},{pa:“tablo”,en:“table”,pos:“noun”},{pa:“tagi”,en:“toggle / turn on”,pos:“verb”},{pa:“tago”,en:“switch”,pos:“noun”},{pa:“tarda”,en:“late”,pos:“adj”},{pa:“taso”,en:“cup”,pos:“noun”},{pa:“teko”,en:“ceiling”,pos:“noun”},{pa:“telo”,en:“phone”,pos:“noun”},{pa:“tendo”,en:“shop / store”,pos:“noun”},{pa:“teo”,en:“tea”,pos:“noun”},{pa:“terfa”,en:“grassy”,pos:“adj”},{pa:“terfo”,en:“grass”,pos:“noun”},{pa:“tero”,en:“ground”,pos:“noun”},{pa:“teramaludi”,en:“do jiu jitsu”,pos:“verb”,note:“tera + maludi”},{pa:“teramaludo”,en:“jiu jitsu”,pos:“noun”,note:“tera + maludo”},{pa:“tivo”,en:“television / TV”,pos:“noun”},{pa:“toda”,en:“all”,pos:“adj”},{pa:“todabona”,en:“perfect”,pos:“adj”,note:“toda + bona”},{pa:“todaboni”,en:“perfect”,pos:“verb”,note:“toda + boni”},{pa:“toki”,en:“touch”,pos:“verb”},{pa:“tolo”,en:“towel”,pos:“noun”},{pa:“topi”,en:“put / place”,pos:“verb”},{pa:“topo”,en:“place”,pos:“noun”},{pa:“tramo”,en:“tram / train”,pos:“noun”},{pa:“tranka”,en:“calm / calmly”,pos:“adj”},{pa:“tranki”,en:“calm down”,pos:“verb”},{pa:“tranko”,en:“calmness”,pos:“noun”},{pa:“trati”,en:“try”,pos:“verb”},{pa:“trema”,en:“shaky”,pos:“adj”},{pa:“tremi”,en:“shake”,pos:“verb”},{pa:“tria”,en:“three”,pos:“num”},{pa:“triayo”,en:“Tuesday”,pos:“noun”},{pa:“trialuno”,en:“March”,pos:“noun”},{pa:“tro”,en:“too much”,pos:“adv”},{pa:“trovi”,en:“find”,pos:“verb”},{pa:“tru”,en:“through”,pos:“prep”},
-{pa:“una”,en:“one”,pos:“num”},{pa:“una hapo”,en:“once”,pos:“adv”},{pa:“unaluno”,en:“January”,pos:“noun”},{pa:“unayo”,en:“Sunday”,pos:“noun”},{pa:“urbo”,en:“city”,pos:“noun”},
-{pa:“vapo”,en:“ship”,pos:“noun”},{pa:“vaso”,en:“container”,pos:“noun”},{pa:“venaro”,en:“wind”,pos:“noun”},{pa:“vendi”,en:“sell”,pos:“verb”},{pa:“veni”,en:“come / arrive”,pos:“verb”},{pa:“vera”,en:“true / truly / real / really”,pos:“adj”},{pa:“vero”,en:“truth”,pos:“noun”},{pa:“verda”,en:“green”,pos:“adj”},{pa:“vidi”,en:“see”,pos:“verb”},{pa:“vilo”,en:“village”,pos:“noun”},{pa:“viro”,en:“man”,pos:“noun”},{pa:“viva”,en:“alive”,pos:“adj”},{pa:“vivi”,en:“live”,pos:“verb”},{pa:“vivo”,en:“life”,pos:“noun”},{pa:“voli”,en:“want”,pos:“verb”},{pa:“voliparli”,en:“mean”,pos:“verb”},{pa:“voliparlo”,en:“meaning”,pos:“noun”},{pa:“volvi”,en:“return / put back”,pos:“verb”},
-{pa:“wadi”,en:“promise”,pos:“verb”},{pa:“wado”,en:“promise”,pos:“noun”},{pa:“walda”,en:“wooden”,pos:“adj”},{pa:“waldo”,en:“wood”,pos:“noun”},{pa:“waka”,en:“awake”,pos:“adj”},{pa:“waki”,en:“wake”,pos:“verb”},{pa:“waso”,en:“bird”,pos:“noun”},{pa:“wundido”,en:“small cut / scrape”,pos:“noun”,note:“wundo + -ido”},{pa:“wundo”,en:“wound”,pos:“noun”},
-{pa:“ya”,en:“already”,pos:“adv”},{pa:“yela”,en:“yellow”,pos:“adj”},{pa:“yo”,en:“day”,pos:“noun”},{pa:“yoyo”,en:“sister”,pos:“noun”},{pa:“yu”,en:“you (singular)”,pos:“pronoun”},{pa:“yun”,en:“your / yours (singular)”,pos:“pronoun”},{pa:“yus”,en:“you (plural)”,pos:“pronoun”},{pa:“yusin”,en:“your / yours (plural)”,pos:“pronoun”},
-{pa:“ad”,en:“to / at”,pos:“prep”},{pa:“far”,en:“far”,pos:“adv”},{pa:“esi vidi ke”,en:“seem (is seen as)”,pos:“phrase”},
+  {pa:"abelo",en:"bee",pos:"noun"},{pa:"abra",en:"open",pos:"adj"},{pa:"abri",en:"open",pos:"verb"},{pa:"ada",en:"more",pos:"adj"},{pa:"adapti",en:"fit",pos:"verb"},{pa:"agwa",en:"wet",pos:"adj"},{pa:"agwi",en:"drink",pos:"verb"},{pa:"agwo",en:"water",pos:"noun"},{pa:"alkolo",en:"alcohol",pos:"noun"},{pa:"alsotu",en:"also",pos:"adv"},{pa:"alta",en:"tall / high / up",pos:"adj"},{pa:"alti",en:"raise / increase",pos:"verb"},{pa:"am",en:"here",pos:"adv"},{pa:"amabla",en:"kind / kindly",pos:"adj"},{pa:"ami",en:"love",pos:"verb"},{pa:"amo",en:"love",pos:"noun"},{pa:"anka",en:"still",pos:"adv"},{pa:"ano",en:"year",pos:"noun"},{pa:"arano",en:"spider",pos:"noun"},{pa:"arbo",en:"tree",pos:"noun"},{pa:"aro",en:"air",pos:"noun"},{pa:"arti",en:"make art",pos:"verb"},{pa:"artio",en:"artist",pos:"noun"},{pa:"arto",en:"art",pos:"noun"},{pa:"asawi",en:"marry",pos:"verb"},{pa:"asawo",en:"spouse / husband / wife",pos:"noun"},{pa:"aspa",en:"hopeful / hopefully",pos:"adj"},{pa:"aspi",en:"hope / expect",pos:"verb"},{pa:"aspo",en:"hope",pos:"noun"},{pa:"audo",en:"sound",pos:"noun"},{pa:"autuno",en:"autumn",pos:"noun"},{pa:"avanta",en:"forward / advantageous",pos:"adj"},{pa:"avanti",en:"move forward",pos:"verb"},{pa:"avanto",en:"advantage",pos:"noun"},{pa:"avono",en:"airplane",pos:"noun"},
+  {pa:"balda",en:"soon",pos:"adv"},{pa:"bani",en:"use the bathroom",pos:"verb"},{pa:"bano",en:"bathroom",pos:"noun"},{pa:"bebo",en:"baby",pos:"noun"},{pa:"bela",en:"beautiful / beautifully",pos:"adj"},{pa:"bem",en:"well (interjection)",pos:"intj"},{pa:"bigo",en:"building",pos:"noun"},{pa:"bigi",en:"build",pos:"verb"},{pa:"bigio",en:"builder",pos:"noun"},{pa:"biklio",en:"cyclist",pos:"noun"},{pa:"biklo",en:"bicycle",pos:"noun"},{pa:"blanka",en:"white",pos:"adj"},{pa:"blua",en:"blue",pos:"adj"},{pa:"bona",en:"good / correct / well",pos:"adj"},{pa:"bonapova",en:"lucky",pos:"adj"},{pa:"bonapovo",en:"luck",pos:"noun"},{pa:"boti",en:"operate a boat",pos:"verb"},{pa:"botio",en:"boat captain",pos:"noun"},{pa:"boto",en:"boat",pos:"noun"},{pa:"bovo",en:"cow",pos:"noun"},{pa:"brako",en:"arm",pos:"noun"},{pa:"braki",en:"reach",pos:"verb"},{pa:"brava",en:"brave",pos:"adj"},{pa:"bravi",en:"act bravely",pos:"verb"},{pa:"bravo",en:"bravery",pos:"noun"},{pa:"bruna",en:"brown",pos:"adj"},{pa:"buko",en:"mouth",pos:"noun"},{pa:"buski",en:"search",pos:"verb"},{pa:"buso",en:"bus",pos:"noun"},
+  {pa:"da",en:"yes",pos:"particle"},{pa:"dansi",en:"dance",pos:"verb"},{pa:"danso",en:"dance",pos:"noun"},{pa:"de",en:"of / from",pos:"prep"},{pa:"debi",en:"should",pos:"verb"},{pa:"debifaro",en:"rule",pos:"noun"},{pa:"deka",en:"ten",pos:"num"},{pa:"dekadualuno",en:"December",pos:"noun"},{pa:"dekaunaluno",en:"November",pos:"noun"},{pa:"dekaluno",en:"October",pos:"noun"},{pa:"dena",en:"rich",pos:"adj"},{pa:"deni",en:"buy",pos:"verb"},{pa:"denio",en:"buyer",pos:"noun"},{pa:"deno",en:"money",pos:"noun"},{pa:"denti",en:"bite",pos:"verb"},{pa:"dentio",en:"dentist",pos:"noun"},{pa:"dento",en:"tooth",pos:"noun"},{pa:"dentopuro",en:"toothbrush",pos:"noun",note:"dento + puro"},{pa:"dilemo",en:"problem",pos:"noun"},{pa:"dipa",en:"deep",pos:"adj"},{pa:"dipla",en:"used",pos:"adj"},{pa:"dipli",en:"use",pos:"verb"},{pa:"doktio",en:"doctor",pos:"noun"},{pa:"dola",en:"painful",pos:"adj"},{pa:"doli",en:"hurt",pos:"verb"},{pa:"domo",en:"room",pos:"noun"},{pa:"doni",en:"give",pos:"verb"},{pa:"dono",en:"gift",pos:"noun"},{pa:"dorma",en:"sleepy / tiredly / sleepily",pos:"adj"},{pa:"dormi",en:"sleep",pos:"verb"},{pa:"dormo",en:"sleep",pos:"noun"},{pa:"drogo",en:"drug",pos:"noun"},{pa:"dua",en:"two",pos:"num"},{pa:"dualuno",en:"February",pos:"noun"},{pa:"duayo",en:"Monday",pos:"noun"},{pa:"dura",en:"hard",pos:"adj"},{pa:"duramalabro",en:"lock",pos:"noun",note:"dura + malabro"},{pa:"dute",en:"during / while",pos:"conj"},{pa:"dureli",en:"continue / endure / last",pos:"verb"},
+  {pa:"elefano",en:"elephant",pos:"noun"},{pa:"eleki",en:"choose",pos:"verb"},{pa:"eleko",en:"choice",pos:"noun"},{pa:"elori",en:"having the urge to squeeze something cute",pos:"verb"},{pa:"en",en:"in",pos:"prep"},{pa:"esi",en:"be / is / am",pos:"verb"},{pa:"eso",en:"thing",pos:"noun"},{pa:"espliki",en:"explain",pos:"verb"},{pa:"espliko",en:"explanation",pos:"noun"},{pa:"evali",en:"test",pos:"verb"},{pa:"evalo",en:"exam / test",pos:"noun"},
+  {pa:"fabula",en:"storied / legendary",pos:"adj"},{pa:"fabuli",en:"tell stories / narrate",pos:"verb"},{pa:"fabulo",en:"story",pos:"noun"},{pa:"famila",en:"family",pos:"adj"},{pa:"familo",en:"family",pos:"noun"},{pa:"faram",en:"there",pos:"adv"},{pa:"fari",en:"do",pos:"verb"},{pa:"farlan",en:"that / those",pos:"dem"},{pa:"fasila",en:"easy / easily",pos:"adj"},{pa:"fasa",en:"front",pos:"adj"},{pa:"fasi",en:"face",pos:"verb"},{pa:"faso",en:"face",pos:"noun"},{pa:"febro",en:"fever",pos:"noun"},{pa:"feli",en:"feel",pos:"verb"},{pa:"felibona",en:"comfortable",pos:"adj"},{pa:"feliboni",en:"comfort",pos:"verb"},{pa:"felibono",en:"comfort",pos:"noun"},{pa:"felifasi",en:"smile",pos:"verb",note:"feli + fasi"},{pa:"felifaso",en:"smile",pos:"noun",note:"feli + faso"},{pa:"felisa",en:"happy",pos:"adj"},{pa:"feliso",en:"happiness",pos:"noun"},{pa:"felo",en:"feeling",pos:"noun"},{pa:"femo",en:"woman",pos:"noun"},{pa:"feno",en:"window",pos:"noun"},{pa:"feto",en:"feature / trait / characteristic",pos:"noun"},{pa:"fika",en:"fixed",pos:"adj"},{pa:"fiki",en:"repair",pos:"verb"},{pa:"fikio",en:"repairman",pos:"noun"},{pa:"fili",en:"enjoy / like",pos:"verb"},{pa:"filmido",en:"show (TV show)",pos:"noun",note:"filmo + -ido"},{pa:"filmo",en:"movie",pos:"noun"},{pa:"fina",en:"last / end",pos:"adj"},{pa:"fingo",en:"finger",pos:"noun"},{pa:"fini",en:"finish",pos:"verb"},{pa:"fino",en:"end / last",pos:"noun"},{pa:"finte",en:"until",pos:"conj"},{pa:"filo",en:"friend",pos:"noun"},{pa:"flora",en:"floral",pos:"adj"},{pa:"floro",en:"flower",pos:"noun"},{pa:"fogo",en:"fire",pos:"noun"},{pa:"fogida",en:"burnt",pos:"adj"},{pa:"fogidi",en:"burn",pos:"verb"},{pa:"fogido",en:"flame",pos:"noun",note:"fogo + -ido"},{pa:"fogidido",en:"spark",pos:"noun",note:"fogido + -ido"},{pa:"foli",en:"fly",pos:"verb"},{pa:"for",en:"for",pos:"prep"},{pa:"for ke",en:"so that",pos:"conj"},{pa:"forke",en:"because",pos:"conj"},{pa:"formiko",en:"ant",pos:"noun"},{pa:"foro",en:"forest",pos:"noun"},{pa:"forta",en:"strong / strongly",pos:"adj"},{pa:"foti",en:"take a photo",pos:"verb"},{pa:"fotio",en:"photographer",pos:"noun"},{pa:"foto",en:"picture / photo",pos:"noun"},{pa:"frato",en:"brother",pos:"noun"},{pa:"frigi",en:"cool",pos:"verb"},{pa:"friga",en:"cold",pos:"adj"},{pa:"frigo",en:"refrigerator",pos:"noun"},{pa:"fruko",en:"fruit",pos:"noun"},{pa:"frukotendo",en:"fruit store",pos:"noun",note:"fruko + tendo"},{pa:"fu",en:"(future tense marker) / next",pos:"particle"},{pa:"fula",en:"full",pos:"adj"},{pa:"fuli",en:"fill",pos:"verb"},{pa:"fumo",en:"smoke",pos:"noun"},{pa:"fumi",en:"smoke",pos:"verb"},{pa:"fuyo",en:"tomorrow",pos:"noun"},{pa:"fute",en:"after",pos:"conj"},
+  {pa:"galo",en:"chicken",pos:"noun"},{pa:"gambo",en:"leg",pos:"noun"},{pa:"garfo",en:"fork",pos:"noun"},{pa:"gardi",en:"keep / hold",pos:"verb"},{pa:"gato",en:"cat",pos:"noun"},{pa:"goro",en:"hat",pos:"noun"},{pa:"granda",en:"big",pos:"adj"},{pa:"grata",en:"thankful",pos:"adj"},{pa:"grati",en:"please / thank you / you're welcome",pos:"verb"},{pa:"grato",en:"thanks",pos:"noun"},{pa:"grava",en:"important",pos:"adj"},{pa:"grisa",en:"gray",pos:"adj"},{pa:"gusti",en:"taste",pos:"verb"},{pa:"gusto",en:"flavor",pos:"noun"},
+  {pa:"hapo",en:"occurrence",pos:"noun"},{pa:"haro",en:"hair",pos:"noun"},{pa:"havi",en:"have",pos:"verb"},{pa:"hema",en:"bloody",pos:"adj"},{pa:"hemi",en:"bleed",pos:"verb"},{pa:"hemo",en:"blood",pos:"noun"},{pa:"hemopuri",en:"dialyze",pos:"verb",note:"hemo + puri"},{pa:"hemopuro",en:"hemodialysis",pos:"noun",note:"hemo + puro"},{pa:"helpa",en:"helpful",pos:"adj"},{pa:"helpi",en:"help",pos:"verb"},{pa:"helpio",en:"helper",pos:"noun"},{pa:"helpo",en:"help",pos:"noun"},{pa:"hivero",en:"winter",pos:"noun"},{pa:"hospito",en:"hospital",pos:"noun"},{pa:"huma",en:"human",pos:"adj"},{pa:"humo",en:"person / human",pos:"noun"},
+  {pa:"i",en:"and",pos:"conj"},{pa:"ideo",en:"idea",pos:"noun"},{pa:"ili",en:"or",pos:"conj"},{pa:"insekto",en:"insect",pos:"noun"},{pa:"inter",en:"between",pos:"prep"},{pa:"intera",en:"medium / middle",pos:"adj"},{pa:"intero",en:"medium / middle",pos:"noun"},{pa:"interligo",en:"internet",pos:"noun",note:"inter + ligo"},{pa:"iri",en:"go",pos:"verb"},
+  {pa:"kafo",en:"coffee",pos:"noun"},{pa:"kambi",en:"change",pos:"verb"},{pa:"kamo",en:"bed",pos:"noun"},{pa:"kamelo",en:"camel",pos:"noun"},{pa:"kanto",en:"song",pos:"noun"},{pa:"kanti",en:"sing",pos:"verb"},{pa:"kantio",en:"singer",pos:"noun"},{pa:"kapi",en:"understand",pos:"verb"},{pa:"kapo",en:"understanding",pos:"noun"},{pa:"kapro",en:"goat",pos:"noun"},{pa:"kargi",en:"carry",pos:"verb"},{pa:"kargi am",en:"bring",pos:"verb"},{pa:"kari",en:"drive",pos:"verb"},{pa:"kario",en:"driver",pos:"noun"},{pa:"karno",en:"meat",pos:"noun"},{pa:"karnotendo",en:"meat store",pos:"noun",note:"karno + tendo"},{pa:"karo",en:"car",pos:"noun"},{pa:"karto",en:"card",pos:"noun"},{pa:"kasi",en:"reside / live",pos:"verb"},{pa:"kaso",en:"house",pos:"noun"},{pa:"kavalo",en:"horse",pos:"noun"},{pa:"ke",en:"that (conjunction) / who, which (relative pronoun)",pos:"conj"},{pa:"ki",en:"question particle (yes/no)",pos:"particle"},{pa:"kido",en:"child",pos:"noun"},{pa:"kiki",en:"kick",pos:"verb"},{pa:"kiko",en:"foot",pos:"noun"},{pa:"kiparli",en:"ask",pos:"verb"},{pa:"kiparlo",en:"question",pos:"noun"},{pa:"kila",en:"thousand",pos:"num"},{pa:"kina",en:"five",pos:"num"},{pa:"kinaluno",en:"May",pos:"noun"},{pa:"kinayo",en:"Thursday",pos:"noun"},{pa:"kiri",en:"get / acquire",pos:"verb"},{pa:"klara",en:"clear / clearly",pos:"adj"},{pa:"klavi",en:"lock",pos:"verb"},{pa:"klavo",en:"key",pos:"noun"},{pa:"kleva",en:"smart",pos:"adj"},{pa:"kolo",en:"neck",pos:"noun"},{pa:"kom",en:"how",pos:"adv"},{pa:"komensi",en:"start",pos:"verb"},{pa:"komenso",en:"start / beginning",pos:"noun"},{pa:"kompo",en:"computer",pos:"noun"},{pa:"kompoludo",en:"videogame",pos:"noun",note:"kompo + ludo"},{pa:"kon",en:"with",pos:"prep"},{pa:"kora",en:"careful / carefully",pos:"adj"},{pa:"kori",en:"care",pos:"verb"},{pa:"koro",en:"heart",pos:"noun"},{pa:"korpo",en:"body",pos:"noun"},{pa:"kova",en:"hidden",pos:"adj"},{pa:"kovasaba",en:"secret",pos:"adj",note:"kova + sabo"},{pa:"kovasabo",en:"secret",pos:"noun",note:"kova + sabo"},{pa:"kovi",en:"hide",pos:"verb"},{pa:"kovo",en:"hiding place",pos:"noun"},{pa:"kredi",en:"believe",pos:"verb"},{pa:"kredio",en:"believer",pos:"noun"},{pa:"krea",en:"creative",pos:"adj"},{pa:"krei",en:"create",pos:"verb"},{pa:"kreo",en:"creation",pos:"noun"},{pa:"krano",en:"head / top",pos:"noun"},{pa:"kroma",en:"color",pos:"adj"},{pa:"kromi",en:"color",pos:"verb"},{pa:"kromo",en:"color",pos:"noun"},{pa:"kuri",en:"run",pos:"verb"},{pa:"kurio",en:"runner",pos:"noun"},{pa:"kumi",en:"stop",pos:"verb"},{pa:"kumo",en:"stop",pos:"noun"},{pa:"kusa",en:"cooked",pos:"adj"},{pa:"kusi",en:"cook",pos:"verb"},{pa:"kuso",en:"kitchen",pos:"noun"},{pa:"kuti",en:"cut",pos:"verb"},{pa:"kuto",en:"knife",pos:"noun"},{pa:"kwa",en:"what",pos:"pronoun"},{pa:"kwant",en:"how many",pos:"adv"},{pa:"kwaraluno",en:"April",pos:"noun"},{pa:"kwarayo",en:"Wednesday",pos:"noun"},{pa:"kwe",en:"where",pos:"adv"},{pa:"kwen",en:"when",pos:"adv"},{pa:"kwi",en:"why",pos:"adv"},{pa:"kwo",en:"who (question)",pos:"pronoun"},
+  {pa:"la",en:"the",pos:"article"},{pa:"la ada",en:"most",pos:"adj"},{pa:"la mina",en:"least",pos:"adj"},{pa:"late",en:"then / next / at that time",pos:"conj"},{pa:"labori",en:"work",pos:"verb"},{pa:"laborio",en:"worker",pos:"noun"},{pa:"laboro",en:"work",pos:"noun"},{pa:"lago",en:"lake",pos:"noun"},{pa:"lagoma",en:"enough",pos:"adj"},{pa:"lakto",en:"milk",pos:"noun"},{pa:"lan",en:"this / these",pos:"dem"},{pa:"lano",en:"sheep",pos:"noun"},{pa:"larga",en:"wide / widely",pos:"adj"},{pa:"largi",en:"widen",pos:"verb"},{pa:"le",en:"he",pos:"pronoun"},{pa:"legi",en:"read",pos:"verb"},{pa:"len",en:"his",pos:"pronoun"},{pa:"les",en:"they / them (male group)",pos:"pronoun"},{pa:"lesin",en:"their / theirs (male group)",pos:"pronoun"},{pa:"lerni",en:"learn",pos:"verb"},{pa:"levo",en:"elevator",pos:"noun"},{pa:"levi",en:"lift",pos:"verb"},{pa:"libera",en:"free",pos:"adj"},{pa:"libero",en:"freedom",pos:"noun"},{pa:"liberi",en:"liberate / free",pos:"verb"},{pa:"libo",en:"book",pos:"noun"},{pa:"libotendo",en:"bookstore",pos:"noun",note:"libo + tendo"},{pa:"ligi",en:"connect",pos:"verb"},{pa:"ligo",en:"bridge / connection",pos:"noun"},{pa:"lingi",en:"lick",pos:"verb"},{pa:"lingo",en:"tongue",pos:"noun"},{pa:"lista",en:"ready",pos:"adj"},{pa:"listi",en:"get ready",pos:"verb"},{pa:"lo",en:"it / they (gender-neutral sg.)",pos:"pronoun"},{pa:"lon",en:"its",pos:"pronoun"},{pa:"longa",en:"long",pos:"adj"},{pa:"longi",en:"stretch",pos:"verb"},{pa:"los",en:"they / them (mixed group)",pos:"pronoun"},{pa:"losin",en:"their / theirs (mixed group)",pos:"pronoun"},{pa:"lu",en:"she",pos:"pronoun"},{pa:"lun",en:"her",pos:"pronoun"},{pa:"lus",en:"they / them (female group)",pos:"pronoun"},{pa:"lusin",en:"their / theirs (female group)",pos:"pronoun"},{pa:"luda",en:"fun",pos:"adj"},{pa:"ludi",en:"play",pos:"verb"},{pa:"ludo",en:"game",pos:"noun"},{pa:"luma",en:"light / bright / shiny",pos:"adj"},{pa:"lumi",en:"shine",pos:"verb"},{pa:"luno",en:"moon / month",pos:"noun"},
+  {pa:"ma",en:"but / although",pos:"conj"},{pa:"maki",en:"make",pos:"verb"},{pa:"mala",en:"bad / wrong / incorrect",pos:"adj"},{pa:"malabra",en:"closed",pos:"adj"},{pa:"malabri",en:"close",pos:"verb"},{pa:"malagwa",en:"dry",pos:"adj"},{pa:"malagwi",en:"dry",pos:"verb"},{pa:"malamabla",en:"cruel / cruelly",pos:"adj"},{pa:"malami",en:"hate",pos:"verb"},{pa:"malbela",en:"ugly",pos:"adj"},{pa:"malbrava",en:"afraid / scared (adj.) / cowardly",pos:"adj"},{pa:"malbravi",en:"fear",pos:"verb"},{pa:"malbravo",en:"fear",pos:"noun"},{pa:"maldena",en:"poor",pos:"adj"},{pa:"maldeni",en:"steal",pos:"verb"},{pa:"maldilemi",en:"forgive",pos:"verb"},{pa:"maldipa",en:"shallow",pos:"adj"},{pa:"maldoni",en:"take",pos:"verb"},{pa:"maldura",en:"soft",pos:"adj"},{pa:"malen",en:"out",pos:"adv"},{pa:"malevi",en:"drop",pos:"verb"},{pa:"malfasa",en:"behind",pos:"adj"},{pa:"malfasi",en:"face away / turn around",pos:"verb"},{pa:"malfasila",en:"difficult / hard",pos:"adj"},{pa:"malfelisa",en:"sad",pos:"adj"},{pa:"malfeliso",en:"sadness",pos:"noun"},{pa:"malfiki",en:"break",pos:"verb"},{pa:"malfilo",en:"enemy",pos:"noun"},{pa:"malfriga",en:"hot",pos:"adj"},{pa:"malfrigi",en:"heat",pos:"verb"},{pa:"malfrigo",en:"heat",pos:"noun"},{pa:"malfruko",en:"vegetable",pos:"noun"},{pa:"malfula",en:"empty",pos:"adj"},{pa:"malfuli",en:"empty",pos:"verb"},{pa:"malgardi",en:"release / let go",pos:"verb"},{pa:"malgranda",en:"small",pos:"adj"},{pa:"malhelpa",en:"unhelpful",pos:"adj"},{pa:"malkapi",en:"misunderstand",pos:"verb"},{pa:"malkapo",en:"misunderstanding",pos:"noun"},{pa:"malkiri",en:"give away",pos:"verb"},{pa:"malkora",en:"careless / carelessly",pos:"adj"},{pa:"malkori",en:"disregard / ignore",pos:"verb"},{pa:"malkreda",en:"unbelievable",pos:"adj"},{pa:"malkredi",en:"doubt",pos:"verb"},{pa:"malkredo",en:"doubt",pos:"noun"},{pa:"malkrei",en:"destroy",pos:"verb"},{pa:"malkreo",en:"destruction",pos:"noun"},{pa:"malkrano",en:"bottom",pos:"noun"},{pa:"malmanga",en:"few",pos:"adj"},{pa:"malmiga",en:"left (direction)",pos:"adj"},{pa:"malnebo",en:"storm",pos:"noun"},{pa:"malnuva",en:"old",pos:"adj"},{pa:"malofta",en:"rare / rarely",pos:"adj"},{pa:"malongi",en:"squish",pos:"verb"},{pa:"malpaso",en:"war",pos:"noun"},{pa:"malpova",en:"impossible",pos:"adj"},{pa:"malprenti",en:"lose (opposite of win)",pos:"verb"},{pa:"malprento",en:"loss",pos:"noun"},{pa:"malprentio",en:"loser",pos:"noun"},{pa:"malpresi",en:"pull",pos:"verb"},{pa:"malpura",en:"dirty",pos:"adj"},{pa:"malpuro",en:"dirt",pos:"noun"},{pa:"malrapida",en:"slow / slowly",pos:"adj"},{pa:"malrapidi",en:"slow down",pos:"verb"},{pa:"malsama",en:"different",pos:"adj"},{pa:"malsana",en:"ill / sick",pos:"adj"},{pa:"malsano",en:"illness",pos:"noun"},{pa:"malsendi",en:"receive",pos:"verb"},{pa:"maltagi",en:"turn off",pos:"verb"},{pa:"maltrova",en:"lost",pos:"adj"},{pa:"maltrovi",en:"lose (opposite of find)",pos:"verb"},{pa:"maltranka",en:"chaotic / chaotically",pos:"adj"},{pa:"maltranko",en:"chaos",pos:"noun"},{pa:"maludi",en:"fight",pos:"verb"},{pa:"maludio",en:"fighter",pos:"noun"},{pa:"maludo",en:"fight",pos:"noun"},{pa:"maluma",en:"dark",pos:"adj"},{pa:"malumi",en:"darken",pos:"verb"},{pa:"malumo",en:"darkness",pos:"noun"},{pa:"malveni",en:"leave",pos:"verb"},{pa:"malvera",en:"false",pos:"adj"},{pa:"malveri",en:"lie",pos:"verb"},{pa:"malvero",en:"lie",pos:"noun"},{pa:"malyusto",en:"revenge",pos:"noun"},{pa:"manga",en:"many",pos:"adj"},{pa:"mani",en:"punch",pos:"verb"},{pa:"mano",en:"hand",pos:"noun"},{pa:"mapo",en:"map",pos:"noun"},{pa:"maro",en:"sea",pos:"noun"},{pa:"marsi",en:"walk",pos:"verb"},{pa:"marsimoro",en:"zombie",pos:"noun",note:"marsi + moro"},{pa:"marso",en:"step",pos:"noun"},{pa:"marsos",en:"stairs",pos:"noun"},{pa:"matina",en:"morning",pos:"adj"},{pa:"matino",en:"morning",pos:"noun"},{pa:"matro",en:"mother",pos:"noun"},{pa:"matura",en:"mature",pos:"adj"},{pa:"me",en:"I / me",pos:"pronoun"},{pa:"mediko",en:"medicine",pos:"noun"},{pa:"men",en:"my / mine",pos:"pronoun"},{pa:"merko",en:"market",pos:"noun"},{pa:"mesagi",en:"text / message",pos:"verb"},{pa:"mesago",en:"text / message",pos:"noun"},{pa:"miga",en:"right (direction)",pos:"adj"},{pa:"mina",en:"less",pos:"adj"},{pa:"mora",en:"dead",pos:"adj"},{pa:"morahumo",en:"ghost",pos:"noun",note:"mora + humo"},{pa:"mori",en:"die",pos:"verb"},{pa:"moro",en:"death",pos:"noun"},{pa:"moto",en:"motorcycle",pos:"noun"},{pa:"moti",en:"ride a motorcycle",pos:"verb"},{pa:"motio",en:"motorcycle rider",pos:"noun"},{pa:"movi",en:"move",pos:"verb"},{pa:"mondo",en:"world",pos:"noun"},{pa:"monto",en:"mountain",pos:"noun"},{pa:"muro",en:"wall",pos:"noun"},{pa:"musiko",en:"music",pos:"noun"},{pa:"musko",en:"fly (insect)",pos:"noun"},
+  {pa:"na",en:"no / not",pos:"particle"},{pa:"nadi",en:"swim",pos:"verb"},{pa:"nadio",en:"swimmer",pos:"noun"},{pa:"naski",en:"be born",pos:"verb"},{pa:"nasi",en:"smell",pos:"verb"},{pa:"naso",en:"nose",pos:"noun"},{pa:"nula",en:"zero",pos:"num"},{pa:"nuli",en:"nullify / cancel",pos:"verb"},{pa:"nulo",en:"nothing",pos:"noun"},{pa:"nebo",en:"sky",pos:"noun"},{pa:"nebofelo",en:"weather",pos:"noun",note:"nebo + felo"},{pa:"nedi",en:"need",pos:"verb"},{pa:"nedo",en:"need",pos:"noun"},{pa:"nedifaro",en:"law",pos:"noun"},{pa:"negra",en:"black",pos:"adj"},{pa:"nerva",en:"nervous / nervously",pos:"adj"},{pa:"nervo",en:"nerve",pos:"noun"},{pa:"nomi",en:"name",pos:"verb"},{pa:"nomo",en:"name",pos:"noun"},{pa:"nokto",en:"night",pos:"noun"},{pa:"nos",en:"we / us",pos:"pronoun"},{pa:"nos ke",en:"let's",pos:"phrase"},{pa:"nosin",en:"our / ours",pos:"pronoun"},{pa:"nova",en:"nine",pos:"num"},{pa:"novaluno",en:"September",pos:"noun"},{pa:"nufemo",en:"girl",pos:"noun"},{pa:"nuro",en:"brain",pos:"noun"},{pa:"nurovidi",en:"imagine",pos:"verb"},{pa:"nurovido",en:"imagination",pos:"noun"},{pa:"nursio",en:"nurse",pos:"noun"},{pa:"nutri",en:"eat",pos:"verb"},{pa:"nutro",en:"food",pos:"noun"},{pa:"numi",en:"count",pos:"verb"},{pa:"numo",en:"number",pos:"noun"},{pa:"nuna",en:"now",pos:"adv"},{pa:"nuva",en:"new",pos:"adj"},
+  {pa:"odoro",en:"smell / scent",pos:"noun"},{pa:"ofiso",en:"office",pos:"noun"},{pa:"ofta",en:"often",pos:"adv"},{pa:"okta",en:"eight",pos:"num"},{pa:"oktaluno",en:"August",pos:"noun"},{pa:"okli",en:"look / watch",pos:"verb"},{pa:"oklo",en:"eye",pos:"noun"},{pa:"oleo",en:"oil",pos:"noun"},{pa:"onesta",en:"honest",pos:"adj"},{pa:"onesto",en:"honesty",pos:"noun"},{pa:"orana",en:"orange",pos:"adj"},{pa:"oreli",en:"hear",pos:"verb"},{pa:"orelo",en:"ear",pos:"noun"},{pa:"orido",en:"minute",pos:"noun",note:"oro + -ido"},{pa:"oridido",en:"second",pos:"noun",note:"orido + -ido"},{pa:"orlo",en:"clock",pos:"noun"},{pa:"oro",en:"hour / time",pos:"noun"},{pa:"otra",en:"other",pos:"adj"},{pa:"otra hapa",en:"again",pos:"adv"},{pa:"otro",en:"other",pos:"noun"},{pa:"ovo",en:"egg",pos:"noun"},{pa:"oyo",en:"today",pos:"noun"},
+  {pa:"pa",en:"(past tense marker)",pos:"particle"},{pa:"paki",en:"pack",pos:"verb"},{pa:"pako",en:"package",pos:"noun"},{pa:"pano",en:"bread",pos:"noun"},{pa:"panotendo",en:"bakery",pos:"noun",note:"pano + tendo"},{pa:"papelo",en:"paper",pos:"noun"},{pa:"parko",en:"park",pos:"noun"},{pa:"parli",en:"speak",pos:"verb"},{pa:"parlo",en:"word / sentence",pos:"noun"},{pa:"pasa",en:"peaceful / peacefully",pos:"adj"},{pa:"paso",en:"peace",pos:"noun"},{pa:"patro",en:"father",pos:"noun"},{pa:"pate",en:"before",pos:"conj"},{pa:"pawa",en:"electric",pos:"adj"},{pa:"pawo",en:"electricity / energy",pos:"noun"},{pa:"payo",en:"yesterday",pos:"noun"},{pa:"pelo",en:"skin",pos:"noun"},{pa:"pensi",en:"think",pos:"verb"},{pa:"penso",en:"thought",pos:"noun"},{pa:"periga",en:"dangerous / dangerously",pos:"adj"},{pa:"perigi",en:"endanger",pos:"verb"},{pa:"perigo",en:"danger",pos:"noun"},{pa:"permi",en:"allow / permit / let",pos:"verb"},{pa:"pinto",en:"paint",pos:"noun"},{pa:"pinti",en:"paint",pos:"verb"},{pa:"pintio",en:"painter",pos:"noun"},{pa:"pipo",en:"dog",pos:"noun"},{pa:"pipido",en:"puppy",pos:"noun",note:"pipo + -ido"},{pa:"piski",en:"fish",pos:"verb"},{pa:"piskio",en:"fisherman",pos:"noun"},{pa:"pisko",en:"fish",pos:"noun"},{pa:"piso",en:"floor",pos:"noun"},{pa:"plasta",en:"plastic",pos:"adj"},{pa:"plasto",en:"plastic",pos:"noun"},{pa:"plato",en:"plate",pos:"noun"},{pa:"playo",en:"beach",pos:"noun"},{pa:"plori",en:"cry",pos:"verb"},{pa:"ploro",en:"tear",pos:"noun"},{pa:"plumi",en:"write",pos:"verb"},{pa:"plumio",en:"writer",pos:"noun"},{pa:"plumo",en:"pen",pos:"noun"},{pa:"pluvi",en:"raining",pos:"verb"},{pa:"pluvo",en:"rain",pos:"noun"},{pa:"pordo",en:"pig",pos:"noun"},{pa:"porto",en:"door",pos:"noun"},{pa:"posti",en:"mail",pos:"verb"},{pa:"posto",en:"mail",pos:"noun"},{pa:"pova",en:"possible / possibly / maybe / might",pos:"adj"},{pa:"povi",en:"can",pos:"verb"},{pa:"povo",en:"possibility",pos:"noun"},{pa:"preferi",en:"prefer",pos:"verb"},{pa:"prenti",en:"win",pos:"verb"},{pa:"prentio",en:"winner",pos:"noun"},{pa:"prento",en:"win",pos:"noun"},{pa:"presi",en:"push / press",pos:"verb"},{pa:"preska",en:"almost",pos:"adv"},{pa:"printemo",en:"spring",pos:"noun"},{pa:"propi",en:"own",pos:"verb"},{pa:"propi kon",en:"belong",pos:"verb"},{pa:"propo",en:"property",pos:"noun"},{pa:"proti",en:"cover / protect",pos:"verb"},{pa:"proto",en:"cover / lid",pos:"noun"},{pa:"puli",en:"jump",pos:"verb"},{pa:"pulmi",en:"breathe",pos:"verb"},{pa:"pulmo",en:"lung",pos:"noun"},{pa:"pura",en:"clean",pos:"adj"},{pa:"puri",en:"clean",pos:"verb"},{pa:"purio",en:"cleaner",pos:"noun"},{pa:"purpa",en:"purple",pos:"adj"},{pa:"kwara",en:"four",pos:"num"},
+  {pa:"rapida",en:"fast / quickly",pos:"adj"},{pa:"rapidi",en:"speed up",pos:"verb"},{pa:"rebigi",en:"rebuild",pos:"verb",note:"re- + bigi"},{pa:"reda",en:"red",pos:"adj"},{pa:"refari",en:"redo",pos:"verb",note:"re- + fari"},{pa:"refusi",en:"refuse",pos:"verb"},{pa:"refuso",en:"refusal",pos:"noun"},{pa:"rekomensi",en:"restart",pos:"verb",note:"re- + komensi"},{pa:"relegi",en:"reread",pos:"verb",note:"re- + legi"},{pa:"repensi",en:"remember",pos:"verb",note:"re- + pensi"},{pa:"repenso",en:"memory",pos:"noun",note:"re- + penso"},{pa:"replumi",en:"rewrite",pos:"verb",note:"re- + plumi"},{pa:"resti",en:"stay / rest / wait / pause",pos:"verb"},{pa:"rida",en:"funny",pos:"adj"},{pa:"ridi",en:"laugh",pos:"verb"},{pa:"rido",en:"joke",pos:"noun"},{pa:"rivo",en:"river",pos:"noun"},{pa:"roko",en:"rock",pos:"noun"},{pa:"ropo",en:"clothes",pos:"noun"},{pa:"ropi",en:"dress / get dressed",pos:"verb"},{pa:"ropopuro",en:"washing machine",pos:"noun",note:"ropo + puro"},
+  {pa:"sabi",en:"know",pos:"verb"},{pa:"sabo",en:"knowledge",pos:"noun"},{pa:"sako",en:"bag",pos:"noun"},{pa:"salo",en:"salt",pos:"noun"},{pa:"sami",en:"resemble / copy / duplicate",pos:"verb"},{pa:"sama",en:"same",pos:"adj"},{pa:"sana",en:"healthy",pos:"adj"},{pa:"sano",en:"health",pos:"noun"},{pa:"sapo",en:"shoe",pos:"noun"},{pa:"sauro",en:"dinosaur",pos:"noun"},{pa:"sedi",en:"sit",pos:"verb"},{pa:"sedo",en:"chair",pos:"noun"},{pa:"seka",en:"dry",pos:"adj"},{pa:"seki",en:"dry",pos:"verb"},{pa:"sela",en:"frozen",pos:"adj"},{pa:"seli",en:"freeze",pos:"verb"},{pa:"selo",en:"ice",pos:"noun"},{pa:"selido",en:"ice cube",pos:"noun",note:"selo + -ido"},{pa:"semano",en:"week",pos:"noun"},{pa:"sempra",en:"always",pos:"adv"},{pa:"sen",en:"without",pos:"prep"},{pa:"sendi",en:"send",pos:"verb"},{pa:"senta",en:"hundred",pos:"num"},{pa:"sepa",en:"seven",pos:"num"},{pa:"sepaluno",en:"July",pos:"noun"},{pa:"sepayo",en:"Saturday",pos:"noun"},{pa:"serka",en:"next to / near / approximately",pos:"prep"},{pa:"serpo",en:"snake",pos:"noun"},{pa:"sesa",en:"six",pos:"num"},{pa:"sesaluno",en:"June",pos:"noun"},{pa:"sesayo",en:"Friday",pos:"noun"},{pa:"sesono",en:"season",pos:"noun"},{pa:"si",en:"if",pos:"conj"},{pa:"simo",en:"monkey",pos:"noun"},{pa:"sina",en:"unless",pos:"conj"},{pa:"skato",en:"box",pos:"noun"},{pa:"skoli",en:"teach",pos:"verb"},{pa:"skolio",en:"teacher",pos:"noun"},{pa:"skolo",en:"school",pos:"noun"},{pa:"skusa",en:"sorry",pos:"adj"},{pa:"skusi",en:"apologize",pos:"verb"},{pa:"skuso",en:"apology",pos:"noun"},{pa:"sofo",en:"sofa",pos:"noun"},{pa:"sola",en:"only / just / alone",pos:"adj"},{pa:"solvi",en:"solve",pos:"verb"},{pa:"solvo",en:"solution",pos:"noun"},{pa:"somero",en:"summer",pos:"noun"},{pa:"somni",en:"dream",pos:"verb"},{pa:"somno",en:"dream",pos:"noun"},{pa:"spero",en:"evening",pos:"noun"},{pa:"sporto",en:"sport",pos:"noun"},{pa:"sporti",en:"play a sport",pos:"verb"},{pa:"sportio",en:"athlete",pos:"noun"},{pa:"spiro",en:"breath",pos:"noun"},{pa:"spiso",en:"spice",pos:"noun"},{pa:"spuno",en:"spoon",pos:"noun"},{pa:"stari",en:"stand",pos:"verb"},{pa:"stelo",en:"star",pos:"noun"},{pa:"strado",en:"street",pos:"noun"},{pa:"studi",en:"study",pos:"verb"},{pa:"studio",en:"student",pos:"noun"},{pa:"sub",en:"under",pos:"prep"},{pa:"sukra",en:"sweet",pos:"adj"},{pa:"sukro",en:"sugar",pos:"noun"},{pa:"suko",en:"juice",pos:"noun"},{pa:"suma",en:"some",pos:"adj"},{pa:"sumeso",en:"something",pos:"noun"},{pa:"sumoro",en:"sometime(s)",pos:"adv"},{pa:"suna",en:"sunny",pos:"adj"},{pa:"suno",en:"sun",pos:"noun"},{pa:"sur",en:"on / about",pos:"prep"},
+  {pa:"tabako",en:"tobacco",pos:"noun"},{pa:"tablo",en:"table",pos:"noun"},{pa:"tagi",en:"toggle / turn on",pos:"verb"},{pa:"tago",en:"switch",pos:"noun"},{pa:"tarda",en:"late",pos:"adj"},{pa:"taso",en:"cup",pos:"noun"},{pa:"teko",en:"ceiling",pos:"noun"},{pa:"telo",en:"phone",pos:"noun"},{pa:"tendo",en:"shop / store",pos:"noun"},{pa:"teo",en:"tea",pos:"noun"},{pa:"terfa",en:"grassy",pos:"adj"},{pa:"terfo",en:"grass",pos:"noun"},{pa:"tero",en:"ground",pos:"noun"},{pa:"teramaludi",en:"do jiu jitsu",pos:"verb",note:"tera + maludi"},{pa:"teramaludo",en:"jiu jitsu",pos:"noun",note:"tera + maludo"},{pa:"tivo",en:"television / TV",pos:"noun"},{pa:"toda",en:"all",pos:"adj"},{pa:"todabona",en:"perfect",pos:"adj",note:"toda + bona"},{pa:"todaboni",en:"perfect",pos:"verb",note:"toda + boni"},{pa:"toki",en:"touch",pos:"verb"},{pa:"tolo",en:"towel",pos:"noun"},{pa:"topi",en:"put / place",pos:"verb"},{pa:"topo",en:"place",pos:"noun"},{pa:"tramo",en:"tram / train",pos:"noun"},{pa:"tranka",en:"calm / calmly",pos:"adj"},{pa:"tranki",en:"calm down",pos:"verb"},{pa:"tranko",en:"calmness",pos:"noun"},{pa:"trati",en:"try",pos:"verb"},{pa:"trema",en:"shaky",pos:"adj"},{pa:"tremi",en:"shake",pos:"verb"},{pa:"tria",en:"three",pos:"num"},{pa:"triayo",en:"Tuesday",pos:"noun"},{pa:"trialuno",en:"March",pos:"noun"},{pa:"tro",en:"too much",pos:"adv"},{pa:"trovi",en:"find",pos:"verb"},{pa:"tru",en:"through",pos:"prep"},
+  {pa:"una",en:"one",pos:"num"},{pa:"una hapo",en:"once",pos:"adv"},{pa:"unaluno",en:"January",pos:"noun"},{pa:"unayo",en:"Sunday",pos:"noun"},{pa:"urbo",en:"city",pos:"noun"},
+  {pa:"vapo",en:"ship",pos:"noun"},{pa:"vaso",en:"container",pos:"noun"},{pa:"venaro",en:"wind",pos:"noun"},{pa:"vendi",en:"sell",pos:"verb"},{pa:"veni",en:"come / arrive",pos:"verb"},{pa:"vera",en:"true / truly / real / really",pos:"adj"},{pa:"vero",en:"truth",pos:"noun"},{pa:"verda",en:"green",pos:"adj"},{pa:"vidi",en:"see",pos:"verb"},{pa:"vilo",en:"village",pos:"noun"},{pa:"viro",en:"man",pos:"noun"},{pa:"viva",en:"alive",pos:"adj"},{pa:"vivi",en:"live",pos:"verb"},{pa:"vivo",en:"life",pos:"noun"},{pa:"voli",en:"want",pos:"verb"},{pa:"voliparli",en:"mean",pos:"verb"},{pa:"voliparlo",en:"meaning",pos:"noun"},{pa:"volvi",en:"return / put back",pos:"verb"},
+  {pa:"wadi",en:"promise",pos:"verb"},{pa:"wado",en:"promise",pos:"noun"},{pa:"walda",en:"wooden",pos:"adj"},{pa:"waldo",en:"wood",pos:"noun"},{pa:"waka",en:"awake",pos:"adj"},{pa:"waki",en:"wake",pos:"verb"},{pa:"waso",en:"bird",pos:"noun"},{pa:"wundido",en:"small cut / scrape",pos:"noun",note:"wundo + -ido"},{pa:"wundo",en:"wound",pos:"noun"},
+  {pa:"ya",en:"already",pos:"adv"},{pa:"yela",en:"yellow",pos:"adj"},{pa:"yo",en:"day",pos:"noun"},{pa:"yoyo",en:"sister",pos:"noun"},{pa:"yu",en:"you (singular)",pos:"pronoun"},{pa:"yun",en:"your / yours (singular)",pos:"pronoun"},{pa:"yus",en:"you (plural)",pos:"pronoun"},{pa:"yusin",en:"your / yours (plural)",pos:"pronoun"},
+  {pa:"ad",en:"to / at",pos:"prep"},{pa:"far",en:"far",pos:"adv"},{pa:"esi vidi ke",en:"seem (is seen as)",pos:"phrase"},
 ];
 const seenDict = new Set();
 const DICTIONARY = DICT_RAW.filter(e => {
-if(seenDict.has(e.pa)) return false;
-seenDict.add(e.pa);
-return true;
+  if(seenDict.has(e.pa)) return false;
+  seenDict.add(e.pa);
+  return true;
 }).sort((a,b) => a.pa.localeCompare(b.pa));
 
 // ═══════════════════════════════════════════════════════════════
 // GRAMMAR RENDERER
 // ═══════════════════════════════════════════════════════════════
 const GRAMMAR_SECTIONS = [
-{
-icon:“🌍”, title:“Introduction”,
-body:`<p>ParliAspo is a constructed language designed for simplicity and accessibility. It borrows words from languages across the world — English, Spanish, Portuguese, French, Latin, Arabic, Japanese — as well as from constructed languages like Esperanto and Toki Pona.</p> <p>With approximately <strong>350 base words</strong> and straightforward grammar rules, ParliAspo facilitates basic communication across diverse linguistic backgrounds.</p> <div class="grammar-callout"><strong>Core principle:</strong> Every rule is consistent — no exceptions, no irregular verbs, no gendered articles.</div>`
-},
-{
-icon:“🔤”, title:“Phonology”,
-body:`<div class="grammar-sub-header">Vowels</div> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead><tbody> <tr><td>a</td><td>/a/ as in "father"</td><td><em>kaso</em> /ka.so/ — house</td></tr> <tr><td>e</td><td>/e/ as in "then"</td><td><em>bela</em> /be.la/ — beautiful</td></tr> <tr><td>i</td><td>/i/ as in "pizza"</td><td><em>vidi</em> /vi.di/ — see</td></tr> <tr><td>o</td><td>/o/ as in "core"</td><td><em>domo</em> /do.mo/ — room</td></tr> <tr><td>u</td><td>/u/ as in "June"</td><td><em>nutro</em> /nu.tro/ — food</td></tr> </tbody></table></div> <div class="grammar-sub-header">Consonants</div> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead><tbody> <tr><td>b</td><td>/b/ as in "boy"</td><td><em>bela</em></td></tr> <tr><td>d</td><td>/d/ as in "dog"</td><td><em>domo</em></td></tr> <tr><td>f</td><td>/f/ as in "fish"</td><td><em>filo</em> — friend</td></tr> <tr><td>g</td><td>/g/ as in "gate"</td><td><em>granda</em> — big</td></tr> <tr><td>h</td><td>/h/ as in "hot"</td><td><em>humo</em> — person</td></tr> <tr><td>k</td><td>/k/ as in "kite"</td><td><em>kaso</em></td></tr> <tr><td>l</td><td>/l/ as in "love"</td><td><em>lumo</em> — light</td></tr> <tr><td>m</td><td>/m/ as in "man"</td><td><em>moro</em> — death</td></tr> <tr><td>n</td><td>/n/ as in "nice"</td><td><em>nervo</em> — nerve</td></tr> <tr><td>p</td><td>/p/ as in "pen"</td><td><em>pano</em> — bread</td></tr> <tr><td>r</td><td>/r/ as in "red"</td><td><em>ropo</em> — clothes</td></tr> <tr><td>s</td><td>/s/ as in "sun"</td><td><em>suno</em> — sun</td></tr> <tr><td>t</td><td>/t/ as in "top"</td><td><em>tivo</em> — television</td></tr> <tr><td>v</td><td>/v/ as in "voice"</td><td><em>vivo</em> — life</td></tr> <tr><td>w</td><td>/w/ as in "wet"</td><td><em>agwa</em> — wet</td></tr> <tr><td>y</td><td>/y/ as in "yes"</td><td><em>yu</em> — you</td></tr> </tbody></table></div> <div class="grammar-callout"><strong>Stress:</strong> Always on the first syllable — <em>KA.so</em>, <em>FI.lo</em>, <em>BE.la</em>.<br><strong>No digraphs:</strong> Every letter is a single sound. No "sh", "th", "ch", etc.</div>`
-},
-{
-icon:“📝”, title:“Word Classes”,
-body:`<p>Word class is determined entirely by the final letter — no exceptions.</p> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Ending</th><th>Class</th><th>Example</th></tr></thead><tbody> <tr><td><strong>-o</strong></td><td>Noun</td><td><em>libo</em> (book)</td></tr> <tr><td><strong>-i</strong></td><td>Verb (present/infinitive)</td><td><em>legi</em> (read)</td></tr> <tr><td><strong>-a</strong></td><td>Adjective / Adverb</td><td><em>bela</em> (beautiful), <em>rapida</em> (quickly)</td></tr> </tbody></table></div> <div class="grammar-sub-header">Nouns</div> <ul> <li>Plural: add <strong>-s</strong> → <em>libo</em> → <em>libos</em></li> <li>Agent suffix <strong>-io</strong>: turns verb into doer → <em>kanti</em> → <em>kantio</em> (singer)</li> <li>Diminutive suffix <strong>-ido</strong>: smaller version → <em>pipo</em> → <em>pipido</em> (puppy)</li> <li>-ido can stack: <em>fogo</em> → <em>fogido</em> (flame) → <em>fogidido</em> (spark)</li> </ul> <div class="grammar-sub-header">Verbs</div> <ul> <li><strong>Past tense:</strong> <em>pa</em> before verb → <em>pa vidi</em> (saw)</li> <li><strong>Future tense:</strong> <em>fu</em> before verb → <em>fu vidi</em> (will see)</li> <li>Verbs are <strong>never conjugated</strong> for person or number</li> <li>Auxiliary verbs: <em>povi</em> (can), <em>debi</em> (should), <em>voli</em> (want)</li> </ul> <div class="grammar-sub-header">Adjectives &amp; Adverbs</div> <ul> <li>Both end in <strong>-a</strong></li> <li>Adjectives <strong>precede</strong> nouns: <em>bela kaso</em></li> <li>Adverbs generally <strong>follow</strong> verbs: <em>kuri rapida</em></li> </ul>`
-},
-{
-icon:“⛓️”, title:“Verb Chaining”,
-body:`<p>Multiple verbs can be chained in sequence. Only the first verb (or its tense marker) carries the tense for the whole chain.</p> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody> <tr><td><em>Me voli komensi labori.</em></td><td>I want to start working.</td></tr> <tr><td><em>Yu debi trati lerni.</em></td><td>You should try to learn.</td></tr> <tr><td><em>Nos pa komensi kusi nutro.</em></td><td>We started cooking food.</td></tr> <tr><td><em>Los fu povi veni helpi.</em></td><td>They will be able to come help.</td></tr> </tbody></table></div> <div class="grammar-callout">Pattern: <strong>subject + (tense) + verb₁ + verb₂ + verb₃ + ... + object</strong></div> <div class="grammar-sub-header">The Copula esi</div> <p>The verb <strong>esi</strong> (be/is/am) is <em>always</em> required — never omitted.</p> <ul> <li><strong>Identity:</strong> <em>Me esi Maria.</em> — I am Maria.</li> <li><strong>Description:</strong> <em>La kaso esi bela.</em> — The house is beautiful.</li> <li><strong>Location:</strong> <em>La gato esi en la kaso.</em> — The cat is in the house.</li> <li><strong>Existence:</strong> <em>Esi manga arbos faram.</em> — There are many trees there.</li> </ul>`
-},
-{
-icon:“🗣️”, title:“Sentence Structure”,
-body:`<p>ParliAspo follows <strong>Subject-Verb-Object (SVO)</strong> order.</p> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody> <tr><td><em>Me plumi libo.</em></td><td>I write a book.</td></tr> <tr><td><em>Le pa agwi suko.</em></td><td>He drank juice.</td></tr> <tr><td><em>Yun ropas esi reda.</em></td><td>Your clothes are red.</td></tr> <tr><td><em>Ki yun ropas esi reda?</em></td><td>Are your clothes red?</td></tr> <tr><td><em>Kwa yu fari?</em></td><td>What are you doing?</td></tr> <tr><td><em>Kwo esi en la kaso?</em></td><td>Who is in the house?</td></tr> </tbody></table></div>`
-},
-{
-icon:“❓”, title:“Questions”,
-body:`<ul> <li><strong>Yes/No questions:</strong> Start with <em>ki</em> → <em>Ki yu kasi am?</em> (Do you live here?)</li> <li><strong>Wh-questions:</strong> Start with the question word</li> </ul> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody> <tr><td><em>ki</em></td><td>question particle (yes/no)</td></tr> <tr><td><em>kwo</em></td><td>who</td></tr> <tr><td><em>kwa</em></td><td>what</td></tr> <tr><td><em>kwe</em></td><td>where</td></tr> <tr><td><em>kwen</em></td><td>when</td></tr> <tr><td><em>kwi</em></td><td>why</td></tr> <tr><td><em>kom</em></td><td>how</td></tr> <tr><td><em>kwant</em></td><td>how many</td></tr> </tbody></table></div>`
-},
-{
-icon:“👤”, title:“Pronouns”,
-body:`<div class="grammar-sub-header">Singular</div> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Pronoun</th><th>Meaning</th><th>Possessive</th><th>Meaning</th></tr></thead><tbody> <tr><td><em>me</em></td><td>I / me</td><td><em>men</em></td><td>my / mine</td></tr> <tr><td><em>yu</em></td><td>you (singular)</td><td><em>yun</em></td><td>your / yours</td></tr> <tr><td><em>le</em></td><td>he</td><td><em>len</em></td><td>his</td></tr> <tr><td><em>lu</em></td><td>she</td><td><em>lun</em></td><td>her</td></tr> <tr><td><em>lo</em></td><td>it / they (gender-neutral sg.)</td><td><em>lon</em></td><td>its</td></tr> </tbody></table></div> <div class="grammar-sub-header">Plural</div> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Pronoun</th><th>Meaning</th><th>Possessive</th><th>Meaning</th></tr></thead><tbody> <tr><td><em>nos</em></td><td>we / us</td><td><em>nosin</em></td><td>our / ours</td></tr> <tr><td><em>yus</em></td><td>you (plural)</td><td><em>yusin</em></td><td>your / yours (pl.)</td></tr> <tr><td><em>les</em></td><td>they (male group)</td><td><em>lesin</em></td><td>their (male group)</td></tr> <tr><td><em>lus</em></td><td>they (female group)</td><td><em>lusin</em></td><td>their (female group)</td></tr> <tr><td><em>los</em></td><td>they (mixed group)</td><td><em>losin</em></td><td>their (mixed group)</td></tr> </tbody></table></div> <div class="grammar-callout">Possessives: add <strong>-n</strong> to singular pronouns; add <strong>-in</strong> to plural pronouns.</div>`
-},
-{
-icon:“🔗”, title:“Relative Clauses”,
-body:`<p>The conjunction <strong>ke</strong> ("that / who / which") introduces relative clauses. The clause follows the noun it modifies.</p> <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody> <tr><td><em>La humo ke labori am esi men filo.</em></td><td>The person who works here is my friend.</td></tr> <tr><td><em>La libo ke me pa legi esi bela.</em></td><td>The book that I read is beautiful.</td></tr> <tr><td><em>Me vidi la gato ke dormi sur la sedo.</em></td><td>I see the cat that sleeps on the chair.</td></tr> </tbody></table></div> <div class="grammar-callout"><strong>Structure:</strong> noun + ke + clause<br>When the noun is the object of the relative clause, it is omitted after the verb.</div>`
-},
-{
-icon:“🔢”, title:“Numbers”,
-body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Number</th><th>Word</th><th>Number</th></tr></thead><tbody> <tr><td><em>nula</em></td><td>zero</td><td><em>sesa</em></td><td>six</td></tr> <tr><td><em>una</em></td><td>one</td><td><em>sepa</em></td><td>seven</td></tr> <tr><td><em>dua</em></td><td>two</td><td><em>okta</em></td><td>eight</td></tr> <tr><td><em>tria</em></td><td>three</td><td><em>nova</em></td><td>nine</td></tr> <tr><td><em>kwara</em></td><td>four</td><td><em>deka</em></td><td>ten</td></tr> <tr><td><em>kina</em></td><td>five</td><td><em>senta</em></td><td>hundred</td></tr> </tbody></table></div> <ul> <li><strong>11–19:</strong> <em>deka-una</em> (11), <em>deka-nova</em> (19)</li> <li><strong>20–99:</strong> <em>dua-deka</em> (20), <em>dua-deka-una</em> (21)</li> <li><strong>Ordinals:</strong> place <em>la</em> before the cardinal → <em>la una</em> (first)</li> <li><strong>Days:</strong> cardinal + <em>yo</em> → <em>unayo</em> (Sunday), <em>duayo</em> (Monday)…</li> <li><strong>Months:</strong> cardinal + <em>luno</em> → <em>unaluno</em> (January)…</li> </ul>`
-},
-{
-icon:“🔨”, title:“Word Building”,
-body:`<div class="grammar-sub-header">mal- Prefix (opposite)</div> <ul> <li><em>filo</em> (friend) → <em>malfilo</em> (enemy)</li> <li><em>bela</em> (beautiful) → <em>malbela</em> (ugly)</li> <li><em>veni</em> (come) → <em>malveni</em> (leave)</li> <li><em>granda</em> (big) → <em>malgranda</em> (small)</li> </ul> <div class="grammar-section-divider"></div> <div class="grammar-sub-header">re- Prefix (do again)</div> <ul> <li><em>legi</em> (read) → <em>relegi</em> (reread)</li> <li><em>fari</em> (do) → <em>refari</em> (redo)</li> <li><em>pensi</em> (think) → <em>repensi</em> (remember — literally "re-think")</li> </ul> <div class="grammar-section-divider"></div> <div class="grammar-sub-header">-ido Suffix (diminutive)</div> <ul> <li><em>pipo</em> (dog) → <em>pipido</em> (puppy)</li> <li><em>fogo</em> (fire) → <em>fogido</em> (flame) → <em>fogidido</em> (spark)</li> <li><em>oro</em> (hour) → <em>orido</em> (minute) → <em>oridido</em> (second)</li> </ul> <div class="grammar-section-divider"></div> <div class="grammar-sub-header">-io Suffix (agent / doer)</div> <ul> <li><em>kanti</em> (sing) → <em>kantio</em> (singer)</li> <li><em>labori</em> (work) → <em>laborio</em> (worker)</li> <li><em>skoli</em> (teach) → <em>skolio</em> (teacher)</li> </ul> <div class="grammar-section-divider"></div> <div class="grammar-sub-header">Compound Words</div> <p>Two words may be combined when no existing word covers the concept. The second word determines the part of speech.</p> <ul> <li><em>pano</em> + <em>tendo</em> → <em>panotendo</em> (bakery)</li> <li><em>ropo</em> + <em>puro</em> → <em>ropopuro</em> (washing machine)</li> <li><em>kompo</em> + <em>ludo</em> → <em>kompoludo</em> (videogame)</li> </ul>`
-},
-{
-icon:“💬”, title:“Particles & Conjunctions”,
-body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody> <tr><td><em>i</em></td><td>and</td></tr> <tr><td><em>ili</em></td><td>or</td></tr> <tr><td><em>ma</em></td><td>but / although</td></tr> <tr><td><em>da</em></td><td>yes</td></tr> <tr><td><em>na</em></td><td>no / not</td></tr> <tr><td><em>si</em></td><td>if</td></tr> <tr><td><em>bem</em></td><td>well (interjection)</td></tr> <tr><td><em>forke</em></td><td>because</td></tr> <tr><td><em>for ke</em></td><td>so that</td></tr> <tr><td><em>sina</em></td><td>unless</td></tr> <tr><td><em>pate</em></td><td>before</td></tr> <tr><td><em>fute</em></td><td>after</td></tr> <tr><td><em>dute</em></td><td>during / while</td></tr> <tr><td><em>finte</em></td><td>until</td></tr> <tr><td><em>late</em></td><td>then / next / at that time</td></tr> <tr><td><em>la</em></td><td>the (definite article)</td></tr> </tbody></table></div>`
-},
-{
-icon:“📏”, title:“Common Phrases”,
-body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody> <tr><td><em>Kom yu esi?</em></td><td>How are you?</td></tr> <tr><td><em>Me esi bona, grati.</em></td><td>I am good, thank you.</td></tr> <tr><td><em>Kwa esi yun nomo?</em></td><td>What is your name?</td></tr> <tr><td><em>Men nomo esi [name].</em></td><td>My name is [name].</td></tr> <tr><td><em>Grati for yun helpo.</em></td><td>Thank you for your help.</td></tr> <tr><td><em>Kwe yu kasi?</em></td><td>Where do you live?</td></tr> <tr><td><em>Me kasi en [place].</em></td><td>I live in [place].</td></tr> <tr><td><em>Ki oro esi?</em></td><td>What time is it?</td></tr> </tbody></table></div>`
-}
+  {
+    icon:"🌍", title:"Introduction",
+    body:`<p>ParliAspo is a constructed language designed for simplicity and accessibility. It borrows words from languages across the world — English, Spanish, Portuguese, French, Latin, Arabic, Japanese — as well as from constructed languages like Esperanto and Toki Pona.</p>
+    <p>With approximately <strong>350 base words</strong> and straightforward grammar rules, ParliAspo facilitates basic communication across diverse linguistic backgrounds.</p>
+    <div class="grammar-callout"><strong>Core principle:</strong> Every rule is consistent — no exceptions, no irregular verbs, no gendered articles.</div>`
+  },
+  {
+    icon:"🔤", title:"Phonology",
+    body:`<div class="grammar-sub-header">Vowels</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead><tbody>
+    <tr><td>a</td><td>/a/ as in "father"</td><td><em>kaso</em> /ka.so/ — house</td></tr>
+    <tr><td>e</td><td>/e/ as in "then"</td><td><em>bela</em> /be.la/ — beautiful</td></tr>
+    <tr><td>i</td><td>/i/ as in "pizza"</td><td><em>vidi</em> /vi.di/ — see</td></tr>
+    <tr><td>o</td><td>/o/ as in "core"</td><td><em>domo</em> /do.mo/ — room</td></tr>
+    <tr><td>u</td><td>/u/ as in "June"</td><td><em>nutro</em> /nu.tro/ — food</td></tr>
+    </tbody></table></div>
+    <div class="grammar-sub-header">Consonants</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead><tbody>
+    <tr><td>b</td><td>/b/ as in "boy"</td><td><em>bela</em></td></tr>
+    <tr><td>d</td><td>/d/ as in "dog"</td><td><em>domo</em></td></tr>
+    <tr><td>f</td><td>/f/ as in "fish"</td><td><em>filo</em> — friend</td></tr>
+    <tr><td>g</td><td>/g/ as in "gate"</td><td><em>granda</em> — big</td></tr>
+    <tr><td>h</td><td>/h/ as in "hot"</td><td><em>humo</em> — person</td></tr>
+    <tr><td>k</td><td>/k/ as in "kite"</td><td><em>kaso</em></td></tr>
+    <tr><td>l</td><td>/l/ as in "love"</td><td><em>lumo</em> — light</td></tr>
+    <tr><td>m</td><td>/m/ as in "man"</td><td><em>moro</em> — death</td></tr>
+    <tr><td>n</td><td>/n/ as in "nice"</td><td><em>nervo</em> — nerve</td></tr>
+    <tr><td>p</td><td>/p/ as in "pen"</td><td><em>pano</em> — bread</td></tr>
+    <tr><td>r</td><td>/r/ as in "red"</td><td><em>ropo</em> — clothes</td></tr>
+    <tr><td>s</td><td>/s/ as in "sun"</td><td><em>suno</em> — sun</td></tr>
+    <tr><td>t</td><td>/t/ as in "top"</td><td><em>tivo</em> — television</td></tr>
+    <tr><td>v</td><td>/v/ as in "voice"</td><td><em>vivo</em> — life</td></tr>
+    <tr><td>w</td><td>/w/ as in "wet"</td><td><em>agwa</em> — wet</td></tr>
+    <tr><td>y</td><td>/y/ as in "yes"</td><td><em>yu</em> — you</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout"><strong>Stress:</strong> Always on the first syllable — <em>KA.so</em>, <em>FI.lo</em>, <em>BE.la</em>.<br><strong>No digraphs:</strong> Every letter is a single sound. No "sh", "th", "ch", etc.</div>`
+  },
+  {
+    icon:"📝", title:"Word Classes",
+    body:`<p>Word class is determined entirely by the final letter — no exceptions.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Ending</th><th>Class</th><th>Example</th></tr></thead><tbody>
+    <tr><td><strong>-o</strong></td><td>Noun</td><td><em>libo</em> (book)</td></tr>
+    <tr><td><strong>-i</strong></td><td>Verb (present/infinitive)</td><td><em>legi</em> (read)</td></tr>
+    <tr><td><strong>-a</strong></td><td>Adjective / Adverb</td><td><em>bela</em> (beautiful), <em>rapida</em> (quickly)</td></tr>
+    </tbody></table></div>
+    <div class="grammar-sub-header">Nouns</div>
+    <ul>
+      <li>Plural: add <strong>-s</strong> → <em>libo</em> → <em>libos</em></li>
+      <li>Agent suffix <strong>-io</strong>: turns verb into doer → <em>kanti</em> → <em>kantio</em> (singer)</li>
+      <li>Diminutive suffix <strong>-ido</strong>: smaller version → <em>pipo</em> → <em>pipido</em> (puppy)</li>
+      <li>-ido can stack: <em>fogo</em> → <em>fogido</em> (flame) → <em>fogidido</em> (spark)</li>
+    </ul>
+    <div class="grammar-sub-header">Verbs</div>
+    <ul>
+      <li><strong>Past tense:</strong> <em>pa</em> before verb → <em>pa vidi</em> (saw)</li>
+      <li><strong>Future tense:</strong> <em>fu</em> before verb → <em>fu vidi</em> (will see)</li>
+      <li>Verbs are <strong>never conjugated</strong> for person or number</li>
+      <li>Auxiliary verbs: <em>povi</em> (can), <em>debi</em> (should), <em>voli</em> (want)</li>
+    </ul>
+    <div class="grammar-sub-header">Adjectives &amp; Adverbs</div>
+    <ul>
+      <li>Both end in <strong>-a</strong></li>
+      <li>Adjectives <strong>precede</strong> nouns: <em>bela kaso</em></li>
+      <li>Adverbs generally <strong>follow</strong> verbs: <em>kuri rapida</em></li>
+    </ul>`
+  },
+  {
+    icon:"⛓️", title:"Verb Chaining",
+    body:`<p>Multiple verbs can be chained in sequence. Only the first verb (or its tense marker) carries the tense for the whole chain.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Me voli komensi labori.</em></td><td>I want to start working.</td></tr>
+    <tr><td><em>Yu debi trati lerni.</em></td><td>You should try to learn.</td></tr>
+    <tr><td><em>Nos pa komensi kusi nutro.</em></td><td>We started cooking food.</td></tr>
+    <tr><td><em>Los fu povi veni helpi.</em></td><td>They will be able to come help.</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout">Pattern: <strong>subject + (tense) + verb₁ + verb₂ + verb₃ + ... + object</strong></div>
+    <div class="grammar-sub-header">The Copula esi</div>
+    <p>The verb <strong>esi</strong> (be/is/am) is <em>always</em> required — never omitted.</p>
+    <ul>
+      <li><strong>Identity:</strong> <em>Me esi Maria.</em> — I am Maria.</li>
+      <li><strong>Description:</strong> <em>La kaso esi bela.</em> — The house is beautiful.</li>
+      <li><strong>Location:</strong> <em>La gato esi en la kaso.</em> — The cat is in the house.</li>
+      <li><strong>Existence:</strong> <em>Esi manga arbos faram.</em> — There are many trees there.</li>
+    </ul>`
+  },
+  {
+    icon:"🗣️", title:"Sentence Structure",
+    body:`<p>ParliAspo follows <strong>Subject-Verb-Object (SVO)</strong> order.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Me plumi libo.</em></td><td>I write a book.</td></tr>
+    <tr><td><em>Le pa agwi suko.</em></td><td>He drank juice.</td></tr>
+    <tr><td><em>Yun ropas esi reda.</em></td><td>Your clothes are red.</td></tr>
+    <tr><td><em>Ki yun ropas esi reda?</em></td><td>Are your clothes red?</td></tr>
+    <tr><td><em>Kwa yu fari?</em></td><td>What are you doing?</td></tr>
+    <tr><td><em>Kwo esi en la kaso?</em></td><td>Who is in the house?</td></tr>
+    </tbody></table></div>`
+  },
+  {
+    icon:"❓", title:"Questions",
+    body:`<ul>
+      <li><strong>Yes/No questions:</strong> Start with <em>ki</em> → <em>Ki yu kasi am?</em> (Do you live here?)</li>
+      <li><strong>Wh-questions:</strong> Start with the question word</li>
+    </ul>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>ki</em></td><td>question particle (yes/no)</td></tr>
+    <tr><td><em>kwo</em></td><td>who</td></tr>
+    <tr><td><em>kwa</em></td><td>what</td></tr>
+    <tr><td><em>kwe</em></td><td>where</td></tr>
+    <tr><td><em>kwen</em></td><td>when</td></tr>
+    <tr><td><em>kwi</em></td><td>why</td></tr>
+    <tr><td><em>kom</em></td><td>how</td></tr>
+    <tr><td><em>kwant</em></td><td>how many</td></tr>
+    </tbody></table></div>`
+  },
+  {
+    icon:"👤", title:"Pronouns",
+    body:`<div class="grammar-sub-header">Singular</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Pronoun</th><th>Meaning</th><th>Possessive</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>me</em></td><td>I / me</td><td><em>men</em></td><td>my / mine</td></tr>
+    <tr><td><em>yu</em></td><td>you (singular)</td><td><em>yun</em></td><td>your / yours</td></tr>
+    <tr><td><em>le</em></td><td>he</td><td><em>len</em></td><td>his</td></tr>
+    <tr><td><em>lu</em></td><td>she</td><td><em>lun</em></td><td>her</td></tr>
+    <tr><td><em>lo</em></td><td>it / they (gender-neutral sg.)</td><td><em>lon</em></td><td>its</td></tr>
+    </tbody></table></div>
+    <div class="grammar-sub-header">Plural</div>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Pronoun</th><th>Meaning</th><th>Possessive</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>nos</em></td><td>we / us</td><td><em>nosin</em></td><td>our / ours</td></tr>
+    <tr><td><em>yus</em></td><td>you (plural)</td><td><em>yusin</em></td><td>your / yours (pl.)</td></tr>
+    <tr><td><em>les</em></td><td>they (male group)</td><td><em>lesin</em></td><td>their (male group)</td></tr>
+    <tr><td><em>lus</em></td><td>they (female group)</td><td><em>lusin</em></td><td>their (female group)</td></tr>
+    <tr><td><em>los</em></td><td>they (mixed group)</td><td><em>losin</em></td><td>their (mixed group)</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout">Possessives: add <strong>-n</strong> to singular pronouns; add <strong>-in</strong> to plural pronouns.</div>`
+  },
+  {
+    icon:"🔗", title:"Relative Clauses",
+    body:`<p>The conjunction <strong>ke</strong> ("that / who / which") introduces relative clauses. The clause follows the noun it modifies.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>La humo ke labori am esi men filo.</em></td><td>The person who works here is my friend.</td></tr>
+    <tr><td><em>La libo ke me pa legi esi bela.</em></td><td>The book that I read is beautiful.</td></tr>
+    <tr><td><em>Me vidi la gato ke dormi sur la sedo.</em></td><td>I see the cat that sleeps on the chair.</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout"><strong>Structure:</strong> noun + ke + clause<br>When the noun is the object of the relative clause, it is omitted after the verb.</div>`
+  },
+  {
+    icon:"🔢", title:"Numbers",
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Number</th><th>Word</th><th>Number</th></tr></thead><tbody>
+    <tr><td><em>nula</em></td><td>zero</td><td><em>sesa</em></td><td>six</td></tr>
+    <tr><td><em>una</em></td><td>one</td><td><em>sepa</em></td><td>seven</td></tr>
+    <tr><td><em>dua</em></td><td>two</td><td><em>okta</em></td><td>eight</td></tr>
+    <tr><td><em>tria</em></td><td>three</td><td><em>nova</em></td><td>nine</td></tr>
+    <tr><td><em>kwara</em></td><td>four</td><td><em>deka</em></td><td>ten</td></tr>
+    <tr><td><em>kina</em></td><td>five</td><td><em>senta</em></td><td>hundred</td></tr>
+    </tbody></table></div>
+    <ul>
+      <li><strong>11–19:</strong> <em>deka-una</em> (11), <em>deka-nova</em> (19)</li>
+      <li><strong>20–99:</strong> <em>dua-deka</em> (20), <em>dua-deka-una</em> (21)</li>
+      <li><strong>Ordinals:</strong> place <em>la</em> before the cardinal → <em>la una</em> (first)</li>
+      <li><strong>Days:</strong> cardinal + <em>yo</em> → <em>unayo</em> (Sunday), <em>duayo</em> (Monday)…</li>
+      <li><strong>Months:</strong> cardinal + <em>luno</em> → <em>unaluno</em> (January)…</li>
+    </ul>`
+  },
+  {
+    icon:"🔨", title:"Word Building",
+    body:`<div class="grammar-sub-header">mal- Prefix (opposite)</div>
+    <ul>
+      <li><em>filo</em> (friend) → <em>malfilo</em> (enemy)</li>
+      <li><em>bela</em> (beautiful) → <em>malbela</em> (ugly)</li>
+      <li><em>veni</em> (come) → <em>malveni</em> (leave)</li>
+      <li><em>granda</em> (big) → <em>malgranda</em> (small)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">re- Prefix (do again)</div>
+    <ul>
+      <li><em>legi</em> (read) → <em>relegi</em> (reread)</li>
+      <li><em>fari</em> (do) → <em>refari</em> (redo)</li>
+      <li><em>pensi</em> (think) → <em>repensi</em> (remember — literally "re-think")</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">-ido Suffix (diminutive)</div>
+    <ul>
+      <li><em>pipo</em> (dog) → <em>pipido</em> (puppy)</li>
+      <li><em>fogo</em> (fire) → <em>fogido</em> (flame) → <em>fogidido</em> (spark)</li>
+      <li><em>oro</em> (hour) → <em>orido</em> (minute) → <em>oridido</em> (second)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">-io Suffix (agent / doer)</div>
+    <ul>
+      <li><em>kanti</em> (sing) → <em>kantio</em> (singer)</li>
+      <li><em>labori</em> (work) → <em>laborio</em> (worker)</li>
+      <li><em>skoli</em> (teach) → <em>skolio</em> (teacher)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">Compound Words</div>
+    <p>Two words may be combined when no existing word covers the concept. The second word determines the part of speech.</p>
+    <ul>
+      <li><em>pano</em> + <em>tendo</em> → <em>panotendo</em> (bakery)</li>
+      <li><em>ropo</em> + <em>puro</em> → <em>ropopuro</em> (washing machine)</li>
+      <li><em>kompo</em> + <em>ludo</em> → <em>kompoludo</em> (videogame)</li>
+    </ul>`
+  },
+  {
+    icon:"💬", title:"Particles & Conjunctions",
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><em>i</em></td><td>and</td></tr>
+    <tr><td><em>ili</em></td><td>or</td></tr>
+    <tr><td><em>ma</em></td><td>but / although</td></tr>
+    <tr><td><em>da</em></td><td>yes</td></tr>
+    <tr><td><em>na</em></td><td>no / not</td></tr>
+    <tr><td><em>si</em></td><td>if</td></tr>
+    <tr><td><em>bem</em></td><td>well (interjection)</td></tr>
+    <tr><td><em>forke</em></td><td>because</td></tr>
+    <tr><td><em>for ke</em></td><td>so that</td></tr>
+    <tr><td><em>sina</em></td><td>unless</td></tr>
+    <tr><td><em>pate</em></td><td>before</td></tr>
+    <tr><td><em>fute</em></td><td>after</td></tr>
+    <tr><td><em>dute</em></td><td>during / while</td></tr>
+    <tr><td><em>finte</em></td><td>until</td></tr>
+    <tr><td><em>late</em></td><td>then / next / at that time</td></tr>
+    <tr><td><em>la</em></td><td>the (definite article)</td></tr>
+    </tbody></table></div>`
+  },
+  {
+    icon:"📏", title:"Common Phrases",
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Kom yu esi?</em></td><td>How are you?</td></tr>
+    <tr><td><em>Me esi bona, grati.</em></td><td>I am good, thank you.</td></tr>
+    <tr><td><em>Kwa esi yun nomo?</em></td><td>What is your name?</td></tr>
+    <tr><td><em>Men nomo esi [name].</em></td><td>My name is [name].</td></tr>
+    <tr><td><em>Grati for yun helpo.</em></td><td>Thank you for your help.</td></tr>
+    <tr><td><em>Kwe yu kasi?</em></td><td>Where do you live?</td></tr>
+    <tr><td><em>Me kasi en [place].</em></td><td>I live in [place].</td></tr>
+    <tr><td><em>Ki oro esi?</em></td><td>What time is it?</td></tr>
+    </tbody></table></div>`
+  }
 ];
 
 function renderGrammar() {
-const el = document.getElementById(‘grammar-body’);
-let html = ``;
+  const el = document.getElementById('grammar-body');
+  let html = ``;
 
-GRAMMAR_SECTIONS.forEach((sec, i) => {
-html += `<div class="grammar-section" id="gsec-${i}"> <div class="grammar-section-header" onclick="toggleGrammarSection(${i})"> <span class="grammar-section-icon">${sec.icon}</span> <span class="grammar-section-title">${sec.title}</span> <span class="grammar-section-chevron">▾</span> </div> <div class="grammar-section-body">${sec.body}</div> </div>`;
-});
-el.innerHTML = html;
-// Open first section by default
-document.getElementById(‘gsec-0’).classList.add(‘open’);
+  GRAMMAR_SECTIONS.forEach((sec, i) => {
+    html += `<div class="grammar-section" id="gsec-${i}">
+      <div class="grammar-section-header" onclick="toggleGrammarSection(${i})">
+        <span class="grammar-section-icon">${sec.icon}</span>
+        <span class="grammar-section-title">${sec.title}</span>
+        <span class="grammar-section-chevron">▾</span>
+      </div>
+      <div class="grammar-section-body">${sec.body}</div>
+    </div>`;
+  });
+  el.innerHTML = html;
+  // Open first section by default
+  document.getElementById('gsec-0').classList.add('open');
 }
 
 function toggleGrammarSection(i) {
-const sec = document.getElementById(‘gsec-’ + i);
-sec.classList.toggle(‘open’);
+  const sec = document.getElementById('gsec-' + i);
+  sec.classList.toggle('open');
 }
 
 // ═══════════════════════════════════════════════════════════════
 // DICTIONARY RENDERER
 // ═══════════════════════════════════════════════════════════════
-let dictEnQuery = ‘’;
-let dictPaQuery = ‘’;
-let dictBrowseLetter = ‘’;
+let dictEnQuery = '';
+let dictPaQuery = '';
+let dictBrowseLetter = '';
 
 function searchEnToPA(q) {
-q = q.toLowerCase().trim();
-if(!q) return [];
-const exact=[],startsWith=[],contains=[];
-DICTIONARY.forEach(e => {
-const meanings = e.en.toLowerCase().split(/\s*/\s*|\s*(\s*|\s*)\s*/).filter(Boolean);
-const enLower = e.en.toLowerCase();
-if(meanings.some(m=>m.trim()===q)) exact.push(e);
-else if(meanings.some(m=>m.trim().startsWith(q))||enLower.startsWith(q)) startsWith.push(e);
-else if(enLower.includes(q)) contains.push(e);
-});
-return […exact,…startsWith,…contains];
+  q = q.toLowerCase().trim();
+  if(!q) return [];
+  const exact=[],startsWith=[],contains=[];
+  DICTIONARY.forEach(e => {
+    const meanings = e.en.toLowerCase().split(/\s*\/\s*|\s*\(\s*|\s*\)\s*/).filter(Boolean);
+    const enLower = e.en.toLowerCase();
+    if(meanings.some(m=>m.trim()===q)) exact.push(e);
+    else if(meanings.some(m=>m.trim().startsWith(q))||enLower.startsWith(q)) startsWith.push(e);
+    else if(enLower.includes(q)) contains.push(e);
+  });
+  return [...exact,...startsWith,...contains];
 }
 function searchPAToEn(q) {
-q = q.toLowerCase().trim();
-if(!q) return [];
-const exact=[],startsWith=[],contains=[];
-DICTIONARY.forEach(e => {
-const p = e.pa.toLowerCase();
-if(p===q) exact.push(e);
-else if(p.startsWith(q)) startsWith.push(e);
-else if(p.includes(q)) contains.push(e);
-});
-return […exact,…startsWith,…contains];
+  q = q.toLowerCase().trim();
+  if(!q) return [];
+  const exact=[],startsWith=[],contains=[];
+  DICTIONARY.forEach(e => {
+    const p = e.pa.toLowerCase();
+    if(p===q) exact.push(e);
+    else if(p.startsWith(q)) startsWith.push(e);
+    else if(p.includes(q)) contains.push(e);
+  });
+  return [...exact,...startsWith,...contains];
 }
 
 function renderDictResultItem(entry, direction) {
-const word = direction===‘en’ ? entry.pa : entry.en;
-const trans = direction===‘en’ ? entry.en : entry.pa;
-const arrow = direction===‘en’ ? ‘→’ : ‘←’;
-const noteHTML = entry.note ? `<div class="dict-result-note">🧩 ${entry.note}</div>` : ‘’;
-return `<div class="dict-result-item">
-<span class="dict-result-arrow">${arrow}</span>
-<div style="flex:1;min-width:0">
-<div class="dict-result-word">${word}</div>
-<div class="dict-result-translation">${trans}</div>
-<span class="dict-result-pos">${entry.pos}</span>
-${noteHTML}
-</div>
-
+  const word = direction==='en' ? entry.pa : entry.en;
+  const trans = direction==='en' ? entry.en : entry.pa;
+  const arrow = direction==='en' ? '→' : '←';
+  const noteHTML = entry.note ? `<div class="dict-result-note">🧩 ${entry.note}</div>` : '';
+  return `<div class="dict-result-item">
+    <span class="dict-result-arrow">${arrow}</span>
+    <div style="flex:1;min-width:0">
+      <div class="dict-result-word">${word}</div>
+      <div class="dict-result-translation">${trans}</div>
+      <span class="dict-result-pos">${entry.pos}</span>
+      ${noteHTML}
+    </div>
   </div>`;
 }
 
 function renderDict() {
-const el = document.getElementById(‘dict-body’);
-const enResults = searchEnToPA(dictEnQuery);
-const paResults = searchPAToEn(dictPaQuery);
+  const el = document.getElementById('dict-body');
+  const enResults = searchEnToPA(dictEnQuery);
+  const paResults = searchPAToEn(dictPaQuery);
 
-let enResultsHTML = ‘’;
-if(dictEnQuery.trim()) {
-if(enResults.length>0) {
-enResultsHTML = `<div class="dict-result-count">${enResults.length} result${enResults.length!==1?'s':''}</div>`;
-enResultsHTML += enResults.slice(0,30).map(e=>renderDictResultItem(e,‘en’)).join(’’);
-if(enResults.length>30) enResultsHTML += `<div class="dict-result-count" style="text-align:center;padding:12px">...and ${enResults.length-30} more</div>`;
-} else {
-enResultsHTML = `<div class="dict-no-results"><div class="dict-no-results-icon">🤔</div>No results for "${dictEnQuery}"</div>`;
-}
-}
+  let enResultsHTML = '';
+  if(dictEnQuery.trim()) {
+    if(enResults.length>0) {
+      enResultsHTML = `<div class="dict-result-count">${enResults.length} result${enResults.length!==1?'s':''}</div>`;
+      enResultsHTML += enResults.slice(0,30).map(e=>renderDictResultItem(e,'en')).join('');
+      if(enResults.length>30) enResultsHTML += `<div class="dict-result-count" style="text-align:center;padding:12px">...and ${enResults.length-30} more</div>`;
+    } else {
+      enResultsHTML = `<div class="dict-no-results"><div class="dict-no-results-icon">🤔</div>No results for "${dictEnQuery}"</div>`;
+    }
+  }
 
-let paResultsHTML = ‘’;
-if(dictPaQuery.trim()) {
-if(paResults.length>0) {
-paResultsHTML = `<div class="dict-result-count">${paResults.length} result${paResults.length!==1?'s':''}</div>`;
-paResultsHTML += paResults.slice(0,30).map(e=>renderDictResultItem(e,‘pa’)).join(’’);
-if(paResults.length>30) paResultsHTML += `<div class="dict-result-count" style="text-align:center;padding:12px">...and ${paResults.length-30} more</div>`;
-} else {
-paResultsHTML = `<div class="dict-no-results"><div class="dict-no-results-icon">🤔</div>No results for "${dictPaQuery}"</div>`;
-}
-}
+  let paResultsHTML = '';
+  if(dictPaQuery.trim()) {
+    if(paResults.length>0) {
+      paResultsHTML = `<div class="dict-result-count">${paResults.length} result${paResults.length!==1?'s':''}</div>`;
+      paResultsHTML += paResults.slice(0,30).map(e=>renderDictResultItem(e,'pa')).join('');
+      if(paResults.length>30) paResultsHTML += `<div class="dict-result-count" style="text-align:center;padding:12px">...and ${paResults.length-30} more</div>`;
+    } else {
+      paResultsHTML = `<div class="dict-no-results"><div class="dict-no-results-icon">🤔</div>No results for "${dictPaQuery}"</div>`;
+    }
+  }
 
-const letters = ‘ABDEFGHIKLMNOPRSTUVWY’.split(’’);
-const paLetters = new Set(DICTIONARY.map(e=>e.pa[0].toUpperCase()));
-let browseHTML = ‘’;
-if(dictBrowseLetter) {
-const br = DICTIONARY.filter(e=>e.pa[0].toUpperCase()===dictBrowseLetter);
-browseHTML = `<div class="dict-browse-results">${br.map(e=>renderDictResultItem(e,'pa')).join('')}</div>`;
-}
+  const letters = 'ABDEFGHIKLMNOPRSTUVWY'.split('');
+  const paLetters = new Set(DICTIONARY.map(e=>e.pa[0].toUpperCase()));
+  let browseHTML = '';
+  if(dictBrowseLetter) {
+    const br = DICTIONARY.filter(e=>e.pa[0].toUpperCase()===dictBrowseLetter);
+    browseHTML = `<div class="dict-browse-results">${br.map(e=>renderDictResultItem(e,'pa')).join('')}</div>`;
+  }
 
-const tips = [
-{title:“Nouns end in -o”, text:“All nouns end in <strong>-o</strong>. Plurals add <strong>-s</strong>: libo → libos (books)”},
-{title:“Verbs end in -i”, text:“Present/infinitive ends in <strong>-i</strong>. Past: <strong>pa</strong> + verb. Future: <strong>fu</strong> + verb.”},
-{title:“Adjectives end in -a”, text:“Both adjectives and adverbs end in <strong>-a</strong>. Adjectives precede nouns: bela kaso”},
-{title:“mal- = opposite”, text:“Add <strong>mal-</strong> for opposites: bela → malbela (ugly), veni → malveni (leave)”},
-{title:“re- = again”, text:“Add <strong>re-</strong> for repetition: legi → relegi (reread), pensi → repensi (remember)”},
-{title:”-ido = smaller”, text:”<strong>-ido</strong> makes diminutives: pipo (dog) → pipido (puppy), fogo → fogido (flame)”},
-{title:”-io = doer”, text:”<strong>-io</strong> creates agents: kanti → kantio (singer), labori → laborio (worker)”},
-];
-const tip = tips[Math.floor(Date.now()/60000) % tips.length];
+  const tips = [
+    {title:"Nouns end in -o", text:"All nouns end in <strong>-o</strong>. Plurals add <strong>-s</strong>: libo → libos (books)"},
+    {title:"Verbs end in -i", text:"Present/infinitive ends in <strong>-i</strong>. Past: <strong>pa</strong> + verb. Future: <strong>fu</strong> + verb."},
+    {title:"Adjectives end in -a", text:"Both adjectives and adverbs end in <strong>-a</strong>. Adjectives precede nouns: bela kaso"},
+    {title:"mal- = opposite", text:"Add <strong>mal-</strong> for opposites: bela → malbela (ugly), veni → malveni (leave)"},
+    {title:"re- = again", text:"Add <strong>re-</strong> for repetition: legi → relegi (reread), pensi → repensi (remember)"},
+    {title:"-ido = smaller", text:"<strong>-ido</strong> makes diminutives: pipo (dog) → pipido (puppy), fogo → fogido (flame)"},
+    {title:"-io = doer", text:"<strong>-io</strong> creates agents: kanti → kantio (singer), labori → laborio (worker)"},
+  ];
+  const tip = tips[Math.floor(Date.now()/60000) % tips.length];
 
-el.innerHTML = `
-<div class="dict-stats">
-<span class="dict-stat-chip">📖 ${DICTIONARY.length} words</span>
-<span class="dict-stat-chip blue">🔤 Bidirectional</span>
-<span class="dict-stat-chip green">⚡ Instant</span>
-</div>
+  el.innerHTML = `
+    <div class="dict-stats">
+      <span class="dict-stat-chip">📖 ${DICTIONARY.length} words</span>
+      <span class="dict-stat-chip blue">🔤 Bidirectional</span>
+      <span class="dict-stat-chip green">⚡ Instant</span>
+    </div>
 
-```
-<div class="dict-panel">
-  <div class="dict-panel-label">
-    <div class="dict-flag flag-en">EN</div>
-    <span class="dict-panel-lang">English → Parli Aspo</span>
-  </div>
-  <div class="dict-input-wrap">
-    <input class="dict-search-input" id="dictEnInput" type="text" placeholder="Type an English word..." value="${dictEnQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="dict-clear-btn ${dictEnQuery?'visible':''}" id="dictEnClear">✕</button>
-  </div>
-  <div class="dict-results">${enResultsHTML}</div>
-</div>
+    <div class="dict-panel">
+      <div class="dict-panel-label">
+        <div class="dict-flag flag-en">EN</div>
+        <span class="dict-panel-lang">English → Parli Aspo</span>
+      </div>
+      <div class="dict-input-wrap">
+        <input class="dict-search-input" id="dictEnInput" type="text" placeholder="Type an English word..." value="${dictEnQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button class="dict-clear-btn ${dictEnQuery?'visible':''}" id="dictEnClear">✕</button>
+      </div>
+      <div class="dict-results">${enResultsHTML}</div>
+    </div>
 
-<div class="dict-divider">
-  <div class="dict-divider-line"></div>
-  <div class="dict-divider-icon">⇅</div>
-  <div class="dict-divider-line"></div>
-</div>
+    <div class="dict-divider">
+      <div class="dict-divider-line"></div>
+      <div class="dict-divider-icon">⇅</div>
+      <div class="dict-divider-line"></div>
+    </div>
 
-<div class="dict-panel pa-panel">
-  <div class="dict-panel-label">
-    <div class="dict-flag flag-pa">PA</div>
-    <span class="dict-panel-lang">Parli Aspo → English</span>
-  </div>
-  <div class="dict-input-wrap">
-    <input class="dict-search-input" id="dictPaInput" type="text" placeholder="Topi parlo de Parli Aspo..." value="${dictPaQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="dict-clear-btn ${dictPaQuery?'visible':''}" id="dictPaClear">✕</button>
-  </div>
-  <div class="dict-results">${paResultsHTML}</div>
-</div>
+    <div class="dict-panel pa-panel">
+      <div class="dict-panel-label">
+        <div class="dict-flag flag-pa">PA</div>
+        <span class="dict-panel-lang">Parli Aspo → English</span>
+      </div>
+      <div class="dict-input-wrap">
+        <input class="dict-search-input" id="dictPaInput" type="text" placeholder="Topi parlo de Parli Aspo..." value="${dictPaQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button class="dict-clear-btn ${dictPaQuery?'visible':''}" id="dictPaClear">✕</button>
+      </div>
+      <div class="dict-results">${paResultsHTML}</div>
+    </div>
 
-<div class="dict-grammar-tip">
-  <div class="dict-grammar-tip-title">💡 ${tip.title}</div>
-  <div class="dict-grammar-tip-text">${tip.text}</div>
-</div>
+    <div class="dict-grammar-tip">
+      <div class="dict-grammar-tip-title">💡 ${tip.title}</div>
+      <div class="dict-grammar-tip-text">${tip.text}</div>
+    </div>
 
-<div class="dict-browse-section">
-  <div class="dict-browse-title">📚 Browse by letter</div>
-  <div class="dict-letter-nav">
-    ${letters.map(l=>{
-      const has=paLetters.has(l);
-      const active=dictBrowseLetter===l;
-      return `<button class="dict-letter-btn ${active?'active':''} ${!has?'disabled':''}" data-letter="${l}" ${!has?'disabled':''}>${l}</button>`;
-    }).join('')}
-  </div>
-  ${browseHTML}
-</div>
-```
+    <div class="dict-browse-section">
+      <div class="dict-browse-title">📚 Browse by letter</div>
+      <div class="dict-letter-nav">
+        ${letters.map(l=>{
+          const has=paLetters.has(l);
+          const active=dictBrowseLetter===l;
+          return `<button class="dict-letter-btn ${active?'active':''} ${!has?'disabled':''}" data-letter="${l}" ${!has?'disabled':''}>${l}</button>`;
+        }).join('')}
+      </div>
+      ${browseHTML}
+    </div>
+  `;
 
-`;
+  // Bind events
+  const enIn = document.getElementById('dictEnInput');
+  const paIn = document.getElementById('dictPaInput');
+  const sCaret = enIn.selectionStart;
 
-// Bind events
-const enIn = document.getElementById(‘dictEnInput’);
-const paIn = document.getElementById(‘dictPaInput’);
-const sCaret = enIn.selectionStart;
-
-enIn.addEventListener(‘input’, e => {
-const pos = e.target.selectionStart;
-dictEnQuery = e.target.value;
-renderDict();
-const el2 = document.getElementById(‘dictEnInput’);
-el2.focus(); el2.setSelectionRange(pos,pos);
-});
-paIn.addEventListener(‘input’, e => {
-const pos = e.target.selectionStart;
-dictPaQuery = e.target.value;
-renderDict();
-const el2 = document.getElementById(‘dictPaInput’);
-el2.focus(); el2.setSelectionRange(pos,pos);
-});
-document.getElementById(‘dictEnClear’).addEventListener(‘click’, () => { dictEnQuery=’’; renderDict(); document.getElementById(‘dictEnInput’).focus(); });
-document.getElementById(‘dictPaClear’).addEventListener(‘click’, () => { dictPaQuery=’’; renderDict(); document.getElementById(‘dictPaInput’).focus(); });
-document.querySelectorAll(’.dict-letter-btn:not(.disabled)’).forEach(btn => {
-btn.addEventListener(‘click’, () => {
-const l = btn.dataset.letter;
-dictBrowseLetter = dictBrowseLetter===l ? ‘’ : l;
-renderDict();
-});
-});
+  enIn.addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    dictEnQuery = e.target.value;
+    renderDict();
+    const el2 = document.getElementById('dictEnInput');
+    el2.focus(); el2.setSelectionRange(pos,pos);
+  });
+  paIn.addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    dictPaQuery = e.target.value;
+    renderDict();
+    const el2 = document.getElementById('dictPaInput');
+    el2.focus(); el2.setSelectionRange(pos,pos);
+  });
+  document.getElementById('dictEnClear').addEventListener('click', () => { dictEnQuery=''; renderDict(); document.getElementById('dictEnInput').focus(); });
+  document.getElementById('dictPaClear').addEventListener('click', () => { dictPaQuery=''; renderDict(); document.getElementById('dictPaInput').focus(); });
+  document.querySelectorAll('.dict-letter-btn:not(.disabled)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = btn.dataset.letter;
+      dictBrowseLetter = dictBrowseLetter===l ? '' : l;
+      renderDict();
+    });
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
 // CONTACT RENDERER
 // ═══════════════════════════════════════════════════════════════
 function renderContact() {
-const el = document.getElementById(‘contact-body’);
-el.innerHTML = `
-<div class="contact-intro">
-<div class="contact-intro-icon">💬</div>
-<div class="contact-intro-title">Get in Touch</div>
-<div class="contact-intro-desc">Have a suggestion for Parli Aspo? Found a bug in the app? Want to share feedback? We’d love to hear from you.</div>
-</div>
+  const el = document.getElementById('contact-body');
+  el.innerHTML = `
+    <div class="contact-intro">
+      <div class="contact-intro-icon">💬</div>
+      <div class="contact-intro-title">Get in Touch</div>
+      <div class="contact-intro-desc">Have a suggestion for Parli Aspo? Found a bug in the app? Want to share feedback? We'd love to hear from you.</div>
+    </div>
 
-```
-<div id="contact-form-wrap">
-  <div class="contact-form-group">
-    <label class="contact-label" for="cf-name">Your Name <span style="color:var(--dim);font-weight:600">(optional)</span></label>
-    <input class="contact-input" type="text" id="cf-name" placeholder="What should we call you?" autocomplete="name">
-  </div>
+    <div id="contact-form-wrap">
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-name">Your Name <span style="color:var(--dim);font-weight:600">(optional)</span></label>
+        <input class="contact-input" type="text" id="cf-name" placeholder="What should we call you?" autocomplete="name">
+      </div>
 
-  <div class="contact-form-group">
-    <label class="contact-label" for="cf-email">Your Email <span style="color:var(--dim);font-weight:600">(optional — if you'd like a reply)</span></label>
-    <input class="contact-input" type="email" id="cf-email" placeholder="you@example.com" autocomplete="email">
-  </div>
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-email">Your Email <span style="color:var(--dim);font-weight:600">(optional — if you'd like a reply)</span></label>
+        <input class="contact-input" type="email" id="cf-email" placeholder="you@example.com" autocomplete="email">
+      </div>
 
-  <div class="contact-form-group">
-    <label class="contact-label" for="cf-category">Category</label>
-    <select class="contact-select" id="cf-category">
-      <option value="Suggestion">💡 Suggestion</option>
-      <option value="Bug Report">🐛 Bug Report</option>
-      <option value="Feedback">⭐ General Feedback</option>
-      <option value="New Word">📖 New Word Request</option>
-      <option value="Other">💬 Other</option>
-    </select>
-  </div>
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-category">Category</label>
+        <select class="contact-select" id="cf-category">
+          <option value="Suggestion">💡 Suggestion</option>
+          <option value="Bug Report">🐛 Bug Report</option>
+          <option value="Feedback">⭐ General Feedback</option>
+          <option value="New Word">📖 New Word Request</option>
+          <option value="Other">💬 Other</option>
+        </select>
+      </div>
 
-  <div class="contact-form-group">
-    <label class="contact-label" for="cf-message">Message <span style="color:var(--red);font-size:12px">*</span></label>
-    <textarea class="contact-textarea" id="cf-message" placeholder="Tell us what's on your mind..." maxlength="2000" oninput="document.getElementById('cf-chars').textContent=this.value.length+'/2000'"></textarea>
-    <div class="contact-char-count" id="cf-chars">0 / 2000</div>
-  </div>
+      <div class="contact-form-group">
+        <label class="contact-label" for="cf-message">Message <span style="color:var(--red);font-size:12px">*</span></label>
+        <textarea class="contact-textarea" id="cf-message" placeholder="Tell us what's on your mind..." maxlength="2000" oninput="document.getElementById('cf-chars').textContent=this.value.length+'/2000'"></textarea>
+        <div class="contact-char-count" id="cf-chars">0 / 2000</div>
+      </div>
 
-  <div id="contact-emailjs-notice" class="contact-notice" style="display:${emailJSReady?'none':'block'}">
-    <strong>⚠️ EmailJS not configured yet.</strong> To enable message sending, set up your EmailJS credentials in the script section of index.html (search for EMAILJS_PUBLIC_KEY). Until then, you can still copy your message manually.
-  </div>
+      <div id="contact-emailjs-notice" class="contact-notice" style="display:${emailJSReady?'none':'block'}">
+        <strong>⚠️ EmailJS not configured yet.</strong> To enable message sending, set up your EmailJS credentials in the script section of index.html (search for EMAILJS_PUBLIC_KEY). Until then, you can still copy your message manually.
+      </div>
 
-  <button class="contact-submit" id="cf-submit" onclick="submitContact()">
-    Send Message ✉️
-  </button>
-</div>
+      <button class="contact-submit" id="cf-submit" onclick="submitContact()">
+        Send Message ✉️
+      </button>
+    </div>
 
-<div id="contact-success" class="contact-success" style="display:none">
-  <div class="contact-success-icon">✅</div>
-  <div class="contact-success-title">Message Sent!</div>
-  <div class="contact-success-desc">Grati for yun mesago!<br>Thank you for your message. We'll get back to you if you left an email.</div>
-  <button class="btn-primary" style="max-width:240px;margin:0 auto" onclick="resetContact()">Send Another</button>
-</div>
-```
-
-`;
+    <div id="contact-success" class="contact-success" style="display:none">
+      <div class="contact-success-icon">✅</div>
+      <div class="contact-success-title">Message Sent!</div>
+      <div class="contact-success-desc">Grati for yun mesago!<br>Thank you for your message. We'll get back to you if you left an email.</div>
+      <button class="btn-primary" style="max-width:240px;margin:0 auto" onclick="resetContact()">Send Another</button>
+    </div>
+  `;
 }
 
 function submitContact() {
-const name = document.getElementById(‘cf-name’).value.trim() || ‘Anonymous’;
-const email = document.getElementById(‘cf-email’).value.trim() || ‘Not provided’;
-const category = document.getElementById(‘cf-category’).value;
-const message = document.getElementById(‘cf-message’).value.trim();
+  const name = document.getElementById('cf-name').value.trim() || 'Anonymous';
+  const email = document.getElementById('cf-email').value.trim() || 'Not provided';
+  const category = document.getElementById('cf-category').value;
+  const message = document.getElementById('cf-message').value.trim();
 
-if(!message) {
-const ta = document.getElementById(‘cf-message’);
-ta.style.borderColor = ‘var(–red)’;
-ta.focus();
-setTimeout(() => ta.style.borderColor = ‘’, 1500);
-return;
-}
+  if(!message) {
+    const ta = document.getElementById('cf-message');
+    ta.style.borderColor = 'var(--red)';
+    ta.focus();
+    setTimeout(() => ta.style.borderColor = '', 1500);
+    return;
+  }
 
-const btn = document.getElementById(‘cf-submit’);
-btn.disabled = true;
-btn.textContent = ‘Sending…’;
+  const btn = document.getElementById('cf-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
 
-if(emailJSReady) {
-emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-from_name: name,
-from_email: email,
-category: category,
-message: message,
-to_email: ‘njprentiss@gmail.com’
-}).then(() => {
-showContactSuccess();
-}).catch(err => {
-console.error(‘EmailJS error:’, err);
-btn.disabled = false;
-btn.textContent = ‘Send Message ✉️’;
-alert(‘Failed to send. Please try again or email njprentiss@gmail.com directly.’);
-});
-} else {
-// EmailJS not configured — show what would be sent
-console.log(‘Would send:’, {from_name:name, from_email:email, category, message});
-setTimeout(showContactSuccess, 800);
-}
+  if(emailJSReady) {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: name,
+      from_email: email,
+      category: category,
+      message: message,
+      to_email: 'njprentiss@gmail.com'
+    }).then(() => {
+      showContactSuccess();
+    }).catch(err => {
+      console.error('EmailJS error:', err);
+      btn.disabled = false;
+      btn.textContent = 'Send Message ✉️';
+      alert('Failed to send. Please try again or email njprentiss@gmail.com directly.');
+    });
+  } else {
+    // EmailJS not configured — show what would be sent
+    console.log('Would send:', {from_name:name, from_email:email, category, message});
+    setTimeout(showContactSuccess, 800);
+  }
 }
 
 function showContactSuccess() {
-document.getElementById(‘contact-form-wrap’).style.display = ‘none’;
-document.getElementById(‘contact-success’).style.display = ‘block’;
+  document.getElementById('contact-form-wrap').style.display = 'none';
+  document.getElementById('contact-success').style.display = 'block';
 }
 
 function resetContact() {
-document.getElementById(‘contact-form-wrap’).style.display = ‘block’;
-document.getElementById(‘contact-success’).style.display = ‘none’;
-document.getElementById(‘cf-name’).value = ‘’;
-document.getElementById(‘cf-email’).value = ‘’;
-document.getElementById(‘cf-message’).value = ‘’;
-document.getElementById(‘cf-chars’).textContent = ‘0 / 2000’;
+  document.getElementById('contact-form-wrap').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+  document.getElementById('cf-name').value = '';
+  document.getElementById('cf-email').value = '';
+  document.getElementById('cf-message').value = '';
+  document.getElementById('cf-chars').textContent = '0 / 2000';
 }
 
 </script>
