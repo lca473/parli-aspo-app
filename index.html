@@ -1258,7 +1258,7 @@ function generateVocabExercises(lesson){
   // 1. MC: PA → EN (for each word)
   shuffle(wordItems).forEach(item=>{
     if(!canAdd(item.pa))return;
-    const wrong=pick(wordItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    const wrong=pickUnique(wordItems.filter(v=>v.en!==item.en),3,v=>v.en).map(v=>v.en);
     if(wrong.length<3)return;
     exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong]),note:item.note,paWord:item.pa});
     markUsed(item.pa);
@@ -1347,7 +1347,7 @@ function generateSentenceExercises(lesson){
 
   // MC: what does this sentence mean?
   shuffle(items).slice(0,5).forEach(item=>{
-    const wrong=pick(items.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    const wrong=pickUnique(items.filter(v=>v.en!==item.en),3,v=>v.en).map(v=>v.en);
     if(wrong.length>=3)exercises.push({type:"mc",prompt:`What does "${item.pa.join(" ")}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});
   });
 
@@ -1398,7 +1398,7 @@ function generateReviewExercises(lesson){
 
   picked.forEach(item=>{
     if(!canAdd(item.pa))return;
-    const wrong=pick(allItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    const wrong=pickUnique(allItems.filter(v=>v.en!==item.en),3,v=>v.en).map(v=>v.en);
     if(wrong.length<3)return;
     exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong]),note:item.note});
     markUsed(item.pa);
@@ -1480,7 +1480,7 @@ function generateFreeTextExercises(lesson){
   const allItems=[];
   reviewKeys.forEach(key=>{const arr=V[key];if(arr)arr.forEach(v=>{if(!Array.isArray(v.pa))allItems.push({pa:v.pa,en:v.en});});});
   pick(allItems,8).forEach(item=>{
-    const wrong=pick(allItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    const wrong=pickUnique(allItems.filter(v=>v.en!==item.en),3,v=>v.en).map(v=>v.en);
     if(wrong.length>=3)exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});
   });
   return shuffle(exercises).slice(0,12);
@@ -1496,7 +1496,7 @@ function generateFinalTest(){
   // 5 PA→EN MC from diverse pool
   pick(allItems.filter(v=>!used.has(v.pa)),5).forEach(item=>{
     used.add(item.pa);
-    const wrong=pick(allItems.filter(v=>v.en!==item.en),3).map(v=>v.en);
+    const wrong=pickUnique(allItems.filter(v=>v.en!==item.en),3,v=>v.en).map(v=>v.en);
     if(wrong.length>=3)exercises.push({type:"mc",prompt:`What does "${item.pa}" mean?`,correct:item.en,options:shuffle([item.en,...wrong])});
   });
 
@@ -1541,7 +1541,7 @@ function generateFinalTest(){
     const blankIdx=Math.floor(Math.random()*(pArr.length-1))+1;
     const blankedWord=pArr[blankIdx];
     const displaySent=pArr.map((w,i)=>i===blankIdx?"___":w).join(" ");
-    const wrong=pick(allItems,3).map(v=>v.pa).filter(w=>w.toLowerCase()!==blankedWord.toLowerCase()).slice(0,3);
+    const wrong=pickUnique(allItems.filter(v=>v.pa.toLowerCase()!==blankedWord.toLowerCase()),3,v=>v.pa).map(v=>v.pa);
     if(wrong.length>=3)exercises.push({type:"revfill",prompt:`Fill in the blank:\n"${displaySent}"`,correct:blankedWord,options:shuffle([blankedWord,...wrong]),sentenceEn:s.en});
   });
 
@@ -1562,6 +1562,12 @@ function shuffle(arr) {
   const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;
 }
 function pick(arr,n){return shuffle(arr).slice(0,n);}
+// Like pick, but deduplicates by a key function so no two results share the same display value
+function pickUnique(arr,n,keyFn){
+  const seen=new Set();const result=[];
+  for(const item of shuffle(arr)){const k=keyFn(item);if(!seen.has(k)){seen.add(k);result.push(item);if(result.length>=n)break;}}
+  return result;
+}
 function saveLocal(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}}
 function loadLocal(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def}}
 function getCurrentUsername(){return loadLocal("pa_current_user","");}
