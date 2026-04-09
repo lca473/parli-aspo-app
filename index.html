@@ -1567,11 +1567,12 @@ function loadLocal(key,def){try{const v=localStorage.getItem(key);return v?JSON.
 function getCurrentUsername(){return loadLocal("pa_current_user","");}
 function setCurrentUsername(name){saveLocal("pa_current_user",name);}
 function applyStreakLogic(data){
+  // Load-time check only: reset streak if user missed a day. Streak increments
+  // happen exclusively on lesson completion (see handleAnswer), not on app load.
   if(data.lastActiveDate){
     const today=new Date().toDateString();
     const yesterday=new Date(Date.now()-86400000).toDateString();
     if(data.lastActiveDate!==today&&data.lastActiveDate!==yesterday)data.streak=0;
-    if(data.lastActiveDate!==today){data.streak=(data.streak||0)+1;data.lastActiveDate=today;}
   }
   return data;
 }
@@ -1646,8 +1647,13 @@ setTimeout(async()=>{
   if(savedName){
     state.screen="loading";
     const user=await loadUserDataCloud(savedName);
-    if(user.lessonsCompleted && user.lessonsCompleted.some(id=>id==="s6"||id==="communication")){
-      user.lessonsCompleted=[];
+    // ─── ONE-SHOT PROGRESS RESTORE ───
+    // Restores Neal's Unit 4 progress (14/16) lost to the migration-wipe bug.
+    // Self-disabling: runs once per browser, then never again.
+    if(!loadLocal("pa_restore_unit4_v1",false)){
+      const restoreIds=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
+      user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...restoreIds])];
+      saveLocal("pa_restore_unit4_v1",true);
     }
     saveUserData(user);
     state.user=user;
@@ -2147,7 +2153,15 @@ function advanceAfterAnswer(){
   if(!state.isFinalTest&&state.hearts<=0){setState({screen:"complete"});return;}
   if(state.exIdx+1>=state.exercises.length){
     const totalXP=Math.round(state.accXP);
-    const user={...state.user,xp:state.user.xp+totalXP,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:new Date().toDateString()};
+    const today=new Date().toDateString();
+    const prevActive=state.user.lastActiveDate;
+    let newStreak=state.user.streak||0;
+    if(prevActive!==today){
+      // Completing a lesson on a new calendar day → advance the streak.
+      // applyStreakLogic already reset it to 0 on load if more than a day was missed.
+      newStreak=newStreak+1;
+    }
+    const user={...state.user,xp:state.user.xp+totalXP,streak:newStreak,lessonsCompleted:[...new Set([...state.user.lessonsCompleted,state.lesson.id])],lastActiveDate:today};
     saveUserData(user);pushToLeaderboard(user);state.user=user;
     setState({screen:"complete"});
   } else {
