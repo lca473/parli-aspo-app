@@ -203,8 +203,9 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
 }
 .landing-stat {
   background:var(--card); border:1.5px solid var(--border);
-  border-radius:14px; padding:10px 16px; text-align:center;
-  min-width:80px;
+  border-radius:14px; padding:10px 8px; text-align:center;
+  width:90px; height:90px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
 }
 .landing-stat-num { font-family:var(--display); font-size:24px; font-weight:800; color:var(--green); }
 .landing-stat-label { font-size:12px; font-weight:700; color:var(--dim); margin-top:2px; }
@@ -510,8 +511,8 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
 
     <div class="landing-stats fade-up" style="animation-delay:0.1s">
       <div class="landing-stat">
-        <div class="landing-stat-num">350+</div>
-        <div class="landing-stat-label">Words</div>
+        <div class="landing-stat-num">~400</div>
+        <div class="landing-stat-label">Roots</div>
       </div>
       <div class="landing-stat">
         <div class="landing-stat-num">100</div>
@@ -538,7 +539,7 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
         <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(255,200,0,0.2),rgba(255,200,0,0.05));border:1.5px solid rgba(255,200,0,0.3)">📚</div>
         <div class="landing-card-body">
           <div class="landing-card-title">Dictionary</div>
-          <div class="landing-card-desc">350+ words · Bidirectional search · Browse by letter</div>
+          <div class="landing-card-desc">~400 root words · Bidirectional search · Browse by letter</div>
         </div>
         <div class="landing-card-arrow">›</div>
       </button>
@@ -2221,7 +2222,7 @@ function renderComplete(){
       </div>
       <div style="padding:16px;background:var(--gold-glow);border:2px solid var(--gold);border-radius:var(--radius);margin-bottom:24px">
         <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px">🌟 COURSE COMPLETE</div>
-        <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered 350+ words, all 6 units, and the complete grammar system of Parli Aspo. The language of hope lives in you now.</div>
+        <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered ~400 root words, all 6 units, and the complete grammar system of Parli Aspo. The language of hope lives in you now.</div>
       </div>`;
   } else if(passed){
     innerHTML=`
@@ -2301,7 +2302,7 @@ const GRAMMAR_SECTIONS = [
   {
     icon:"🌍", title:"Introduction",
     body:`<p>ParliAspo is a constructed language designed for simplicity and accessibility. It borrows words from languages across the world — English, Spanish, Portuguese, French, Latin, Arabic, Japanese — as well as from constructed languages like Esperanto and Toki Pona.</p>
-    <p>With approximately <strong>350 base words</strong> and straightforward grammar rules, ParliAspo facilitates basic communication across diverse linguistic backgrounds.</p>
+    <p>With approximately <strong>~400 root words</strong> and straightforward grammar rules, ParliAspo facilitates basic communication across diverse linguistic backgrounds.</p>
     <div class="grammar-callout"><strong>Core principle:</strong> Every rule is consistent — no exceptions, no irregular verbs, no gendered articles.</div>`
   },
   {
@@ -2656,7 +2657,8 @@ function renderDict() {
 
   el.innerHTML = `
     <div class="dict-stats">
-      <span class="dict-stat-chip">📖 ${DICTIONARY.length} words</span>
+      <span class="dict-stat-chip">📖 ${DICTIONARY.length} words (all forms)</span>
+      <span class="dict-stat-chip">🌱 ~400 root words</span>
       <span class="dict-stat-chip blue">🔤 Bidirectional</span>
       <span class="dict-stat-chip green">⚡ Instant</span>
     </div>
