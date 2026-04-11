@@ -1442,7 +1442,8 @@ function generateParagraphExercises(lesson){
   paraGroups.forEach(para=>{
     // Paragraph translation: user types the whole paragraph in PA (graded as fill)
     const fullPa=para.sentences.map(s=>s.pa.join(" ")).join(" ").toLowerCase();
-    exercises.push({type:"fill",prompt:`Translate this paragraph to Parli Aspo:\n"${para.en}"`,correct:fullPa,isParagraph:true});
+    const altPa=fullPa.includes("iri ad labori")?fullPa.replace("iri ad labori","iri ad laboro"):null;
+    exercises.push({type:"fill",prompt:`Translate this paragraph to Parli Aspo:\n"${para.en}"`,correct:fullPa,correctAlts:altPa?[altPa]:null,isParagraph:true});
 
     // Word order for each sentence in paragraph
     para.sentences.forEach(s=>{
@@ -2107,7 +2108,7 @@ function bindFill(ex){
 function doFillCheck(ex){
   if(state.fillAnswered||!(state.fillInput||"").trim())return;
   const norm=s=>s.trim().toLowerCase().replace(/[.,!?;:"']/g,"").replace(/\s+/g," ");
-  const correct=norm(state.fillInput)===norm(ex.correct);
+  const u=norm(state.fillInput);const correct=u===norm(ex.correct)||(ex.correctAlts&&ex.correctAlts.some(a=>u===norm(a)));
   state.fillAnswered=true;state.fillCorrect=correct;renderApp();
   if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
 }
@@ -2129,7 +2130,7 @@ function bindWordOrder(ex){
   document.querySelectorAll("[data-add]").forEach(btn=>{btn.addEventListener("click",()=>{const i=parseInt(btn.dataset.add);const word=state.woAvailable[i];state.woSelected=[...state.woSelected,word];state.woAvailable=state.woAvailable.filter((_,j)=>j!==i);renderApp();});});
   document.querySelectorAll("[data-rm]").forEach(btn=>{btn.addEventListener("click",()=>{if(state.woAnswered)return;const i=parseInt(btn.dataset.rm);const word=state.woSelected[i];state.woSelected=state.woSelected.filter((_,j)=>j!==i);state.woAvailable=[...state.woAvailable,word];renderApp();});});
   const checkBtn=document.getElementById("woCheck");
-  if(checkBtn)checkBtn.addEventListener("click",()=>{const correct=state.woSelected.every((w,i)=>w===ex.correctOrder[i]);state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
+  if(checkBtn)checkBtn.addEventListener("click",()=>{const correct=state.woSelected.every((w,i)=>(w||"").toLowerCase()===(ex.correctOrder[i]||"").toLowerCase());state.woAnswered=true;state.woCorrect=correct;renderApp();if(correct){setTimeout(()=>handleAnswer(true),1000);}else{setTimeout(()=>handleAnswer(false),600);}});
 }
 
 // ─── MATCH ─────────────────────────────────────────────────────
