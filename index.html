@@ -1588,12 +1588,27 @@ function loadUserData(username){
   data.username=username;
   return applyStreakLogic(data);
 }
+function fbKey(username){return username.replace(/[.#$\/\[\]]/g,"_");}
+
+// ── Password helpers ────────────────────────────────────────────
+async function savePassword(username,pw){
+  if(!firebaseReady||!db)return;
+  try{await db.ref("passwords/"+fbKey(username)).set({pw,updatedAt:Date.now()});}
+  catch(e){console.warn("Firebase pw save error:",e);}
+}
+async function loadPassword(username){
+  if(!firebaseReady||!db)return null;
+  try{
+    const snap=await db.ref("passwords/"+fbKey(username)).once("value");
+    return snap.exists()?snap.val().pw:null;
+  }catch(e){console.warn("Firebase pw load error:",e);return null;}
+}
+
 async function loadUserDataCloud(username){
   if(!username)return{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
   if(firebaseReady&&db){
     try{
-      const key=username.replace(/[.#$\/\[\]]/g,"_");
-      const snap=await db.ref("users/"+key).once("value");
+      const snap=await db.ref("users/"+fbKey(username)).once("value");
       if(snap.exists()){
         const data=snap.val();
         data.username=username;
@@ -1601,6 +1616,9 @@ async function loadUserDataCloud(username){
         const updated=applyStreakLogic(data);
         saveLocal("pa_user_"+username,updated);
         return updated;
+      } else {
+        // Firebase has no record — treat as new account, do NOT restore from localStorage
+        return {username,xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
       }
     }catch(e){console.warn("Firebase load error:",e);}
   }
@@ -1610,20 +1628,28 @@ function saveUserData(data){
   if(!data.username)return;
   saveLocal("pa_user_"+data.username,data);
   if(firebaseReady&&db){
-    const key=data.username.replace(/[.#$\/\[\]]/g,"_");
-    db.ref("users/"+key).set({...data,updatedAt:Date.now()}).catch(e=>console.warn("Firebase save error:",e));
+    db.ref("users/"+fbKey(data.username)).set({...data,updatedAt:Date.now()}).catch(e=>console.warn("Firebase save error:",e));
   }
 }
 async function pushToLeaderboard(data){
   if(!firebaseReady||!db||!data.username)return;
   if(data.username.toLowerCase()==="admin")return;
-  try{await db.ref("leaderboard/"+data.username.replace(/[.#$\/\[\]]/g,"_")).set({name:data.username,xp:data.xp,streak:data.streak,lessons:data.lessonsCompleted.length,updatedAt:Date.now()});}
+  try{await db.ref("leaderboard/"+fbKey(data.username)).set({name:data.username,xp:data.xp,streak:data.streak,lessons:data.lessonsCompleted.length,updatedAt:Date.now()});}
   catch(e){console.warn("Firebase push error:",e);}
 }
 async function fetchLeaderboard(){
   if(!firebaseReady||!db)return[];
   try{const snap=await db.ref("leaderboard").orderByChild("xp").limitToLast(50).once("value");const entries=[];snap.forEach(c=>{entries.push(c.val());});return entries.sort((a,b)=>b.xp-a.xp);}
   catch(e){console.warn("Firebase fetch error:",e);return[];}
+}
+async function adminDeleteUser(username){
+  if(!firebaseReady||!db)return;
+  const key=fbKey(username);
+  try{
+    await db.ref("users/"+key).remove();
+    await db.ref("leaderboard/"+key).remove();
+    await db.ref("passwords/"+key).remove();
+  }catch(e){console.warn("Admin delete error:",e);}
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1648,27 +1674,38 @@ let state={
 
 function setState(partial){Object.assign(state,partial);renderApp();}
 
+async function finishLogin(username){
+  const user=await loadUserDataCloud(username);
+  // ─── ONE-SHOT PROGRESS RESTORE ───
+  if(!loadLocal("pa_restore_unit4_v1",false)){
+    const restoreIds=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
+    user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...restoreIds])];
+    saveLocal("pa_restore_unit4_v1",true);
+  }
+  saveUserData(user);
+  state.user=user;
+  state.screen="home";
+  fetchLeaderboard().then(lb=>{state.leaderboard=lb;renderApp();});
+  renderApp();
+}
+
 setTimeout(async()=>{
   const savedName=getCurrentUsername();
   if(savedName){
     state.screen="loading";
-    const user=await loadUserDataCloud(savedName);
-    // ─── ONE-SHOT PROGRESS RESTORE ───
-    // Restores Neal's Unit 4 progress (14/16) lost to the migration-wipe bug.
-    // Self-disabling: runs once per browser, then never again.
-    if(!loadLocal("pa_restore_unit4_v1",false)){
-      const restoreIds=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
-      user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...restoreIds])];
-      saveLocal("pa_restore_unit4_v1",true);
+    renderApp();
+    const existingPw=await loadPassword(savedName);
+    if(existingPw!==null){
+      // Returning user with a password — verify before loading
+      Object.assign(state,{screen:"password",_pwUsername:savedName,_pwMode:"verify"});
+      renderApp();
+      return;
     }
-    saveUserData(user);
-    state.user=user;
-    state.screen="home";
-    fetchLeaderboard().then(lb=>{state.leaderboard=lb;renderApp();});
+    await finishLogin(savedName);
   } else {
     state.screen="username";
+    renderApp();
   }
-  renderApp();
 },400);
 
 function renderApp(){
@@ -1676,6 +1713,7 @@ function renderApp(){
   switch(state.screen){
     case"loading":renderLoading();break;
     case"username":renderUsername();break;
+    case"password":renderPassword();break;
     case"home":renderHome();break;
     case"lesson":renderLesson();break;
     case"complete":renderComplete();break;
@@ -1700,25 +1738,116 @@ function renderUsername(){
         style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);
         color:var(--text);font-size:17px;font-weight:700;text-align:center;margin-bottom:8px">
       <div style="color:var(--dim);font-size:12px;margin-bottom:16px">New username = new account · Existing username = resume progress</div>
-      <button id="startBtn" class="btn-primary">START LEARNING</button>
+      <div id="usernameErr" style="color:var(--red);font-size:13px;font-weight:700;margin-bottom:8px;min-height:18px"></div>
+      <button id="startBtn" class="btn-primary">CONTINUE</button>
     </div>
   </div>`;
   const input=document.getElementById("nameInput");const btn=document.getElementById("startBtn");
   input.focus();
-  input.addEventListener("keydown",e=>{if(e.key==="Enter")doSetUsername(input.value);});
-  btn.addEventListener("click",()=>doSetUsername(input.value));
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")doCheckUsername(input.value);});
+  btn.addEventListener("click",()=>doCheckUsername(input.value));
 }
 
-async function doSetUsername(val){
-  const name=val.trim();if(!name)return;
-  setCurrentUsername(name);
-  setState({screen:"loading"});
-  const existing=await loadUserDataCloud(name);
-  const today=new Date().toDateString();
-  const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
-  saveUserData(user);pushToLeaderboard(user);
-  setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+async function doCheckUsername(val){
+  const name=val.trim();
+  if(!name)return;
+  const errEl=document.getElementById("usernameErr");
+  if(errEl)errEl.textContent="Checking…";
+  const existingPw=await loadPassword(name);
+  if(existingPw!==null){
+    // Known user — go to password verify screen
+    Object.assign(state,{screen:"password",_pwUsername:name,_pwMode:"verify"});
+    renderApp();
+  } else {
+    // New user — go to password create screen
+    Object.assign(state,{screen:"password",_pwUsername:name,_pwMode:"create"});
+    renderApp();
+  }
 }
+
+function renderPassword(){
+  const username=state._pwUsername||"";
+  const mode=state._pwMode||"verify"; // "verify" | "create" | "confirm"
+  const isVerify=mode==="verify";
+  const isConfirm=mode==="confirm";
+  const title=isVerify?"Welcome back!":isConfirm?"Confirm your password":"Create a password";
+  const subtitle=isVerify?`Enter your password for <strong>${username}</strong>`:
+    isConfirm?"Re-enter your password to confirm":
+    `Choose a password for <strong>${username}</strong> (4–8 characters)`;
+  const btnLabel=isVerify?"LOG IN":isConfirm?"CONFIRM":"NEXT";
+
+  app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="text-align:center;max-width:360px;width:100%">
+      <div class="float" style="font-size:72px;margin-bottom:16px">${isVerify?"🔑":"🔒"}</div>
+      <div style="font-family:var(--display);font-size:28px;color:var(--green);font-weight:800;margin-bottom:8px">${title}</div>
+      <div style="color:var(--dim);font-size:14px;margin-bottom:28px">${subtitle}</div>
+      <input id="pwInput" type="password" placeholder="Password" maxlength="8"
+        style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);
+        color:var(--text);font-size:20px;font-weight:700;text-align:center;letter-spacing:6px;margin-bottom:8px">
+      <div id="pwErr" style="color:var(--red);font-size:13px;font-weight:700;margin-bottom:12px;min-height:18px"></div>
+      <button id="pwBtn" class="btn-primary">${btnLabel}</button>
+      <button id="pwBack" style="background:none;border:none;color:var(--dim);font-size:13px;font-weight:700;margin-top:16px;display:block;width:100%;cursor:pointer">← Back</button>
+    </div>
+  </div>`;
+  const input=document.getElementById("pwInput");
+  input.focus();
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")doPwAction();});
+  document.getElementById("pwBtn").addEventListener("click",doPwAction);
+  document.getElementById("pwBack").addEventListener("click",()=>{
+    if(isConfirm){
+      Object.assign(state,{screen:"password",_pwMode:"create",_pwFirst:null});renderApp();
+    } else {
+      setCurrentUsername("");
+      Object.assign(state,{screen:"username",_pwUsername:null,_pwMode:null,_pwFirst:null});renderApp();
+    }
+  });
+}
+
+async function doPwAction(){
+  const pw=document.getElementById("pwInput").value;
+  const errEl=document.getElementById("pwErr");
+  const mode=state._pwMode;
+  const username=state._pwUsername;
+
+  if(mode==="verify"){
+    const stored=await loadPassword(username);
+    if(pw===stored){
+      setCurrentUsername(username);
+      setState({screen:"loading"});
+      await finishLogin(username);
+    } else {
+      errEl.textContent="Incorrect password. Try again.";
+      document.getElementById("pwInput").value="";
+      document.getElementById("pwInput").classList.add("shake");
+      setTimeout(()=>document.getElementById("pwInput")?.classList.remove("shake"),400);
+    }
+  } else if(mode==="create"){
+    if(pw.length<4){errEl.textContent="Password must be at least 4 characters.";return;}
+    if(pw.length>8){errEl.textContent="Password must be 8 characters or fewer.";return;}
+    Object.assign(state,{screen:"password",_pwMode:"confirm",_pwFirst:pw});
+    renderApp();
+  } else if(mode==="confirm"){
+    if(pw!==state._pwFirst){
+      errEl.textContent="Passwords don't match. Try again.";
+      document.getElementById("pwInput").value="";
+      return;
+    }
+    // Save password & create account
+    errEl.textContent="";
+    await savePassword(username,pw);
+    setCurrentUsername(username);
+    setState({screen:"loading"});
+    const today=new Date().toDateString();
+    const existing=await loadUserDataCloud(username);
+    const user=existing.lastActiveDate?existing:{...existing,username,streak:1,lastActiveDate:today};
+    saveUserData(user);pushToLeaderboard(user);
+    state.user=user;
+    state.screen="home";
+    fetchLeaderboard().then(lb=>{state.leaderboard=lb;renderApp();});
+    renderApp();
+  }
+}
+
 
 function renderHome(){
   const u=state.user;
@@ -1772,7 +1901,7 @@ function renderHome(){
   let lbHTML="";
   if(!firebaseReady){lbHTML=`<div style="text-align:center;padding:40px 20px;color:var(--dim)"><div style="font-size:36px;margin-bottom:12px">🌐</div><div style="font-size:15px;font-weight:700;margin-bottom:8px">Leaderboard available when hosted</div></div>`;}
   else if(state.leaderboard.length===0){lbHTML=`<div style="text-align:center;padding:40px;color:var(--dim);font-size:15px">No learners yet. Be the first!</div>`;}
-  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;lbHTML+=`<div class="lb-row ${isMe?'is-me':''}"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div></div>`;});lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
+  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;lbHTML+=`<div class="lb-row ${isMe?'is-me':''}" style="gap:8px"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div>${isAdmin&&!isMe?`<button class="admin-del-btn" data-name="${entry.name}" style="background:var(--bad);border:1.5px solid var(--red);border-radius:8px;padding:4px 10px;color:var(--red);font-size:12px;font-weight:800;flex-shrink:0">🗑 Delete</button>`:''}  </div>`;});lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
 
   const pct=Math.round((u.lessonsCompleted||[]).length/LESSONS.length*100);
   app.innerHTML=`<div style="padding-bottom:80px">
@@ -1809,6 +1938,16 @@ function renderHome(){
     setState({unitToggleOverrides:newOverrides});
   });});
   const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
+  if(isAdmin){
+    document.querySelectorAll(".admin-del-btn").forEach(btn=>{btn.addEventListener("click",async()=>{
+      const target=btn.dataset.name;
+      if(!confirm(`Delete user "${target}"?\n\nThis removes their progress, leaderboard entry, and password from Firebase. They will start fresh if they log in again.`))return;
+      btn.textContent="Deleting…";btn.disabled=true;
+      await adminDeleteUser(target);
+      const lb=await fetchLeaderboard();
+      setState({leaderboard:lb});
+    });});
+  }
   document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
 
   // Scroll to just-finished lesson if returning from completion
