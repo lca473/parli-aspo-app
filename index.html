@@ -1651,7 +1651,6 @@ function setState(partial){Object.assign(state,partial);renderApp();}
 setTimeout(async()=>{
   const savedName=getCurrentUsername();
   if(savedName){
-    if(savedName.toLowerCase()==="admin"){state.screen="loading";renderApp();await finishLogin(savedName);return;}
     const pw=await loadPassword(savedName);
     state.screen="password";state.pwName=savedName;state.pwMode=pw?"verify":"create";state.pwFirst=null;
     renderApp();return;
@@ -1751,7 +1750,6 @@ function renderPassword(){
 async function doSetUsername(val){
   const name=val.trim();if(!name)return;
   setCurrentUsername(name);
-  if(name.toLowerCase()==="admin"){setState({screen:"loading"});finishLogin(name);return;}
   setState({screen:"loading"});
   const pw=await loadPassword(name);
   setState({screen:"password",pwName:name,pwMode:pw?"verify":"create",pwFirst:null});
