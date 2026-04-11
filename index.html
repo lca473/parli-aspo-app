@@ -1675,14 +1675,16 @@ let state={
 function setState(partial){Object.assign(state,partial);renderApp();}
 
 async function finishLogin(username){
-  const user=await loadUserDataCloud(username);
+  const today=new Date().toDateString();
+  const loaded=await loadUserDataCloud(username);
+  const user=loaded.lastActiveDate?loaded:{...loaded,username,streak:1,lastActiveDate:today};
   // ─── ONE-SHOT PROGRESS RESTORE ───
   if(!loadLocal("pa_restore_unit4_v1",false)){
     const restoreIds=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
     user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...restoreIds])];
     saveLocal("pa_restore_unit4_v1",true);
   }
-  saveUserData(user);
+  saveUserData(user);pushToLeaderboard(user);
   state.user=user;
   state.screen="home";
   fetchLeaderboard().then(lb=>{state.leaderboard=lb;renderApp();});
@@ -1696,12 +1698,13 @@ setTimeout(async()=>{
     renderApp();
     const existingPw=await loadPassword(savedName);
     if(existingPw!==null){
-      // Returning user with a password — verify before loading
+      // Returning user with a password — must verify
       Object.assign(state,{screen:"password",_pwUsername:savedName,_pwMode:"verify"});
-      renderApp();
-      return;
+    } else {
+      // Returning user with NO password yet — must create one
+      Object.assign(state,{screen:"password",_pwUsername:savedName,_pwMode:"create"});
     }
-    await finishLogin(savedName);
+    renderApp();
   } else {
     state.screen="username";
     renderApp();
@@ -1832,19 +1835,12 @@ async function doPwAction(){
       document.getElementById("pwInput").value="";
       return;
     }
-    // Save password & create account
+    // Save password then load the account (existing progress preserved, new users get fresh start)
     errEl.textContent="";
     await savePassword(username,pw);
     setCurrentUsername(username);
     setState({screen:"loading"});
-    const today=new Date().toDateString();
-    const existing=await loadUserDataCloud(username);
-    const user=existing.lastActiveDate?existing:{...existing,username,streak:1,lastActiveDate:today};
-    saveUserData(user);pushToLeaderboard(user);
-    state.user=user;
-    state.screen="home";
-    fetchLeaderboard().then(lb=>{state.leaderboard=lb;renderApp();});
-    renderApp();
+    await finishLogin(username);
   }
 }
 
