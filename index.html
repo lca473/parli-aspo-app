@@ -895,7 +895,7 @@ const V = {
      sentences:[
        {pa:["Me","waki","en","la","matino"],en:"I wake up in the morning"},
        {pa:["Me","nutri","pano","i","agwi","kafo"],en:"I eat bread and drink coffee"},
-       {pa:["Pos","me","iri","ad","labori"],en:"Then I go to work"},
+       {pa:["Late","me","iri","ad","labori"],en:"Then I go to work"},
      ]},
     {en:"My friend lives in the city. She has a big house. We often eat together in the evening.",
      sentences:[
@@ -928,7 +928,7 @@ const V = {
     {en:"She wants to learn to speak Parli Aspo. She studies every day. She will be able to speak well soon.",
      sentences:[
        {pa:["Lu","voli","lerni","parli","Parli","Aspo"],en:"She wants to learn to speak Parli Aspo"},
-       {pa:["Lu","studi","toda","oyo"],en:"She studies every day"},
+       {pa:["Lu","studi","toda","yo"],en:"She studies every day"},
        {pa:["Lu","fu","povi","parli","bona","balda"],en:"She will be able to speak well soon"},
      ]},
   ],
@@ -1440,9 +1440,9 @@ function generateParagraphExercises(lesson){
   const exercises=[];
 
   paraGroups.forEach(para=>{
-    // Intro MC: what is this paragraph about?
-    const enWords=para.en.split(" ").slice(0,6).join(" ")+"…";
-    exercises.push({type:"paraIntro",prompt:`📖 Read this paragraph:\n"${para.en}"`,info:true,label:"Paragraph Preview"});
+    // Paragraph translation: user types the whole paragraph in PA (graded as fill)
+    const fullPa=para.sentences.map(s=>s.pa.join(" ")).join(" ").toLowerCase();
+    exercises.push({type:"fill",prompt:`Translate this paragraph to Parli Aspo:\n"${para.en}"`,correct:fullPa,isParagraph:true});
 
     // Word order for each sentence in paragraph
     para.sentences.forEach(s=>{
@@ -1465,9 +1465,7 @@ function generateParagraphExercises(lesson){
     exercises.push({type:"errcorrect",prompt:`Is this sentence correct?\n"${errPA.join(" ")}"`,sentenceEn:errSent.en,isCorrect:false,correctSent:errSent.pa.join(" ")});
   });
 
-  return shuffle(exercises.filter(e=>e.type!=="paraIntro")).slice(0,14).concat(
-    exercises.filter(e=>e.type==="paraIntro").slice(0,1)
-  ).slice(0,15);
+  return shuffle(exercises).slice(0,14);
 }
 
 function generateFreeTextExercises(lesson){
@@ -2091,21 +2089,25 @@ function renderFill(ex){
   const borderColor=state.fillAnswered?(state.fillCorrect?"var(--green)":"var(--red)"):"var(--border)";
   const bgColor=state.fillAnswered?(state.fillCorrect?"var(--ok)":"var(--bad)"):"var(--input)";
   return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div>
-    <div style="display:flex;gap:10px">
-      <input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
-        style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">
+    <div style="display:flex;gap:10px;flex-direction:${ex.isParagraph?'column':'row'}">
+      ${ex.isParagraph
+        ?`<textarea id="fillInput" placeholder="Type the full paragraph in Parli Aspo..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
+          style="flex:1;min-height:140px;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:600;font-family:var(--font);resize:vertical;line-height:1.5">${state.fillInput}</textarea>`
+        :`<input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
+        style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">`}
       ${!state.fillAnswered?'<button id="fillCheck" class="btn-primary" style="width:auto;padding:14px 20px;font-size:15px">CHECK</button>':''}
     </div>${feedbackHTML}`;
 }
 function bindFill(ex){
   if(state.fillAnswered)return;
   const input=document.getElementById("fillInput");const btn=document.getElementById("fillCheck");
-  if(input){input.focus({preventScroll:true});input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter")doFillCheck(ex);});}
+  if(input){input.focus({preventScroll:true});input.addEventListener("input",e=>{state.fillInput=e.target.value;});input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!ex.isParagraph)doFillCheck(ex);});}
   if(btn)btn.addEventListener("click",()=>doFillCheck(ex));
 }
 function doFillCheck(ex){
   if(state.fillAnswered||!(state.fillInput||"").trim())return;
-  const correct=state.fillInput.trim().toLowerCase()===ex.correct.toLowerCase();
+  const norm=s=>s.trim().toLowerCase().replace(/[.,!?;:"']/g,"").replace(/\s+/g," ");
+  const correct=norm(state.fillInput)===norm(ex.correct);
   state.fillAnswered=true;state.fillCorrect=correct;renderApp();
   if(correct){setTimeout(()=>handleAnswer(true),1200);}else{setTimeout(()=>handleAnswer(false),600);}
 }
