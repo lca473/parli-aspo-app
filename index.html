@@ -1604,7 +1604,7 @@ async function loadUserDataCloud(username){
       }
     }catch(e){console.warn("Firebase load error:",e);}
   }
-  return loadUserData(username);
+  return{username,xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null};
 }
 function saveUserData(data){
   if(!data.username)return;
@@ -1651,7 +1651,10 @@ function setState(partial){Object.assign(state,partial);renderApp();}
 setTimeout(async()=>{
   const savedName=getCurrentUsername();
   if(savedName){
-    state.screen="loading";
+    if(savedName.toLowerCase()==="admin"){state.screen="loading";renderApp();await finishLogin(savedName);return;}
+    const pw=await loadPassword(savedName);
+    state.screen="password";state.pwName=savedName;state.pwMode=pw?"verify":"create";state.pwFirst=null;
+    renderApp();return;
     const user=await loadUserDataCloud(savedName);
     // ─── ONE-SHOT PROGRESS RESTORE ───
     // Restores Neal's Unit 4 progress (14/16) lost to the migration-wipe bug.
@@ -1679,6 +1682,7 @@ function renderApp(){
     case"home":renderHome();break;
     case"lesson":renderLesson();break;
     case"complete":renderComplete();break;
+    case"password":renderPassword();break;
   }
 }
 
@@ -1709,15 +1713,48 @@ function renderUsername(){
   btn.addEventListener("click",()=>doSetUsername(input.value));
 }
 
-async function doSetUsername(val){
-  const name=val.trim();if(!name)return;
-  setCurrentUsername(name);
-  setState({screen:"loading"});
+function fbKey(u){return (u||"").replace(/[.#$\/\[\]]/g,"_");}
+async function savePassword(u,pw){if(firebaseReady&&db){try{await db.ref("passwords/"+fbKey(u)).set(pw);}catch(e){}}}
+async function loadPassword(u){if(firebaseReady&&db){try{const s=await db.ref("passwords/"+fbKey(u)).once("value");return s.exists()?s.val():null;}catch(e){}}return null;}
+async function adminDeleteUser(u){if(!firebaseReady||!db)return;const k=fbKey(u);try{await db.ref("users/"+k).remove();await db.ref("leaderboard/"+k).remove();await db.ref("passwords/"+k).remove();}catch(e){console.warn(e);}}
+async function finishLogin(name){
   const existing=await loadUserDataCloud(name);
   const today=new Date().toDateString();
   const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
-  saveUserData(user);pushToLeaderboard(user);
-  setState({user,screen:"home"});fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+  if(!loadLocal("pa_restore_unit4_v1",false)){
+    const r=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
+    user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...r])];
+    saveLocal("pa_restore_unit4_v1",true);
+  }
+  const isAdmin=name.toLowerCase()==="admin";
+  if(!isAdmin){saveUserData(user);pushToLeaderboard(user);}
+  setState({user,screen:"home"});
+  fetchLeaderboard().then(lb=>setState({leaderboard:lb}));
+}
+function renderPassword(){
+  const m=state.pwMode,name=state.pwName;
+  const title=m==="verify"?"Enter your password":m==="create"?"Create a password":"Confirm password";
+  const sub=m==="verify"?`Welcome back, ${name}`:m==="create"?`New account: ${name} · 4–8 characters`:"Type it again to confirm";
+  app.innerHTML=`<div id="pwWrap" style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px"><div style="text-align:center;max-width:360px;width:100%"><div class="float" style="font-size:72px;margin-bottom:16px">🔒</div><div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800;margin-bottom:4px">${title}</div><div style="color:var(--dim);font-size:14px;margin-bottom:28px">${sub}</div><input id="pwInput" type="password" maxlength="8" placeholder="••••" style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:20px;font-weight:700;text-align:center;margin-bottom:12px;letter-spacing:4px"><div id="pwErr" style="color:#e74c3c;font-size:13px;min-height:18px;margin-bottom:10px"></div><button id="pwBtn" class="btn-primary">CONTINUE</button><button id="pwBack" class="btn-secondary" style="margin-top:8px">← Back</button></div></div><style>@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}.shake{animation:shake .4s}</style>`;
+  const inp=document.getElementById("pwInput"),btn=document.getElementById("pwBtn"),err=document.getElementById("pwErr");
+  inp.focus();
+  const go=async()=>{
+    const v=inp.value;err.textContent="";
+    if(m==="verify"){const real=await loadPassword(name);if(v===real){finishLogin(name);}else{inp.classList.remove("shake");void inp.offsetWidth;inp.classList.add("shake");err.textContent="Wrong password";inp.value="";}}
+    else if(m==="create"){if(v.length<4||v.length>8){err.textContent="Must be 4–8 characters";return;}setState({pwMode:"confirm",pwFirst:v});}
+    else{if(v!==state.pwFirst){err.textContent="Passwords don't match";inp.value="";return;}await savePassword(name,v);finishLogin(name);}
+  };
+  btn.addEventListener("click",go);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")go();});
+  document.getElementById("pwBack").addEventListener("click",()=>setState({screen:"username"}));
+}
+async function doSetUsername(val){
+  const name=val.trim();if(!name)return;
+  setCurrentUsername(name);
+  if(name.toLowerCase()==="admin"){setState({screen:"loading"});finishLogin(name);return;}
+  setState({screen:"loading"});
+  const pw=await loadPassword(name);
+  setState({screen:"password",pwName:name,pwMode:pw?"verify":"create",pwFirst:null});
 }
 
 function renderHome(){
@@ -1772,7 +1809,7 @@ function renderHome(){
   let lbHTML="";
   if(!firebaseReady){lbHTML=`<div style="text-align:center;padding:40px 20px;color:var(--dim)"><div style="font-size:36px;margin-bottom:12px">🌐</div><div style="font-size:15px;font-weight:700;margin-bottom:8px">Leaderboard available when hosted</div></div>`;}
   else if(state.leaderboard.length===0){lbHTML=`<div style="text-align:center;padding:40px;color:var(--dim);font-size:15px">No learners yet. Be the first!</div>`;}
-  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;lbHTML+=`<div class="lb-row ${isMe?'is-me':''}"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div></div>`;});lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
+  else{state.leaderboard.forEach((entry,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1);const isMe=entry.name===u.username;const showDel=isAdmin&&entry.name.toLowerCase()!=="admin";lbHTML+=`<div class="lb-row ${isMe?'is-me':''}"><span style="font-size:${i<3?'24px':'16px'};width:36px;text-align:center;color:var(--dim);font-weight:800">${medal}</span><div style="flex:1"><div style="font-size:15px;font-weight:800">${entry.name} ${isMe?'<span style="color:var(--green);font-size:12px">(you)</span>':''}</div><div style="color:var(--dim);font-size:12px;margin-top:2px">${entry.lessons} lessons · 🔥 ${entry.streak}</div></div><div style="color:var(--gold);font-weight:800;font-size:15px">⚡ ${entry.xp}</div>${showDel?`<button class="admin-del" data-user="${entry.name}" style="margin-left:10px;background:#e74c3c;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-weight:800;cursor:pointer">🗑</button>`:""}</div>`;});lbHTML+=`<button id="refreshLB" class="btn-secondary" style="margin-top:10px;font-size:14px">↻ Refresh</button>`;}
 
   const pct=Math.round((u.lessonsCompleted||[]).length/LESSONS.length*100);
   app.innerHTML=`<div style="padding-bottom:80px">
@@ -1809,6 +1846,7 @@ function renderHome(){
     setState({unitToggleOverrides:newOverrides});
   });});
   const refreshBtn=document.getElementById("refreshLB");if(refreshBtn)refreshBtn.addEventListener("click",()=>fetchLeaderboard().then(lb=>setState({leaderboard:lb})));
+  document.querySelectorAll(".admin-del").forEach(b=>b.addEventListener("click",async()=>{const un=b.dataset.user;if(confirm(`Delete user "${un}"? This removes their account, leaderboard entry, and password. Cannot be undone.`)){await adminDeleteUser(un);const lb=await fetchLeaderboard();setState({leaderboard:lb});}}));
   document.getElementById("switchUserBtn").addEventListener("click",()=>{setCurrentUsername("");setState({screen:"username",user:{username:"",xp:0,streak:0,lessonsCompleted:[],lastActiveDate:null}});});
 
   // Scroll to just-finished lesson if returning from completion
