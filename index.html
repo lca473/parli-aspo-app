@@ -1697,14 +1697,7 @@ setTimeout(async()=>{
     state.screen="password";state.pwName=savedName;state.pwMode=pw?"verify":"create";state.pwFirst=null;
     renderApp();return;
     const user=await loadUserDataCloud(savedName);
-    // ─── ONE-SHOT PROGRESS RESTORE ───
-    // Restores Neal's Unit 4 progress (14/16) lost to the migration-wipe bug.
-    // Self-disabling: runs once per browser, then never again.
-    if(!loadLocal("pa_restore_unit4_v1",false)){
-      const restoreIds=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
-      user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...restoreIds])];
-      saveLocal("pa_restore_unit4_v1",true);
-    }
+    // (The one-shot Unit 4 restore lives in finishLogin, gated to Neal only.)
     saveUserData(user);
     state.user=user;
     state.screen="home";
@@ -1766,7 +1759,9 @@ async function finishLogin(name){
   const existing=await loadUserDataCloud(name);
   const today=new Date().toDateString();
   const user=existing.lastActiveDate?existing:{...existing,username:name,streak:1,lastActiveDate:today};
-  if(!loadLocal("pa_restore_unit4_v1",false)){
+  // One-shot restore is scoped to Neal only — previously this ran for any user
+  // whose browser hadn't set the flag, which corrupted other users' progress.
+  if(name==="Neal"&&!loadLocal("pa_restore_unit4_v1",false)){
     const r=["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","people1b","coreVerbs1b","preps1b","s1","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","food1b","home1b","s2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","nature1b","places1b","time1b","animals1b","s3","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","feelings1b","abstract1b","personality1b","adverbs1b","midReview1","midReview2"];
     user.lessonsCompleted=[...new Set([...(user.lessonsCompleted||[]),...r])];
     saveLocal("pa_restore_unit4_v1",true);
