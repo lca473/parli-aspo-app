@@ -5,7 +5,7 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Parli Aspo — The Language of Hope</title>
+<title>ParliAspo — The Language of Hope</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
 <!-- EmailJS SDK -->
@@ -536,7 +536,7 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
   <div class="landing-content">
     <div class="landing-hero fade-up">
       <div class="landing-globe">🌍</div>
-      <div class="landing-title">Parli Aspo</div>
+      <div class="landing-title">ParliAspo</div>
       <div class="landing-tagline">✨ The language of hope</div>
     </div>
 
@@ -578,7 +578,7 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
       <button class="landing-card" onclick="showView('app')">
         <div class="landing-card-icon" style="background:linear-gradient(135deg,rgba(88,204,2,0.2),rgba(88,204,2,0.05));border:1.5px solid rgba(88,204,2,0.3)">🎓</div>
         <div class="landing-card-body">
-          <div class="landing-card-title">Learn Parli Aspo</div>
+          <div class="landing-card-title">Learn ParliAspo</div>
           <div class="landing-card-desc">Duolingo-style lessons · XP · Streaks · Leaderboard</div>
         </div>
         <div class="landing-card-arrow">›</div>
@@ -626,7 +626,7 @@ input, textarea, select { font-family:var(--font); outline:none; color:#FFF; }
 <div id="view-app" class="view">
   <nav class="top-nav">
     <button class="top-nav-back" onclick="showView('home')">‹ Home</button>
-    <div class="top-nav-title" style="font-size:16px">🌍 Parli Aspo</div>
+    <div class="top-nav-title" style="font-size:16px">🌍 ParliAspo</div>
     <div class="top-nav-spacer"></div>
   </nav>
   <div class="app-inner" id="app"></div>
@@ -956,9 +956,9 @@ const V = {
        {pa:["Lo","pa","esi","malfasila","ma","nos","pa","dureli"],en:"It was difficult but we continued"},
        {pa:["Nuna","la","kaso","esi","bela","i","granda"],en:"Now the house is beautiful and big"},
      ]},
-    {en:"She wants to learn to speak Parli Aspo. She studies often. She will be able to speak well soon.",
+    {en:"She wants to learn to speak ParliAspo. She studies often. She will be able to speak well soon.",
      sentences:[
-       {pa:["Lu","voli","lerni","parli","Parli","Aspo"],en:"She wants to learn to speak Parli Aspo"},
+       {pa:["Lu","voli","lerni","parli","Parli","Aspo"],en:"She wants to learn to speak ParliAspo"},
        {pa:["Lu","studi","ofta"],en:"She studies often"},
        {pa:["Lu","fu","povi","parli","bona","balda"],en:"She will be able to speak well soon"},
      ]},
@@ -1106,14 +1106,14 @@ const LS={
 // FREE TEXT PROMPTS (lessons 98-99)
 // ═══════════════════════════════════════════════════════════════
 const FREETEXT_PROMPTS = [
-  {prompt:"Describe your morning routine in at least 3 Parli Aspo sentences.",hint:"Use: waki, nutri, agwi, iri, labori, matino"},
-  {prompt:"Write 3 sentences about your family in Parli Aspo.",hint:"Use: patro, matro, frato, yoyo, ami, havi, esi"},
-  {prompt:"Describe the weather today in Parli Aspo. Write at least 2 sentences.",hint:"Use: nebofelo, suna, pluvi, venaro, malfriga, friga"},
+  {prompt:"Describe your morning routine in at least 3 ParliAspo sentences.",hint:"Use: waki, nutri, agwi, iri, labori, matino"},
+  {prompt:"Write 3 sentences about your family in ParliAspo.",hint:"Use: patro, matro, frato, yoyo, ami, havi, esi"},
+  {prompt:"Describe the weather today in ParliAspo. Write at least 2 sentences.",hint:"Use: nebofelo, suna, pluvi, venaro, malfriga, friga"},
   {prompt:"Write 2-3 sentences about something you want to do in the future.",hint:"Use: fu, voli, trati, iri, lerni, povi"},
-  {prompt:"Describe a place you love. Write at least 3 sentences in Parli Aspo.",hint:"Use: bela, granda, esi, havi, kasi, amor, en"},
-  {prompt:"Tell a short story in Parli Aspo about someone who found something they lost.",hint:"Use: trovi, buski, pa, repensi, klavo, libo"},
+  {prompt:"Describe a place you love. Write at least 3 sentences in ParliAspo.",hint:"Use: bela, granda, esi, havi, kasi, amor, en"},
+  {prompt:"Tell a short story in ParliAspo about someone who found something they lost.",hint:"Use: trovi, buski, pa, repensi, klavo, libo"},
   {prompt:"Write 3 sentences about what you believe is important in life.",hint:"Use: kredi, grava, vivo, libero, paso, amo"},
-  {prompt:"Describe a memory from your childhood in Parli Aspo.",hint:"Use: pa, repensi, kido, ludi, ami, felisa"},
+  {prompt:"Describe a memory from your childhood in ParliAspo.",hint:"Use: pa, repensi, kido, ludi, ami, felisa"},
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -1235,11 +1235,11 @@ const LESSONS=[
   {id:"deepReview2",title:"Deep Review 2",desc:"Full vocab random challenge",icon:"🔁",vocabKey:"_review",xp:40,unit:5,isReview:true,reviewPool:["health","daily1","daily2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","tense1","tense2","mal1","mal2","compound1","compound2","reprefix","diminutive","advanced1","advanced2","advanced3","advanced4"]},
   {id:"para8",title:"Paragraph 8",desc:"Memory & reflection",icon:"📜",vocabKey:"para8",xp:50,unit:5,isParagraph:true},
   {id:"advanced3b",title:"Advanced Verbs Review",desc:"Review: advanced verbs & actions",icon:"🔁",vocabKey:"_review",xp:35,unit:5,isReview:true,reviewPool:["advanced1","advanced2","advanced3","advanced4"]},
-  {id:"freetext1",title:"Free Writing 1",desc:"Write freely in Parli Aspo",icon:"✍️",vocabKey:"_freetext",xp:55,unit:5,isFreeText:true},
+  {id:"freetext1",title:"Free Writing 1",desc:"Write freely in ParliAspo",icon:"✍️",vocabKey:"_freetext",xp:55,unit:5,isFreeText:true},
   {id:"freetext2",title:"Free Writing 2",desc:"Express yourself freely",icon:"✍️",vocabKey:"_freetext",xp:55,unit:5,isFreeText:true},
   {id:"fluencyReview3",title:"Fluency Review 3",desc:"Final mixed review before the test",icon:"🔁",vocabKey:"_review",xp:40,unit:5,isReview:true,reviewPool:["feelings1","abstract1","tense1","tense2","mal1","compound1","reprefix","diminutive","verbchain","relclauses","advanced1","advanced2"]},
   {id:"finalReview",title:"Final Review",desc:"Everything — the complete draw",icon:"🔁",vocabKey:"_review",xp:50,unit:5,isReview:true,reviewPool:["greetings1","pronouns1","possessives","articles1","coreVerbs1","numbers","people1","people2","basicAdj","colors1","basicVerbs2","movement","preps1","conjunctions1","time1","days","food1","food2","kitchen","home1","home2","objects1","objects2","body1","body2","health","daily1","daily2","nature1","nature2","nature3","animals1","animals2","places","transport","time2","feelings1","feelings2","personality","abstract1","abstract2","adverbs","quantities","communication","tense1","tense2","mal1","mal2","compound1","compound2","reprefix","diminutive","advanced1","advanced2","advanced3","advanced4"]},
-  {id:"finalTest",title:"Final Test",desc:"The complete Parli Aspo challenge — no hearts, one shot",icon:"🎓",vocabKey:"_final",xp:100,unit:5,isFinalTest:true},
+  {id:"finalTest",title:"Final Test",desc:"The complete ParliAspo challenge — no hearts, one shot",icon:"🎓",vocabKey:"_final",xp:100,unit:5,isFinalTest:true},
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -1301,7 +1301,7 @@ function generateVocabExercises(lesson){
     if(!canAdd(item.pa))return;
     const wrong=pick(wordItems.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);
     if(wrong.length<3)return;
-    exercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
+    exercises.push({type:"mc",prompt:`How do you say "${item.en}" in ParliAspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
     markUsed(item.pa);
   });
 
@@ -1322,7 +1322,7 @@ function generateVocabExercises(lesson){
   // 5. Fill in the blank (PA word given English)
   shuffle(wordItems).slice(0,3).forEach(item=>{
     if(!canAdd(item.pa))return;
-    exercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});
+    exercises.push({type:"fill",prompt:`"${item.en}" in ParliAspo is:`,correct:item.pa.toLowerCase()});
     markUsed(item.pa);
   });
 
@@ -1440,7 +1440,7 @@ function generateReviewExercises(lesson){
     if(!canAdd(item.pa))return;
     const wrong=pick(allItems.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);
     if(wrong.length<3)return;
-    exercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
+    exercises.push({type:"mc",prompt:`How do you say "${item.en}" in ParliAspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
     markUsed(item.pa);
   });
 
@@ -1458,7 +1458,7 @@ function generateReviewExercises(lesson){
 
   shuffle(picked).slice(0,3).forEach(item=>{
     if(!canAdd(item.pa))return;
-    exercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});
+    exercises.push({type:"fill",prompt:`"${item.en}" in ParliAspo is:`,correct:item.pa.toLowerCase()});
     markUsed(item.pa);
   });
 
@@ -1485,7 +1485,7 @@ function generateParagraphExercises(lesson){
         });
       }
     });
-    exercises.push({type:"fill",prompt:`Translate this paragraph to Parli Aspo:\n"${para.en}"`,correct:fullPa,correctAlts:paraAlts.length>0?paraAlts:null,isParagraph:true});
+    exercises.push({type:"fill",prompt:`Translate this paragraph to ParliAspo:\n"${para.en}"`,correct:fullPa,correctAlts:paraAlts.length>0?paraAlts:null,isParagraph:true});
 
     // Word order for each sentence in paragraph
     para.sentences.forEach(s=>{
@@ -1546,7 +1546,7 @@ function generateFinalTest(){
   pick(allItems.filter(v=>!used.has(v.pa)),4).forEach(item=>{
     used.add(item.pa);
     const wrong=pick(allItems.filter(v=>v.pa!==item.pa),3).map(v=>v.pa);
-    if(wrong.length>=3)exercises.push({type:"mc",prompt:`How do you say "${item.en}" in Parli Aspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
+    if(wrong.length>=3)exercises.push({type:"mc",prompt:`How do you say "${item.en}" in ParliAspo?`,correct:item.pa,options:shuffle([item.pa,...wrong])});
   });
 
   // 3 True/False
@@ -1566,7 +1566,7 @@ function generateFinalTest(){
   // 2 fill
   pick(allItems.filter(v=>!used.has(v.pa)),2).forEach(item=>{
     used.add(item.pa);
-    exercises.push({type:"fill",prompt:`"${item.en}" in Parli Aspo is:`,correct:item.pa.toLowerCase()});
+    exercises.push({type:"fill",prompt:`"${item.en}" in ParliAspo is:`,correct:item.pa.toLowerCase()});
   });
 
   // 3 word-order from sentence checkpoints
@@ -1727,7 +1727,7 @@ function renderApp(){
 function renderLoading(){
   app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;flex-direction:column">
     <div class="float" style="font-size:64px;margin-bottom:16px">🌍</div>
-    <div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800">Parli Aspo</div>
+    <div style="font-family:var(--display);font-size:26px;color:var(--green);font-weight:800">ParliAspo</div>
     <div style="color:var(--dim);font-size:14px;margin-top:6px">Syncing your progress…</div>
   </div>`;
 }
@@ -1736,7 +1736,7 @@ function renderUsername(){
   app.innerHTML=`<div style="min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:24px">
     <div style="text-align:center;max-width:360px;width:100%">
       <div class="float" style="font-size:72px;margin-bottom:16px">🌍</div>
-      <div style="font-family:var(--display);font-size:32px;color:var(--green);font-weight:800;margin-bottom:4px">Parli Aspo</div>
+      <div style="font-family:var(--display);font-size:32px;color:var(--green);font-weight:800;margin-bottom:4px">ParliAspo</div>
       <div style="color:var(--dim);font-size:15px;margin-bottom:36px">The language of hope</div>
       <input id="nameInput" type="text" placeholder="Enter your username" maxlength="20" value=""
         style="width:100%;padding:16px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);
@@ -1853,7 +1853,7 @@ function renderHome(){
   const pct=Math.round((u.lessonsCompleted||[]).length/LESSONS.length*100);
   app.innerHTML=`<div style="padding-bottom:80px">
     <div style="padding:16px 20px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌍</span><span style="font-family:var(--display);color:var(--green);font-weight:800;font-size:19px">Parli Aspo</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌍</span><span style="font-family:var(--display);color:var(--green);font-weight:800;font-size:19px">ParliAspo</span></div>
       <div style="display:flex;gap:8px;align-items:center"><span class="badge badge-streak">🔥 ${u.streak||0}</span><span class="badge badge-xp">⚡ ${u.xp||0} XP</span></div>
     </div>
     <div style="padding:14px 20px 8px">
@@ -2136,7 +2136,7 @@ function renderFreeText(ex){
     return `<div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:12px;letter-spacing:0.5px">✍️ FREE WRITING</div>
     <div style="font-size:18px;font-weight:800;margin-bottom:12px;line-height:1.5">${ex.prompt}</div>
     <div style="color:var(--blue);font-size:13px;margin-bottom:16px;font-style:italic">💡 Hint: ${ex.hint}</div>
-    <textarea id="ftInput" rows="5" placeholder="Write in Parli Aspo..." autocomplete="off" autocapitalize="off"
+    <textarea id="ftInput" rows="5" placeholder="Write in ParliAspo..." autocomplete="off" autocapitalize="off"
       style="width:100%;padding:14px;background:var(--input);border:2.5px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:15px;font-weight:600;resize:vertical;margin-bottom:12px">${state.freetextInput}</textarea>
     <button id="ftSubmit" class="btn-primary">SUBMIT</button>`;
   }
@@ -2164,7 +2164,7 @@ function renderFill(ex){
   return `<div style="font-size:20px;font-weight:800;margin-bottom:24px">${ex.prompt}</div>
     <div style="display:flex;gap:10px;flex-direction:${ex.isParagraph?'column':'row'}">
       ${ex.isParagraph
-        ?`<textarea id="fillInput" placeholder="Type the full paragraph in Parli Aspo..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
+        ?`<textarea id="fillInput" placeholder="Type the full paragraph in ParliAspo..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
           style="flex:1;min-height:140px;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:600;font-family:var(--font);resize:vertical;line-height:1.5">${state.fillInput}</textarea>`
         :`<input id="fillInput" type="text" value="${state.fillInput}" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" ${state.fillAnswered?'disabled':''}
         style="flex:1;padding:14px 16px;background:${bgColor};border:2.5px solid ${borderColor};border-radius:var(--radius);color:var(--text);font-size:16px;font-weight:700">`}
@@ -2288,7 +2288,7 @@ function renderComplete(){
     innerHTML=`
       <div style="font-size:80px;margin-bottom:8px">🏆</div>
       <div style="font-family:var(--display);font-size:32px;font-weight:800;color:var(--gold);margin-bottom:8px">Bona Labori!</div>
-      <div style="font-size:18px;color:var(--mid);margin-bottom:8px">You have completed the Parli Aspo course.</div>
+      <div style="font-size:18px;color:var(--mid);margin-bottom:8px">You have completed the ParliAspo course.</div>
       <div style="font-size:14px;color:var(--dim);margin-bottom:20px;font-style:italic">"Vivo esi bela kon aspo." — Life is beautiful with hope.</div>
       <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
         <span class="badge badge-xp" style="font-size:15px;padding:6px 16px">⚡ +${earnedXP} XP</span>
@@ -2297,7 +2297,7 @@ function renderComplete(){
       </div>
       <div style="padding:16px;background:var(--gold-glow);border:2px solid var(--gold);border-radius:var(--radius);margin-bottom:24px">
         <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px">🌟 COURSE COMPLETE</div>
-        <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered ~400 root words, all 6 units, and the complete grammar system of Parli Aspo. The language of hope lives in you now.</div>
+        <div style="font-size:13px;color:var(--mid);line-height:1.6">You mastered ~400 root words, all 6 units, and the complete grammar system of ParliAspo. The language of hope lives in you now.</div>
       </div>`;
   } else if(passed){
     innerHTML=`
@@ -2445,7 +2445,7 @@ const GRAMMAR_SECTIONS = [
   {
     icon:"⛓️", title:"Verb Chaining",
     body:`<p>Multiple verbs can be chained in sequence. Only the first verb (or its tense marker) carries the tense for the whole chain.</p>
-    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>ParliAspo</th><th>English</th></tr></thead><tbody>
     <tr><td><em>Me voli komensi labori.</em></td><td>I want to start working.</td></tr>
     <tr><td><em>Yu debi trati lerni.</em></td><td>You should try to learn.</td></tr>
     <tr><td><em>Nos pa komensi kusi nutro.</em></td><td>We started cooking food.</td></tr>
@@ -2473,7 +2473,7 @@ const GRAMMAR_SECTIONS = [
   {
     icon:"🗣️", title:"Sentence Structure",
     body:`<p>ParliAspo follows <strong>Subject-Verb-Object (SVO)</strong> order.</p>
-    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>ParliAspo</th><th>English</th></tr></thead><tbody>
     <tr><td><em>Me plumi libo.</em></td><td>I write a book.</td></tr>
     <tr><td><em>Le pa agwi suko.</em></td><td>He drank juice.</td></tr>
     <tr><td><em>Yun ropas esi reda.</em></td><td>Your clothes are red.</td></tr>
@@ -2522,7 +2522,7 @@ const GRAMMAR_SECTIONS = [
   {
     icon:"🔗", title:"Relative Clauses",
     body:`<p>The conjunction <strong>ke</strong> ("that / who / which") introduces relative clauses. The clause follows the noun it modifies.</p>
-    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>ParliAspo</th><th>English</th></tr></thead><tbody>
     <tr><td><em>La humo ke labori am esi men filo.</em></td><td>The person who works here is my friend.</td></tr>
     <tr><td><em>La libo ke me pa legi esi bela.</em></td><td>The book that I read is beautiful.</td></tr>
     <tr><td><em>Me vidi la gato ke dormi sur la sedo.</em></td><td>I see the cat that sleeps on the chair.</td></tr>
@@ -2657,14 +2657,14 @@ const GRAMMAR_SECTIONS = [
     <div class="grammar-sub-header">Omitting <em>la</em> with Abstract &amp; General Nouns</div>
     <p><em>La</em> is used for <strong>specific, identifiable</strong> referents — things the speaker and listener can point to. It is <strong>omitted</strong> when a noun refers to a concept, category, or mass abstraction rather than a specific instance.</p>
     <p>This applies especially to abstract concepts: <em>paso</em> (peace), <em>libero</em> (freedom), <em>amo</em> (love), <em>aspo</em> (hope), <em>vero</em> (truth), <em>vivo</em> (life), <em>saba</em> (knowledge).</p>
-    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>ParliAspo</th><th>English</th></tr></thead><tbody>
     <tr><td><em>Paso esi grava for toda humos.</em></td><td>Peace is important for all people.</td></tr>
     <tr><td><em>Libero esi bela.</em></td><td>Freedom is beautiful.</td></tr>
     <tr><td><em>Amo esi forta.</em></td><td>Love is strong.</td></tr>
     <tr><td><em>Sen libero, paso na esi.</em></td><td>Without freedom, there is no peace.</td></tr>
     </tbody></table></div>
     <p><strong>Contrast — specific use takes <em>la</em>:</strong></p>
-    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>ParliAspo</th><th>English</th></tr></thead><tbody>
     <tr><td><em>La paso inter la dua lanos esi nuva.</em></td><td>The peace between the two countries is new.</td></tr>
     <tr><td><em>La vero ke lu parli pa esi grava.</em></td><td>The truth that she spoke was important.</td></tr>
     </tbody></table></div>
@@ -2679,7 +2679,7 @@ const GRAMMAR_SECTIONS = [
   },
   {
     icon:"📏", title:"Common Phrases",
-    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    body:`<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>ParliAspo</th><th>English</th></tr></thead><tbody>
     <tr><td><em>Kom yu esi?</em></td><td>How are you?</td></tr>
     <tr><td><em>Me esi bona, grati.</em></td><td>I am good, thank you.</td></tr>
     <tr><td><em>Kwa esi yun nomo?</em></td><td>What is your name?</td></tr>
@@ -2822,7 +2822,7 @@ function renderDict() {
     <div class="dict-panel">
       <div class="dict-panel-label">
         <div class="dict-flag flag-en">EN</div>
-        <span class="dict-panel-lang">English → Parli Aspo</span>
+        <span class="dict-panel-lang">English → ParliAspo</span>
       </div>
       <div class="dict-input-wrap">
         <input class="dict-search-input" id="dictEnInput" type="text" placeholder="Type an English word..." value="${dictEnQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -2840,10 +2840,10 @@ function renderDict() {
     <div class="dict-panel pa-panel">
       <div class="dict-panel-label">
         <div class="dict-flag flag-pa">PA</div>
-        <span class="dict-panel-lang">Parli Aspo → English</span>
+        <span class="dict-panel-lang">ParliAspo → English</span>
       </div>
       <div class="dict-input-wrap">
-        <input class="dict-search-input" id="dictPaInput" type="text" placeholder="Topi parlo de Parli Aspo..." value="${dictPaQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <input class="dict-search-input" id="dictPaInput" type="text" placeholder="Topi parlo de ParliAspo..." value="${dictPaQuery}" autocomplete="off" autocapitalize="off" spellcheck="false">
         <button class="dict-clear-btn ${dictPaQuery?'visible':''}" id="dictPaClear">✕</button>
       </div>
       <div class="dict-results">${paResultsHTML}</div>
@@ -2906,7 +2906,7 @@ function renderContact() {
     <div class="contact-intro">
       <div class="contact-intro-icon">💬</div>
       <div class="contact-intro-title">Get in Touch</div>
-      <div class="contact-intro-desc">Have a suggestion for Parli Aspo? Found a bug in the app? Want to share feedback? We'd love to hear from you.</div>
+      <div class="contact-intro-desc">Have a suggestion for ParliAspo? Found a bug in the app? Want to share feedback? We'd love to hear from you.</div>
     </div>
 
     <div id="contact-form-wrap">
