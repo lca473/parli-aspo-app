@@ -2458,8 +2458,17 @@ const GRAMMAR_SECTIONS = [
       <li><strong>Identity:</strong> <em>Me esi Maria.</em> — I am Maria.</li>
       <li><strong>Description:</strong> <em>La kaso esi bela.</em> — The house is beautiful.</li>
       <li><strong>Location:</strong> <em>La gato esi en la kaso.</em> — The cat is in the house.</li>
-      <li><strong>Existence:</strong> <em>Esi manga arbos faram.</em> — There are many trees there.</li>
-    </ul>`
+      <li><strong>Existence:</strong> <em>Esi manga arbos.</em> — There are many trees. Add <em>faram</em> only to specify the location "there": <em>Esi manga arbos faram.</em></li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">Impersonal Verbs (Weather &amp; Nature)</div>
+    <p>Verbs describing weather and natural phenomena are <strong>subjectless</strong>. Unlike English, no dummy "it" is used.</p>
+    <ul>
+      <li><em>Pluvi oyo.</em> — It is raining today.</li>
+      <li><em>Pluvi pa.</em> — It rained.</li>
+      <li><em>Snowi.</em> — It is snowing.</li>
+    </ul>
+    <div class="grammar-callout">Do <strong>not</strong> use <em>lo</em> or any other pronoun as a placeholder subject with weather verbs.</div>`
   },
   {
     icon:"🗣️", title:"Sentence Structure",
@@ -2529,14 +2538,27 @@ const GRAMMAR_SECTIONS = [
     <tr><td><em>tria</em></td><td>three</td><td><em>nova</em></td><td>nine</td></tr>
     <tr><td><em>kwara</em></td><td>four</td><td><em>deka</em></td><td>ten</td></tr>
     <tr><td><em>kina</em></td><td>five</td><td><em>senta</em></td><td>hundred</td></tr>
+    <tr><td></td><td></td><td><em>kila</em></td><td>thousand</td></tr>
     </tbody></table></div>
     <ul>
       <li><strong>11–19:</strong> <em>deka-una</em> (11), <em>deka-nova</em> (19)</li>
       <li><strong>20–99:</strong> <em>dua-deka</em> (20), <em>dua-deka-una</em> (21)</li>
-      <li><strong>Ordinals:</strong> place <em>la</em> before the cardinal → <em>la una</em> (first)</li>
+      <li><strong>100–999:</strong> <em>senta</em> (100), <em>dua-senta-tria-deka-dua</em> (232)</li>
+      <li><strong>1000+:</strong> <em>kila</em> (1000), <em>dua-kila</em> (2000)</li>
+      <li><strong>Ordinals:</strong> place <em>la</em> before the cardinal → <em>la una</em> (first), <em>la tria</em> (third)</li>
+      <li><strong>Frequency:</strong> cardinal + <em>hapo</em> (occurrence) → <em>una hapo</em> (once), <em>dua hapos</em> (twice)</li>
       <li><strong>Days:</strong> cardinal + <em>yo</em> → <em>unayo</em> (Sunday), <em>duayo</em> (Monday)…</li>
       <li><strong>Months:</strong> cardinal + <em>luno</em> → <em>unaluno</em> (January)…</li>
-    </ul>`
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">Weights &amp; Measurements</div>
+    <p>ParliAspo uses the <strong>metric system</strong>. Unit names are identical to English spelling and pronunciation.</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Unit</th><th>Measures</th><th>Example</th></tr></thead><tbody>
+    <tr><td><em>meter</em></td><td>length</td><td><em>La tablo esi dua meters longa.</em></td></tr>
+    <tr><td><em>kilogram</em></td><td>weight</td><td><em>La sako havi kina kilograms.</em></td></tr>
+    <tr><td><em>liter</em></td><td>volume</td><td><em>Me deni una liter de lakto.</em></td></tr>
+    <tr><td><em>Celsius</em></td><td>temperature</td><td><em>La agwo esi deka Celsius.</em></td></tr>
+    </tbody></table></div>`
   },
   {
     icon:"🔨", title:"Word Building",
@@ -2570,15 +2592,18 @@ const GRAMMAR_SECTIONS = [
     </ul>
     <div class="grammar-section-divider"></div>
     <div class="grammar-sub-header">Compound Words</div>
-    <p>Two words may be combined when no existing word covers the concept. The second word determines the part of speech.</p>
+    <p>Two words may be combined when no existing word covers the concept. The second word determines the part of speech — so a verb becoming the second element must shift to the appropriate ending.</p>
     <ul>
-      <li><em>pano</em> + <em>tendo</em> → <em>panotendo</em> (bakery)</li>
-      <li><em>ropo</em> + <em>puro</em> → <em>ropopuro</em> (washing machine)</li>
-      <li><em>kompo</em> + <em>ludo</em> → <em>kompoludo</em> (videogame)</li>
+      <li><em>pano</em> (bread) + <em>tendo</em> (store) → <em>panotendo</em> (bakery)</li>
+      <li><em>ropo</em> (clothes) + <em>puri</em> (to clean) → <em>ropopuro</em> (washing machine) — <em>puri</em> shifts to <em>puro</em> (noun)</li>
+      <li><em>tero</em> (ground) + <em>maludo</em> (fight) → <em>teramaludo</em> (jiu jitsu) — <em>tero</em> shifts to <em>tera</em> (adj.)</li>
+      <li><em>kompo</em> (computer) + <em>ludo</em> (game) → <em>kompoludo</em> (videogame)</li>
     </ul>
     <p><strong>Letter collapse at boundaries:</strong> When combining two elements creates a doubled letter at the boundary (the first element's final letter matches the second element's initial letter), the doubled letter collapses to a single letter. This applies to both vowels and consonants. Non-matching letters are preserved.</p>
     <ul>
       <li><em>fasi</em> (face) + <em>iri</em> (go) → <em>fasiri</em> (lead) — not <em>fasiiri</em></li>
+      <li><em>fasiri</em> + <em>-o</em> → <em>fasirio</em> (leader)</li>
+      <li><em>mal-</em> + <em>fasiri</em> → <em>malfasiri</em> (follow)</li>
       <li><em>mal-</em> + <em>longa</em> (long) → <em>malonga</em> (short) — not <em>mallonga</em></li>
       <li><em>mal-</em> + <em>matura</em> (mature) → <em>malmatura</em> (young) — no collapse, since <em>l</em> and <em>m</em> are different</li>
     </ul>`
@@ -2590,7 +2615,6 @@ const GRAMMAR_SECTIONS = [
     <tr><td><em>ili</em></td><td>or</td></tr>
     <tr><td><em>ma</em></td><td>but / although</td></tr>
     <tr><td><em>da</em></td><td>yes</td></tr>
-    <tr><td><em>na</em></td><td>no / not</td></tr>
     <tr><td><em>si</em></td><td>if</td></tr>
     <tr><td><em>bem</em></td><td>well (interjection)</td></tr>
     <tr><td><em>forke</em></td><td>because</td></tr>
@@ -2601,8 +2625,37 @@ const GRAMMAR_SECTIONS = [
     <tr><td><em>dute</em></td><td>during / while</td></tr>
     <tr><td><em>finte</em></td><td>until</td></tr>
     <tr><td><em>late</em></td><td>then / next / at that time</td></tr>
-    <tr><td><em>la</em></td><td>the (definite article)</td></tr>
     </tbody></table></div>`
+  },
+  {
+    icon:"📘", title:"Articles &amp; Negation",
+    body:`<ul>
+      <li><strong>la</strong> — the (definite article) → <em>la kaso</em> (the house)</li>
+      <li><strong>na</strong> — no / not → <em>Me na labori.</em> (I don't work.)</li>
+    </ul>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">Omitting <em>la</em> with Abstract &amp; General Nouns</div>
+    <p><em>La</em> is used for <strong>specific, identifiable</strong> referents — things the speaker and listener can point to. It is <strong>omitted</strong> when a noun refers to a concept, category, or mass abstraction rather than a specific instance.</p>
+    <p>This applies especially to abstract concepts: <em>paso</em> (peace), <em>libero</em> (freedom), <em>amo</em> (love), <em>aspo</em> (hope), <em>vero</em> (truth), <em>vivo</em> (life), <em>saba</em> (knowledge).</p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>Paso esi grava for toda humos.</em></td><td>Peace is important for all people.</td></tr>
+    <tr><td><em>Libero esi bela.</em></td><td>Freedom is beautiful.</td></tr>
+    <tr><td><em>Amo esi forta.</em></td><td>Love is strong.</td></tr>
+    <tr><td><em>Sen libero, paso na esi.</em></td><td>Without freedom, there is no peace.</td></tr>
+    </tbody></table></div>
+    <p><strong>Contrast — specific use takes <em>la</em>:</strong></p>
+    <div class="grammar-table-wrap"><table class="grammar-table"><thead><tr><th>Parli Aspo</th><th>English</th></tr></thead><tbody>
+    <tr><td><em>La paso inter la dua lanos esi nuva.</em></td><td>The peace between the two countries is new.</td></tr>
+    <tr><td><em>La vero ke lu parli pa esi grava.</em></td><td>The truth that she spoke was important.</td></tr>
+    </tbody></table></div>
+    <div class="grammar-callout"><strong>toda</strong> means both "all" and "every" — context decides. <em>toda humos</em> = "all people"; <em>toda yo</em> = "every day"; <em>toda oyo</em> = "all day."</div>
+    <div class="grammar-section-divider"></div>
+    <div class="grammar-sub-header">Demonstratives</div>
+    <ul>
+      <li><strong>lan</strong> — this / these</li>
+      <li><strong>farlan</strong> — that / those</li>
+    </ul>
+    <p>Example: <em>lan libo esi bela</em> (this book is beautiful); <em>lan libos esi bela</em> (these books are beautiful).</p>`
   },
   {
     icon:"📏", title:"Common Phrases",
